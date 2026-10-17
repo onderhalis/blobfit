@@ -6,6 +6,7 @@ import { Button } from '@/components/Button';
 import { Card, Chevron, ReviewBadge } from '@/components/Card';
 import { Icon, type IconName } from '@/components/Icon';
 import { ExerciseArt } from '@/components/Illustration';
+import { MUSCLE_COLORS, MuscleMap } from '@/components/MuscleMap';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
 import { EQUIPMENT_LABEL, findExercise } from '@/domain/exercises';
 import { findOpenSession } from '@/domain/session';
@@ -40,7 +41,7 @@ function MetaItem({ icon, value, label }: { icon: IconName; value: string; label
 function MuscleChip({ name, kind }: { name: string; kind: 'primary' | 'secondary' }) {
   return (
     <View style={styles.chip}>
-      <View style={[styles.chipDot, { backgroundColor: kind === 'primary' ? '#F27B70' : '#F4C04E' }]} />
+      <View style={[styles.chipDot, { backgroundColor: MUSCLE_COLORS[kind] }]} />
       <AppText variant="caption">{name.charAt(0).toUpperCase() + name.slice(1)}</AppText>
     </View>
   );
@@ -143,6 +144,7 @@ export default function ExerciseDetail() {
           Mainly {exercise.primaryMuscles.join(' and ')}
           {exercise.secondaryMuscles.length > 0 ? `, with help from ${exercise.secondaryMuscles.join(', ')}` : ''}.
         </AppText>
+        <MuscleMap primary={exercise.primaryMuscles} secondary={exercise.secondaryMuscles} />
         <View style={styles.chips}>
           {exercise.primaryMuscles.map((muscle) => (
             <MuscleChip key={muscle} name={muscle} kind="primary" />
@@ -152,7 +154,7 @@ export default function ExerciseDetail() {
           ))}
         </View>
         <AppText variant="caption" tone="secondary">
-          Red: main muscles · Yellow: supporting muscles
+          Red: main muscles · Yellow: supporting muscles. Simplified diagram, pending coach review.
         </AppText>
       </Card>
 
