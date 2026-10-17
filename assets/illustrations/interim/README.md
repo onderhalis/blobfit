@@ -10,6 +10,11 @@ Every PNG here was cut out of the **five founder-approved app concepts** in `ass
 
 The source concepts are about 941×1672 px, so these cutouts are low resolution (roughly 150–680 px). They look soft on 3× displays. Production exports should be at least 1200 px on the long edge.
 
+### `hd/` (what the app uses)
+`hd/*.webp` are the same cut-outs, upscaled 2–4× (to about 700–1500 px) so they hold up on 3× iPhone screens. The upscaler is Real-ESRGAN `realesrgan-x4plus`, run on CPU through ncnn in the dev container. The alpha channel was resized with Lanczos. Nothing was redrawn, so pose, proportions, eyes and shorts are unchanged; the upscaler only reconstructs edges and smooths the clay texture a little. The files are WebP (quality 88). `src/components/art.ts` is generated from this folder.
+
+These are still interim. Production exports (CC-001, CC-007) replace both folders.
+
 | File | Source concept | Used for |
 |---|---|---|
 | `blob-idle-towel.png` | 01 Home hero | Home hero |
