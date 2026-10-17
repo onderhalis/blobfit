@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
@@ -8,6 +7,7 @@ import type { WeekDay } from '@/domain/progress';
 import { colors, space } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon } from './Icon';
 
 export function ProgressRing({
   value,
@@ -100,7 +100,7 @@ export function WeekDots({ days }: { days: WeekDay[] }) {
                 day.status === 'rest' && styles.dotRest,
                 day.isToday && !done && styles.dotToday,
               ]}>
-              {done ? <Ionicons name="checkmark" size={16} color={colors.inkOnDark} /> : null}
+              {done ? <Icon name="checkmark" size={16} color={colors.inkOnDark} /> : null}
             </View>
             <AppText
               variant="caption"

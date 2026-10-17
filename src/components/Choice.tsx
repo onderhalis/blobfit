@@ -1,15 +1,15 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, radius, space, TOUCH, type TintName } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon, type IconName } from './Icon';
 
 function Check({ selected, multi }: { selected: boolean; multi?: boolean }) {
   return (
     <View style={[styles.check, multi && styles.checkSquare, selected && styles.checkOn]}>
-      {selected ? <Ionicons name="checkmark" size={16} color={colors.inkOnDark} /> : null}
+      {selected ? <Icon name="checkmark" size={16} color={colors.inkOnDark} /> : null}
     </View>
   );
 }
@@ -77,7 +77,7 @@ export function OptionRow({
   selected: boolean;
   onPress: () => void;
   multi?: boolean;
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: IconName;
   testID?: string;
 }) {
   return (
@@ -90,7 +90,7 @@ export function OptionRow({
       style={({ pressed }) => [styles.row, selected && styles.selected, pressed && styles.pressed]}>
       {icon ? (
         <View style={styles.rowIcon}>
-          <Ionicons name={icon} size={22} color={colors.ink} />
+          <Icon name={icon} size={22} color={colors.ink} />
         </View>
       ) : null}
       <View style={styles.flex}>

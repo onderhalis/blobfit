@@ -1,13 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, radius, space, TAB_BAR_HEIGHT } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon, type IconName } from './Icon';
 import { MAX_WIDTH } from './Screen';
-
-type IconName = keyof typeof Ionicons.glyphMap;
 
 const ICONS: Record<string, { on: IconName; off: IconName; label: string }> = {
   index: { on: 'home', off: 'home-outline', label: 'Home' },
@@ -35,7 +33,7 @@ export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
               accessibilityLabel={meta.label}
               onPress={() => navigateToTab(route.key)}
               style={({ pressed }) => [styles.tab, pressed && styles.pressed]}>
-              <Ionicons name={focused ? meta.on : meta.off} size={24} color={focused ? colors.ink : colors.inkSecondary} />
+              <Icon name={focused ? meta.on : meta.off} size={24} color={focused ? colors.ink : colors.inkSecondary} />
               <AppText
                 variant="caption"
                 maxFontSizeMultiplier={1.2}

@@ -1,12 +1,13 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Card, Chevron } from '@/components/Card';
+import { Icon } from '@/components/Icon';
+import { Hero } from '@/components/Hero';
 import { Illustration, MotionMarks } from '@/components/Illustration';
 import { ProgressRing } from '@/components/Progress';
-import { EmptyState, Screen, TopBar } from '@/components/Screen';
+import { EmptyState, Screen, TopBar, useLayout } from '@/components/Screen';
 import { WEEKDAY_LONG, WEEKDAY_SHORT, addDays, formatShortDate, startOfDay, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
 import { WORKOUT_TEMPLATES, nextTrainingDay } from '@/domain/plan';
@@ -36,6 +37,9 @@ function describeSet(exerciseId: string, set: BestSet, units: Units): string {
 
 export default function Progress() {
   const { data } = useStore();
+  const { compact, narrow, content } = useLayout();
+  // Two tiles per row on small phones and large text; the third spans the row.
+  const tileWidth = compact ? { flexBasis: (content - space.xs) / 2 - 1, flexGrow: 1 } : null;
   const now = useNow(60_000);
   const prefs = data.preferences;
   if (!prefs) {
@@ -65,23 +69,24 @@ export default function Progress() {
     <Screen withTabBar testID="progress">
       <TopBar showProfile />
 
-      <View style={styles.hero}>
-        <View style={styles.heroText}>
-          <Eyebrow>Your progress</Eyebrow>
-          <AppText variant="h1">{headline}</AppText>
-          <AppText variant="lead" tone="secondary">
-            Same you.{'\n'}Real progress.
-          </AppText>
-        </View>
-        <View style={styles.heroArt} pointerEvents="none">
-          <Illustration name="blob-flex-towel" height={230} />
+      <Hero
+        art="blob-flex-towel"
+        artHeight={230}
+        artOverlay={
           <View style={styles.marks}>
             <MotionMarks size={32} />
           </View>
-        </View>
-      </View>
+        }
+        before={<Eyebrow>Your progress</Eyebrow>}
+        headline={headline}
+        after={
+          <AppText variant="lead" tone="secondary">
+            Same you.{'\n'}Real progress.
+          </AppText>
+        }
+      />
 
-      <View style={styles.pair}>
+      <View style={[styles.pair, narrow && styles.stack]}>
         <Card style={[styles.ringCard]} onPress={() => router.push('/plan')}>
           <ProgressRing
             value={week.target === 0 ? 0 : week.done / week.target}
@@ -116,7 +121,7 @@ export default function Progress() {
         </Card>
         <Card style={styles.streakCard} accessibilityLabel={`${plural(streak, 'week')} in a row on target`}>
           <View style={styles.row}>
-            <Ionicons name="flame" size={34} color={colors.accent} />
+            <Icon name="flame" size={34} color={colors.accent} />
             <AppText variant="stat">{streak}</AppText>
           </View>
           <AppText variant="bodyStrong">{streak === 1 ? 'Week on target' : 'Weeks on target'}</AppText>
@@ -126,9 +131,9 @@ export default function Progress() {
         </Card>
       </View>
 
-      <View style={styles.tiles}>
-        <Card style={styles.tile} accessibilityLabel={`${t.sessions} workouts in total, ${last30} in the last 30 days`}>
-          <Ionicons name="barbell" size={26} color={colors.ink} />
+      <View style={[styles.tiles, compact && styles.wrap]}>
+        <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.sessions} workouts in total, ${last30} in the last 30 days`}>
+          <Icon name="barbell" size={26} color={colors.ink} />
           <AppText variant="h2">{t.sessions}</AppText>
           <AppText variant="caption" tone="secondary">
             Workouts
@@ -138,9 +143,9 @@ export default function Progress() {
           </AppText>
         </Card>
         <Card
-          style={styles.tile}
+          style={[styles.tile, tileWidth]}
           accessibilityLabel={adh.ratio === null ? 'Consistency: not enough data yet' : `Consistency ${percent(adh.ratio)}`}>
-          <Ionicons name="heart" size={26} color={colors.tint.pink.fg} />
+          <Icon name="heart" size={26} color={colors.tint.pink.fg} />
           <AppText variant="h2">{adh.ratio === null ? '—' : percent(adh.ratio)}</AppText>
           <AppText variant="caption" tone="secondary">
             Consistency
@@ -149,8 +154,8 @@ export default function Progress() {
             {adh.ratio === null ? 'After your first planned day' : `${adh.credited} of ${adh.scheduled} planned`}
           </AppText>
         </Card>
-        <Card style={styles.tile} accessibilityLabel={`${t.reps} total reps`}>
-          <Ionicons name="repeat" size={26} color={colors.tint.lavender.fg} />
+        <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.reps} total reps`}>
+          <Icon name="repeat" size={26} color={colors.tint.lavender.fg} />
           <AppText variant="h2">{t.reps}</AppText>
           <AppText variant="caption" tone="secondary">
             Total reps
@@ -175,7 +180,7 @@ export default function Progress() {
           <Card style={styles.section}>
             <View style={styles.row}>
               <Eyebrow>First</Eyebrow>
-              <Ionicons name="arrow-forward" size={14} color={colors.inkSecondary} />
+              <Icon name="arrow-forward" size={14} color={colors.inkSecondary} />
               <Eyebrow>Latest</Eyebrow>
             </View>
             {comparisons.length === 0 ? (
@@ -192,7 +197,7 @@ export default function Progress() {
                   </AppText>
                   <View style={styles.compareValues}>
                     <AppText tone="secondary">{describeSet(row.exerciseId, row.first, units)}</AppText>
-                    <Ionicons name="arrow-forward" size={16} color={colors.inkSecondary} />
+                    <Icon name="arrow-forward" size={16} color={colors.inkSecondary} />
                     <AppText variant="bodyStrong">{describeSet(row.exerciseId, row.latest, units)}</AppText>
                   </View>
                 </View>
@@ -231,7 +236,7 @@ export default function Progress() {
           {bests.length > 0 ? (
             <Card style={styles.section}>
               <View style={styles.row}>
-                <Ionicons name="trophy-outline" size={20} color={colors.ink} />
+                <Icon name="trophy-outline" size={20} color={colors.ink} />
                 <AppText variant="h3">Personal bests</AppText>
               </View>
               {bests.map((best) => (
@@ -290,11 +295,10 @@ export default function Progress() {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  hero: { flexDirection: 'row', minHeight: 220 },
-  heroText: { flex: 1.35, gap: space.xs, justifyContent: 'center', zIndex: 1 },
-  heroArt: { flex: 1, alignItems: 'center', marginRight: -space.xl, marginLeft: -space.md },
   marks: { position: 'absolute', top: 4, left: 0 },
-  pair: { flexDirection: 'row', gap: space.sm, marginTop: -space.lg },
+  pair: { flexDirection: 'row', gap: space.sm },
+  stack: { flexDirection: 'column' },
+  wrap: { flexWrap: 'wrap' },
   ringCard: { alignItems: 'center', justifyContent: 'center', paddingVertical: space.md },
   ringEyebrow: { fontSize: 10, letterSpacing: 1.6 },
   streakCard: { flex: 1, gap: space.xxs, justifyContent: 'center' },

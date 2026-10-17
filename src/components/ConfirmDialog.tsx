@@ -1,11 +1,15 @@
-import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { useEffect, useEffectEvent } from 'react';
+import { Alert, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { colors, radius, space } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 import { Button } from './Button';
 
-/** Cross-platform confirmation (React Native's Alert is a no-op on web). */
+/**
+ * Confirmation dialog. iOS and Android show the system alert (destructive actions get the
+ * platform's destructive style); web, where React Native's Alert is a no-op, gets a modal sheet.
+ */
 export function ConfirmDialog({
   visible,
   title,
@@ -25,6 +29,26 @@ export function ConfirmDialog({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  const showSystemAlert = useEffectEvent(() =>
+    Alert.alert(
+      title,
+      body,
+      [
+        { text: cancelLabel, style: 'cancel', onPress: onCancel },
+        { text: confirmLabel, style: destructive ? 'destructive' : 'default', onPress: onConfirm },
+      ],
+      { cancelable: true, onDismiss: onCancel },
+    ),
+  );
+  useEffect(() => {
+    if (visible && Platform.OS !== 'web') {
+      showSystemAlert();
+    }
+  }, [visible]);
+
+  if (Platform.OS !== 'web') {
+    return null;
+  }
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <Pressable style={styles.backdrop} onPress={onCancel} accessibilityLabel="Close dialog" accessibilityRole="button">

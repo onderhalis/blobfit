@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -6,6 +5,7 @@ import { useStore } from '@/state/AppStore';
 import { colors, radius, space, TOUCH } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon } from './Icon';
 
 /** Shown over every screen while the latest change could not be written to the device. */
 export function SaveErrorBanner() {
@@ -20,7 +20,7 @@ export function SaveErrorBanner() {
       style={[styles.wrap, { top: insets.top + space.xs }]}
       accessibilityRole="alert"
       accessibilityLiveRegion="assertive">
-      <Ionicons name="warning-outline" size={22} color={colors.dangerInk} />
+      <Icon name="warning-outline" size={22} color={colors.dangerInk} />
       <View style={styles.text}>
         <AppText variant="bodyStrong" tone="danger">
           Not saved on this device

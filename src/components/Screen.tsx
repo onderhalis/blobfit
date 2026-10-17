@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View, type StyleProp, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors, space, TAB_BAR_HEIGHT, type } from '@/theme/tokens';
@@ -10,6 +10,16 @@ import { Button, IconButton } from './Button';
 import { Illustration } from './Illustration';
 
 export const MAX_WIDTH = 520;
+
+/**
+ * Width available to a Screen column, plus breakpoints for small phones and large Dynamic Type.
+ * `compact` covers 375pt phones (iPhone SE / mini) and up-scaled text; `narrow` covers 320pt.
+ */
+export function useLayout() {
+  const { width, fontScale } = useWindowDimensions();
+  const content = Math.min(width, MAX_WIDTH) - space.lg * 2;
+  return { content, fontScale, compact: content < 340 || fontScale > 1.15, narrow: content < 300 };
+}
 
 interface ScreenProps {
   children: ReactNode;

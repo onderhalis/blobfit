@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import Svg, { Line } from 'react-native-svg';
@@ -7,6 +6,7 @@ import type { Exercise } from '@/domain/types';
 import { colors, radius } from '@/theme/tokens';
 
 import { ART, type ArtName } from './art';
+import { Icon, type IconName } from './Icon';
 
 interface IllustrationProps {
   name: ArtName;
@@ -48,7 +48,7 @@ const EXERCISE_HERO: Record<string, ArtName> = {
   row: 'blob-row',
 };
 
-const PATTERN_ICON: Record<Exercise['pattern'], keyof typeof Ionicons.glyphMap> = {
+const PATTERN_ICON: Record<Exercise['pattern'], IconName> = {
   squat: 'body-outline',
   push: 'barbell-outline',
   pull: 'barbell-outline',
@@ -88,7 +88,7 @@ export function ExerciseArt({
       style={[styles.placeholder, { width: size * 0.62, height: size * 0.62, borderRadius: size * 0.31 }]}
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants">
-      <Ionicons name={PATTERN_ICON[exercise.pattern]} size={size * 0.3} color={colors.inkSecondary} />
+      <Icon name={PATTERN_ICON[exercise.pattern]} size={size * 0.3} color={colors.inkSecondary} />
     </View>
   );
 }

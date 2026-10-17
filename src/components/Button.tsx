@@ -1,9 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
 import { ActivityIndicator, Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, radius, space, TOUCH } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon, type IconName } from './Icon';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger';
 
@@ -11,7 +11,7 @@ interface ButtonProps {
   label: string;
   onPress: () => void;
   variant?: Variant;
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: IconName;
   /** Trailing arrow, as in the concepts' primary CTAs. */
   arrow?: boolean;
   disabled?: boolean;
@@ -73,11 +73,11 @@ export function Button({
         <ActivityIndicator color={FG[variant]} />
       ) : (
         <View style={styles.row}>
-          {icon ? <Ionicons name={icon} size={20} color={FG[variant]} /> : null}
+          {icon ? <Icon name={icon} size={20} color={FG[variant]} /> : null}
           <AppText variant={size === 'lg' ? 'button' : 'bodyStrong'} style={{ color: FG[variant] }}>
             {label}
           </AppText>
-          {arrow ? <Ionicons name="arrow-forward" size={22} color={FG[variant]} /> : null}
+          {arrow ? <Icon name="arrow-forward" size={22} color={FG[variant]} /> : null}
         </View>
       )}
     </Pressable>
@@ -85,7 +85,7 @@ export function Button({
 }
 
 interface IconButtonProps {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: IconName;
   label: string;
   onPress: () => void;
   size?: number;
@@ -114,7 +114,7 @@ export function IconButton({ icon, label, onPress, size = TOUCH, tone = 'muted',
         pressed && styles.pressed,
         style,
       ]}>
-      <Ionicons name={icon} size={size * 0.45} color={fg} />
+      <Icon name={icon} size={size * 0.45} color={fg} />
     </Pressable>
   );
 }

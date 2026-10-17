@@ -1,10 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card, Chevron, ReviewBadge } from '@/components/Card';
+import { Icon, type IconName } from '@/components/Icon';
 import { ExerciseArt } from '@/components/Illustration';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
 import { EQUIPMENT_LABEL, findExercise } from '@/domain/exercises';
@@ -21,11 +21,11 @@ const PATTERN_LABEL: Record<Exercise['pattern'], string> = {
   core: 'Core control',
 };
 
-function MetaItem({ icon, value, label }: { icon: keyof typeof Ionicons.glyphMap; value: string; label: string }) {
+function MetaItem({ icon, value, label }: { icon: IconName; value: string; label: string }) {
   return (
     <View style={styles.meta} accessible accessibilityLabel={`${label}: ${value}`}>
       <View style={styles.metaIcon}>
-        <Ionicons name={icon} size={22} color={colors.ink} />
+        <Icon name={icon} size={22} color={colors.ink} />
       </View>
       <AppText variant="caption" center>
         {value}
@@ -194,7 +194,7 @@ export default function ExerciseDetail() {
         <AppText variant="h2">Form cues</AppText>
         {exercise.cues.map((cue) => (
           <View key={cue} style={styles.listRow}>
-            <Ionicons name="checkmark-circle" size={22} color={colors.success} />
+            <Icon name="checkmark-circle" size={22} color={colors.success} />
             <AppText style={styles.flex}>{cue}</AppText>
           </View>
         ))}
@@ -204,7 +204,7 @@ export default function ExerciseDetail() {
         <AppText variant="h2">Common mistakes</AppText>
         {exercise.mistakes.map((mistake) => (
           <View key={mistake} style={styles.listRow}>
-            <Ionicons name="close-circle" size={22} color={colors.danger} />
+            <Icon name="close-circle" size={22} color={colors.danger} />
             <AppText style={styles.flex}>{mistake.charAt(0).toUpperCase() + mistake.slice(1)}</AppText>
           </View>
         ))}

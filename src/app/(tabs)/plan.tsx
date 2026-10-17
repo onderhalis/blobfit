@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -6,6 +5,8 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card, Chevron, ReviewBadge, Tag } from '@/components/Card';
+import { Icon, type IconName } from '@/components/Icon';
+import { Hero } from '@/components/Hero';
 import { ExerciseArt, Illustration, MotionMarks } from '@/components/Illustration';
 import { WeekDots } from '@/components/Progress';
 import { Screen, TopBar } from '@/components/Screen';
@@ -20,7 +21,7 @@ import { pad2, plural, prescription } from '@/lib/format';
 import { useNow, useStore } from '@/state/AppStore';
 import { colors, radius, space, type TintName } from '@/theme/tokens';
 
-const AREA_TAG: Record<BodyArea, { tint: TintName; icon: keyof typeof Ionicons.glyphMap }> = {
+const AREA_TAG: Record<BodyArea, { tint: TintName; icon: IconName }> = {
   'Lower Body': { tint: 'peach', icon: 'body-outline' },
   'Upper Body': { tint: 'blue', icon: 'barbell-outline' },
   Core: { tint: 'mint', icon: 'timer-outline' },
@@ -74,27 +75,28 @@ export default function Plan() {
     <Screen withTabBar footer={footer} testID="plan">
       <TopBar showProfile />
 
-      <View style={styles.hero}>
-        <View style={styles.heroText}>
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <AppText variant="display" accessibilityLabel={`Session ${sessionNumber}`}>
-            {status.kind === 'done' ? `Day ${pad2(sessionNumber)} ✓` : `Day ${pad2(sessionNumber)}`}
-          </AppText>
-          <AppText variant="lead" tone="secondary">
-            {lead}
-          </AppText>
-        </View>
-        <View style={styles.heroArt} pointerEvents="none">
-          <Illustration name="blob-lunge" height={240} />
+      <Hero
+        art="blob-lunge"
+        artHeight={240}
+        artOverlay={
           <View style={styles.marks}>
             <MotionMarks size={36} />
           </View>
-        </View>
-      </View>
+        }
+        before={<Eyebrow>{eyebrow}</Eyebrow>}
+        headline={status.kind === 'done' ? `Day ${pad2(sessionNumber)} ✓` : `Day ${pad2(sessionNumber)}`}
+        headlineVariant="display"
+        headlineLabel={`Session ${sessionNumber}`}
+        after={
+          <AppText variant="lead" tone="secondary">
+            {lead}
+          </AppText>
+        }
+      />
 
       <Card style={styles.weekCard}>
         <View style={styles.weekHead}>
-          <Ionicons name="flame" size={28} color={colors.accent} />
+          <Icon name="flame" size={28} color={colors.accent} />
           <Eyebrow tone="ink">
             {streak > 0
               ? `${plural(streak, 'week')} on target`
@@ -132,7 +134,7 @@ export default function Plan() {
 
       <Card style={styles.total} accessibilityLabel={`Total workout about ${workout.estimatedMinutes} minutes`}>
         <View style={styles.clock}>
-          <Ionicons name="time-outline" size={28} color={colors.accentInk} />
+          <Icon name="time-outline" size={28} color={colors.accentInk} />
         </View>
         <View style={styles.flex}>
           <Eyebrow>Total workout</Eyebrow>
@@ -147,7 +149,7 @@ export default function Plan() {
       <Card style={styles.row} onPress={() => setWarmUpOpen(!warmUpOpen)} accessibilityLabel={`Warm-up, ${WARM_UP.minutes} minutes, ${WARM_UP.subtitle}`} accessibilityHint={warmUpOpen ? 'Hides the moves' : 'Shows the moves'}>
         <View style={styles.rowMain}>
           <View style={[styles.badge, { backgroundColor: colors.tint.mint.bg }]}>
-            <Ionicons name="walk" size={24} color={colors.tint.mint.fg} />
+            <Icon name="walk" size={24} color={colors.tint.mint.fg} />
           </View>
           <View style={[styles.flex, styles.rowText]}>
             <AppText variant="h3">WARM-UP</AppText>
@@ -156,7 +158,7 @@ export default function Plan() {
             </AppText>
           </View>
           <Illustration name="blob-warm-up" height={70} />
-          <Ionicons name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
+          <Icon name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
         </View>
         {warmUpOpen ? (
           <View style={styles.moves}>
@@ -211,11 +213,8 @@ export default function Plan() {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  hero: { flexDirection: 'row', minHeight: 220 },
-  heroText: { flex: 1.2, gap: space.xs, justifyContent: 'center', zIndex: 1 },
-  heroArt: { flex: 1, alignItems: 'center', marginRight: -space.xl, marginLeft: -space.xxl },
   marks: { position: 'absolute', top: 6, left: 10 },
-  weekCard: { gap: space.sm, marginTop: -space.md },
+  weekCard: { gap: space.sm },
   weekHead: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
   switcher: {
     flexDirection: 'row',

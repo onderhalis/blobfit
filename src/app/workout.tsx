@@ -1,12 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActionSheetIOS, Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button, IconButton } from '@/components/Button';
 import { Card, Tag } from '@/components/Card';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { Icon, type IconName } from '@/components/Icon';
 import { ExerciseArt } from '@/components/Illustration';
 import { EmptyState, Screen } from '@/components/Screen';
 import { Stepper } from '@/components/Stepper';
@@ -17,6 +17,7 @@ import { canComplete, doneSets, elapsedMs, findOpenSession, MAX_SETS } from '@/d
 import type { ExerciseLog, Units, WorkoutSession } from '@/domain/types';
 import { goToTab } from '@/features/navigation';
 import { fromDisplayLoad, plural, toDisplayLoad } from '@/lib/format';
+import { haptics } from '@/lib/haptics';
 import { useNow, useStore } from '@/state/AppStore';
 import { colors, radius, space, TOUCH } from '@/theme/tokens';
 
@@ -58,6 +59,7 @@ export default function Workout() {
   const finish = () => {
     const id = session.id;
     dispatch({ type: 'completeSession', sessionId: id, now: new Date().toISOString() });
+    haptics.success();
     setConfirm(null);
     router.replace({ pathname: '/session/[id]', params: { id, fresh: '1' } });
   };
@@ -117,7 +119,7 @@ export default function Workout() {
 
       {restLeft > 0 ? (
         <View style={styles.rest} accessibilityLiveRegion="polite">
-          <Ionicons name="hourglass-outline" size={20} color={colors.tint.blue.fg} />
+          <Icon name="hourglass-outline" size={20} color={colors.tint.blue.fg} />
           <AppText variant="bodyStrong" style={[styles.flex, { color: colors.tint.blue.fg }]}>
             Rest · {formatDuration(restLeft * 1000)}
           </AppText>
@@ -136,14 +138,14 @@ export default function Workout() {
           aria-expanded={warmUpOpen}
           accessibilityLabel={`Warm-up, ${WARM_UP.minutes} minutes, ${warmUpDone.length} of ${WARM_UP.moves.length} moves done`}
           style={styles.warmHead}>
-          <Ionicons name="walk" size={22} color={colors.tint.mint.fg} />
+          <Icon name="walk" size={22} color={colors.tint.mint.fg} />
           <AppText variant="h3" style={styles.flex}>
             Warm-up · {WARM_UP.minutes} min
           </AppText>
           <AppText variant="caption" style={{ color: colors.tint.mint.fg }}>
             {warmUpDone.length}/{WARM_UP.moves.length}
           </AppText>
-          <Ionicons name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
+          <Icon name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
         </Pressable>
         {warmUpOpen ? WARM_UP.moves.map((move) => {
           const done = warmUpDone.includes(move);
@@ -155,7 +157,7 @@ export default function Workout() {
               accessibilityLabel={move}
               onPress={() => setWarmUpDone(done ? warmUpDone.filter((m) => m !== move) : [...warmUpDone, move])}
               style={styles.warmRow}>
-              <Ionicons name={done ? 'checkmark-circle' : 'ellipse-outline'} size={24} color={colors.tint.mint.fg} />
+              <Icon name={done ? 'checkmark-circle' : 'ellipse-outline'} size={24} color={colors.tint.mint.fg} />
               <AppText variant="caption" style={styles.flex}>
                 {move}
               </AppText>
@@ -223,6 +225,27 @@ function ExerciseCard({
   const options = substitutesFor(log.exerciseId, equipment);
   const base = { sessionId: session.id, exerciseIndex: index } as const;
   const done = log.sets.filter((set) => set.done).length;
+  const swapTo = (exerciseId: string) => dispatch({ type: 'substituteExercise', ...base, exerciseId });
+  // iOS gets the system action sheet; elsewhere the options open inline under the card.
+  const openSwap = () => {
+    if (Platform.OS !== 'ios') {
+      setSwapOpen(!swapOpen);
+      return;
+    }
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: `Swap ${exercise.name}`,
+        message: 'Same movement, fits your equipment',
+        options: [...options.map((option) => option.name), 'Cancel'],
+        cancelButtonIndex: options.length,
+      },
+      (choice) => {
+        if (choice < options.length) {
+          swapTo(options[choice].id);
+        }
+      },
+    );
+  };
 
   return (
     <Card style={[styles.section, log.skipped && styles.skipped]} testID={`log-${exercise.id}`}>
@@ -290,11 +313,12 @@ function ExerciseCard({
               onPress={() => {
                 dispatch({ type: 'updateSet', ...base, setIndex, patch: { done: !set.done } });
                 if (!set.done) {
+                  haptics.tap();
                   onSetDone();
                 }
               }}
               style={[styles.doneButton, set.done && styles.doneButtonOn]}>
-              <Ionicons name="checkmark" size={24} color={set.done ? colors.inkOnDark : colors.inkSecondary} />
+              <Icon name="checkmark" size={24} color={set.done ? colors.inkOnDark : colors.inkSecondary} />
             </Pressable>
           </View>
         ))
@@ -322,7 +346,7 @@ function ExerciseCard({
               label="Swap"
               a11y="Swap for another exercise"
               disabled={options.length === 0}
-              onPress={() => setSwapOpen(!swapOpen)}
+              onPress={openSwap}
             />
           </>
         ) : null}
@@ -345,14 +369,14 @@ function ExerciseCard({
               accessibilityRole="button"
               accessibilityLabel={`Swap to ${option.name}`}
               onPress={() => {
-                dispatch({ type: 'substituteExercise', ...base, exerciseId: option.id });
+                swapTo(option.id);
                 setSwapOpen(false);
               }}
               style={styles.swapOption}>
               <AppText variant="bodyStrong" style={styles.flex}>
                 {option.name}
               </AppText>
-              <Ionicons name="swap-horizontal" size={18} color={colors.ink} />
+              <Icon name="swap-horizontal" size={18} color={colors.ink} />
             </Pressable>
           ))}
         </View>
@@ -368,7 +392,7 @@ function SmallAction({
   onPress,
   disabled,
 }: {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: IconName;
   label: string;
   a11y: string;
   onPress: () => void;
@@ -382,7 +406,7 @@ function SmallAction({
       accessibilityLabel={a11y}
       aria-disabled={Boolean(disabled)}
       style={({ pressed }) => [styles.small, disabled && styles.smallDisabled, pressed && styles.pressed]}>
-      <Ionicons name={icon} size={16} color={colors.ink} />
+      <Icon name={icon} size={16} color={colors.ink} />
       <AppText variant="caption">{label}</AppText>
     </Pressable>
   );

@@ -1,13 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card, Chevron } from '@/components/Card';
+import { Icon } from '@/components/Icon';
+import { Hero } from '@/components/Hero';
 import { Illustration } from '@/components/Illustration';
 import { ProgressBar } from '@/components/Progress';
-import { Screen, TopBar } from '@/components/Screen';
+import { Screen, TopBar, useLayout } from '@/components/Screen';
 import { WEEKDAY_LONG, WEEKDAY_SHORT, weekdayOf } from '@/domain/dates';
 import { nextTrainingDay } from '@/domain/plan';
 import { completedSessions, todayStatus, weekSummary, type TodayStatus } from '@/domain/progress';
@@ -42,6 +43,7 @@ const QUICK_LINKS = [
 
 export default function Home() {
   const { data } = useStore();
+  const { compact, narrow, content } = useLayout();
   const now = useNow(60_000);
   const startWorkout = useStartWorkout();
   const prefs = data.preferences;
@@ -83,30 +85,32 @@ export default function Home() {
     <Screen withTabBar testID="home">
       <TopBar showProfile />
 
-      <View style={styles.hero}>
-        <View style={styles.heroText}>
+      <Hero
+        art="blob-idle-towel"
+        artHeight={320}
+        gap={space.md}
+        before={
           <AppText variant="lead" tone="secondary">
             {greeting(now)}
             {'\n'}You&apos;ve got this.
           </AppText>
-          <AppText variant="h1" style={styles.headline}>
-            {copy.headline}
-          </AppText>
+        }
+        headline={copy.headline}
+        after={
           <AppText variant="lead" tone="secondary">
             Small steps.{'\n'}Real progress.{'\n'}Same you.
           </AppText>
-        </View>
-        <View style={styles.heroArt} pointerEvents="none">
-          <Illustration name="blob-idle-towel" height={320} />
-        </View>
-      </View>
-      <Button
-        testID="home-cta"
-        label={copy.cta}
-        arrow
-        onPress={onHeroPress}
-        style={styles.cta}
-        accessibilityHint={status.kind === 'train' ? `Starts ${status.workout.name}` : undefined}
+        }
+        footer={
+          <Button
+            testID="home-cta"
+            label={copy.cta}
+            arrow
+            onPress={onHeroPress}
+            style={styles.cta}
+            accessibilityHint={status.kind === 'train' ? `Starts ${status.workout.name}` : undefined}
+          />
+        }
       />
 
       <Card
@@ -118,9 +122,11 @@ export default function Home() {
         }
         accessibilityHint="Opens your progress">
         <View style={styles.journeyTop}>
-          <View style={styles.flame}>
-            <Ionicons name="flame" size={26} color={colors.accent} />
-          </View>
+          {narrow ? null : (
+            <View style={styles.flame}>
+              <Icon name="flame" size={26} color={colors.accent} />
+            </View>
+          )}
           <View style={styles.flex}>
             <Eyebrow>Your journey</Eyebrow>
             <AppText variant="h2">Week {week.weekNumber}</AppText>
@@ -159,14 +165,14 @@ export default function Home() {
         )}
       </Card>
 
-      <View style={styles.links}>
+      <View style={[styles.links, compact && styles.linksGrid]}>
         {QUICK_LINKS.map((link) => (
           <Card
             key={link.title}
-            style={styles.link}
+            style={[styles.link, compact ? { width: (content - space.xs) / 2 - 1 } : styles.flex]}
             onPress={() => router.push(link.href)}
             accessibilityLabel={`${link.title}. ${link.sub}`}>
-            <Ionicons name={link.icon} size={28} color={link.tint} />
+            <Icon name={link.icon} size={28} color={link.tint} />
             <AppText variant="bodyStrong" center style={styles.linkTitle}>
               {link.title}
             </AppText>
@@ -195,11 +201,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  hero: { flexDirection: 'row', minHeight: 300 },
-  heroText: { flex: 1.15, gap: space.md, paddingTop: space.md, zIndex: 1 },
-  headline: { marginTop: space.xxs },
-  heroArt: { flex: 1, alignItems: 'center', marginRight: -space.xl, marginLeft: -space.xxl },
-  cta: { alignSelf: 'flex-start', marginTop: -space.xxxl, paddingHorizontal: space.xxl },
+  cta: { paddingHorizontal: space.xxl },
   journeyTop: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
   flame: {
     width: 52,
@@ -211,7 +213,8 @@ const styles = StyleSheet.create({
   },
   journeyCount: { alignItems: 'center' },
   links: { flexDirection: 'row', gap: space.xs },
-  link: { flex: 1, alignItems: 'center', paddingHorizontal: space.xxs, paddingVertical: space.md, gap: 2 },
+  linksGrid: { flexWrap: 'wrap' },
+  link: { alignItems: 'center', paddingHorizontal: space.xxs, paddingVertical: space.md, gap: 2 },
   linkTitle: { marginTop: space.xs, fontSize: 14 },
   focus: { flexDirection: 'row', alignItems: 'flex-end', overflow: 'hidden', paddingBottom: 0, borderRadius: radius.lg },
   focusText: { flex: 1, gap: space.xxs, paddingBottom: space.md },

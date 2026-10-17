@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,6 +6,7 @@ import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card, Tag } from '@/components/Card';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { Icon } from '@/components/Icon';
 import { Illustration } from '@/components/Illustration';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
 import { formatDuration, formatShortDate, WEEKDAY_LONG, weekdayOf } from '@/domain/dates';
@@ -100,7 +100,7 @@ export default function SessionSummary() {
       {bests.length > 0 ? (
         <Card tone="butter" style={styles.section}>
           <View style={styles.row}>
-            <Ionicons name="trophy-outline" size={22} color={colors.tint.butter.fg} />
+            <Icon name="trophy-outline" size={22} color={colors.tint.butter.fg} />
             <AppText variant="h3">New personal bests</AppText>
           </View>
           {bests.map((best) => {

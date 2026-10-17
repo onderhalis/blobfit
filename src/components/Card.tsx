@@ -1,10 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, radius, shadow, space, type TintName } from '@/theme/tokens';
 
 import { AppText } from './AppText';
+import { Icon, type IconName } from './Icon';
 
 interface CardProps {
   children: ReactNode;
@@ -51,7 +51,7 @@ export function Card({ children, style, tone, onPress, accessibilityLabel, acces
 export function Chevron({ tone = 'muted' }: { tone?: 'muted' | 'surface' }) {
   return (
     <View style={[styles.chevron, { backgroundColor: tone === 'surface' ? colors.surface : colors.surfaceMuted }]}>
-      <Ionicons name="chevron-forward" size={18} color={colors.ink} />
+      <Icon name="chevron-forward" size={18} color={colors.ink} />
     </View>
   );
 }
@@ -63,12 +63,12 @@ export function Tag({
 }: {
   label: string;
   tint?: TintName;
-  icon?: keyof typeof Ionicons.glyphMap;
+  icon?: IconName;
 }) {
   const { bg, fg } = colors.tint[tint];
   return (
     <View style={[styles.tag, { backgroundColor: bg }]}>
-      {icon ? <Ionicons name={icon} size={14} color={fg} /> : null}
+      {icon ? <Icon name={icon} size={14} color={fg} /> : null}
       <AppText variant="caption" style={{ color: fg }}>
         {label}
       </AppText>
@@ -83,7 +83,7 @@ export function ReviewBadge({ compact }: { compact?: boolean }) {
       style={styles.review}
       accessible
       accessibilityLabel="Content review pending. This exercise guidance has not yet been reviewed by a qualified coach.">
-      <Ionicons name="information-circle-outline" size={16} color={colors.tint.butter.fg} />
+      <Icon name="information-circle-outline" size={16} color={colors.tint.butter.fg} />
       <AppText variant="caption" style={{ color: colors.tint.butter.fg }}>
         {compact ? 'Review pending' : 'Content review pending'}
       </AppText>

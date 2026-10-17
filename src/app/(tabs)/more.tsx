@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -6,6 +5,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from '@/components/AppText';
 import { Card, Chevron } from '@/components/Card';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
+import { Icon, type IconName } from '@/components/Icon';
 import { Screen, TopBar } from '@/components/Screen';
 import type { Units } from '@/domain/types';
 import { useStore } from '@/state/AppStore';
@@ -18,7 +18,7 @@ function Row({
   href,
   testID,
 }: {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: IconName;
   title: string;
   subtitle: string;
   href: Href;
@@ -27,7 +27,7 @@ function Row({
   return (
     <Card style={styles.row} onPress={() => router.push(href)} accessibilityLabel={`${title}. ${subtitle}`} testID={testID}>
       <View style={styles.icon}>
-        <Ionicons name={icon} size={22} color={colors.ink} />
+        <Icon name={icon} size={22} color={colors.ink} />
       </View>
       <View style={styles.flex}>
         <AppText variant="bodyStrong">{title}</AppText>
@@ -80,7 +80,7 @@ export default function More() {
 
       <Card style={styles.row} onPress={() => setConfirm(true)} accessibilityLabel="Erase all data on this device" testID="erase-all">
         <View style={styles.icon}>
-          <Ionicons name="trash-outline" size={22} color={colors.dangerInk} />
+          <Icon name="trash-outline" size={22} color={colors.dangerInk} />
         </View>
         <View style={styles.flex}>
           <AppText variant="bodyStrong" tone="danger">
