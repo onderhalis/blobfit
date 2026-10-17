@@ -44,3 +44,6 @@ You are the lead implementation engineer for an English-first fitness mobile app
 
 ## Definition of done for initial implementation
 All gates in `docs/QUALITY_GATES.md` pass. If a platform/runtime cannot be exercised in the environment, record exactly what was checked and what remains unverified. Do not claim App Store readiness or evidence of fitness efficacy.
+
+## Cross-agent collaboration (mandatory)
+Read `docs/AGENT_COLLABORATION.md` and `docs/DECISIONS.md`. Use issue [#1](https://github.com/onderhalis/blobfit/issues/1) as the shared design/engineering inbox. If assets are missing, post a structured blocker in the inbox and continue nonvisual implementation with placeholders. When requesting ChatGPT input, include exact expected files and acceptance criteria. No claim of live inter-model messaging: all exchanges occur through GitHub and are read in subsequent agent sessions.
