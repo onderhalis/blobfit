@@ -23,6 +23,8 @@ interface AppStore {
   dispatch: (action: Action) => void;
   /** True when the most recent write to device storage failed. */
   saveFailed: boolean;
+  /** Writes the current data to device storage again. */
+  retrySave: () => void;
   retryLoad: () => void;
   /** Deletes all on-device data. Only offered after an explicit confirmation. */
   eraseAll: () => Promise<void>;
@@ -35,6 +37,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
   const [load, setLoad] = useState<LoadState>({ status: 'loading' });
   const [saveFailed, setSaveFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const [saveAttempt, setSaveAttempt] = useState(0);
   const hydrated = useRef(false);
 
   useEffect(() => {
@@ -69,7 +72,9 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, serialize(data))
       .then(() => setSaveFailed(false))
       .catch(() => setSaveFailed(true));
-  }, [data]);
+  }, [data, saveAttempt]);
+
+  const retrySave = useCallback(() => setSaveAttempt((n) => n + 1), []);
 
   const retryLoad = useCallback(() => {
     setLoad({ status: 'loading' });
@@ -84,8 +89,8 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ load, data, dispatch, saveFailed, retryLoad, eraseAll }),
-    [load, data, saveFailed, retryLoad, eraseAll],
+    () => ({ load, data, dispatch, saveFailed, retrySave, retryLoad, eraseAll }),
+    [load, data, saveFailed, retrySave, retryLoad, eraseAll],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

@@ -139,7 +139,8 @@ export default function SessionSummary() {
             ) : null}
             {log.sets.length > 0 ? (
               <AppText tone="secondary">
-                {plural(log.sets.length, 'set')}:{' '}
+                {plural(log.sets.length, 'set')}
+                {exercise.perSide ? ' (each side)' : ''}:{' '}
                 {log.sets
                   .map((set) =>
                     set.loadKg ? `${setValueLabel(exercise.id, set.value)} × ${formatLoad(set.loadKg, units)}` : setValueLabel(exercise.id, set.value),

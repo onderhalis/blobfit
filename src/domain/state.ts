@@ -1,3 +1,4 @@
+import { startOfDay } from './dates';
 import { normalizeTrainingDays } from './plan';
 import {
   addSet,
@@ -9,7 +10,7 @@ import {
   substituteExercise,
   updateSet,
 } from './session';
-import type { AppData, Preferences, SetLog, Units, WorkoutSession } from './types';
+import type { AppData, Preferences, ScheduleEntry, SetLog, Units, Weekday, WorkoutSession } from './types';
 
 export const INITIAL_DATA: AppData = {
   preferences: null,
@@ -19,7 +20,7 @@ export const INITIAL_DATA: AppData = {
 
 export type Action =
   | { type: 'hydrate'; data: AppData }
-  | { type: 'savePreferences'; preferences: Preferences }
+  | { type: 'savePreferences'; preferences: Preferences; now: string }
   | { type: 'startSession'; session: WorkoutSession }
   | { type: 'updateSet'; sessionId: string; exerciseIndex: number; setIndex: number; patch: Partial<SetLog> }
   | { type: 'addSet'; sessionId: string; exerciseIndex: number }
@@ -51,6 +52,28 @@ function mapSession(
   return changed ? { ...data, sessions } : data;
 }
 
+/**
+ * A schedule change applies from the start of the day it is made; earlier weeks keep
+ * the schedule they were planned with. Several edits on one day collapse into one entry.
+ */
+function nextScheduleHistory(previous: Preferences | null, trainingDays: Weekday[], now: string): ScheduleEntry[] {
+  const from = startOfDay(new Date(now)).toISOString();
+  if (!previous) {
+    return [{ from, trainingDays }];
+  }
+  const history = previous.scheduleHistory?.length
+    ? previous.scheduleHistory
+    : [{ from: startOfDay(new Date(previous.planStartedAt)).toISOString(), trainingDays: previous.trainingDays }];
+  const last = history[history.length - 1];
+  if (last.trainingDays.join() === trainingDays.join()) {
+    return history;
+  }
+  if (last.from === from) {
+    return [...history.slice(0, -1), { from, trainingDays }];
+  }
+  return [...history, { from, trainingDays }];
+}
+
 function isOpen(session: WorkoutSession): boolean {
   return session.status === 'active' || session.status === 'paused';
 }
@@ -59,16 +82,20 @@ export function reducer(data: AppData, action: Action): AppData {
   switch (action.type) {
     case 'hydrate':
       return action.data;
-    case 'savePreferences':
+    case 'savePreferences': {
+      const previous = data.preferences;
+      const trainingDays = normalizeTrainingDays(action.preferences.trainingDays);
       return {
         ...data,
         preferences: {
           ...action.preferences,
-          trainingDays: normalizeTrainingDays(action.preferences.trainingDays),
+          trainingDays,
+          scheduleHistory: nextScheduleHistory(previous, trainingDays, action.now),
           // Editing preferences later must not reset when the plan started.
-          planStartedAt: data.preferences?.planStartedAt ?? action.preferences.planStartedAt,
+          planStartedAt: previous?.planStartedAt ?? action.preferences.planStartedAt,
         },
       };
+    }
     case 'startSession':
       // Only one open session at a time.
       if (data.sessions.some(isOpen)) {

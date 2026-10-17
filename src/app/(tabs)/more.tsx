@@ -66,7 +66,7 @@ export default function More() {
             <Pressable
               key={option}
               accessibilityRole="radio"
-              accessibilityState={{ checked: units === option }}
+              aria-checked={units === option}
               accessibilityLabel={option === 'kg' ? 'Kilograms' : 'Pounds'}
               onPress={() => dispatch({ type: 'setUnits', units: option })}
               style={[styles.segmentItem, units === option && styles.segmentOn]}>

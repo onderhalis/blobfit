@@ -39,7 +39,7 @@ export function SelectCard({
       testID={testID}
       onPress={onPress}
       accessibilityRole="radio"
-      accessibilityState={{ checked: selected }}
+      aria-checked={selected}
       accessibilityLabel={`${title}. ${subtitle}`}
       style={({ pressed }) => [
         styles.selectCard,
@@ -85,7 +85,7 @@ export function OptionRow({
       testID={testID}
       onPress={onPress}
       accessibilityRole={multi ? 'checkbox' : 'radio'}
-      accessibilityState={{ checked: selected }}
+      aria-checked={selected}
       accessibilityLabel={subtitle ? `${title}. ${subtitle}` : title}
       style={({ pressed }) => [styles.row, selected && styles.selected, pressed && styles.pressed]}>
       {icon ? (
@@ -125,7 +125,8 @@ export function DayToggle({
       disabled={disabled}
       accessibilityRole="checkbox"
       accessibilityLabel={longLabel}
-      accessibilityState={{ checked: selected, disabled: Boolean(disabled) }}
+      aria-checked={selected}
+      aria-disabled={Boolean(disabled)}
       style={({ pressed }) => [
         styles.day,
         selected && styles.dayOn,

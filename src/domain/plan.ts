@@ -153,6 +153,27 @@ export function isTrainingDay(prefs: Pick<Preferences, 'trainingDays'>, date: Da
   return prefs.trainingDays.includes(weekdayOf(date));
 }
 
+/** The schedule that was in effect on `date` (falls back to the current one for older data). */
+export function trainingDaysOn(prefs: Pick<Preferences, 'trainingDays' | 'scheduleHistory'>, date: Date): Weekday[] {
+  const history = prefs.scheduleHistory;
+  if (!history || history.length === 0) {
+    return prefs.trainingDays;
+  }
+  let days = history[0].trainingDays;
+  for (const entry of history) {
+    if (new Date(entry.from) > date) {
+      break;
+    }
+    days = entry.trainingDays;
+  }
+  return days;
+}
+
+/** Whether `date` was a planned training day under the schedule in effect at the time. */
+export function wasScheduledOn(prefs: Pick<Preferences, 'trainingDays' | 'scheduleHistory'>, date: Date): boolean {
+  return trainingDaysOn(prefs, date).includes(weekdayOf(date));
+}
+
 /** The next training day strictly after `date` (or `date` itself when `inclusive`). */
 export function nextTrainingDay(
   prefs: Pick<Preferences, 'trainingDays'>,

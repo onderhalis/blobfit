@@ -10,10 +10,22 @@ export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type Units = 'kg' | 'lb';
 
+export interface ScheduleEntry {
+  /** ISO timestamp of the local start of the day this schedule applies from. */
+  from: string;
+  trainingDays: Weekday[];
+}
+
 export interface Preferences {
   goal: GoalId;
   experience: ExperienceLevel;
+  /** The current schedule. */
   trainingDays: Weekday[];
+  /**
+   * Every schedule the user has had, oldest first, so past weeks keep the targets
+   * they were planned with. Missing in data saved before this field existed.
+   */
+  scheduleHistory?: ScheduleEntry[];
   equipment: EquipmentId[];
   /** ISO timestamp the general fitness disclaimer was accepted. */
   disclaimerAcceptedAt: string;

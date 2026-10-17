@@ -58,7 +58,8 @@ export function Button({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityHint={accessibilityHint}
-      accessibilityState={{ disabled: Boolean(inactive), busy: Boolean(loading) }}
+      aria-disabled={Boolean(inactive)}
+      aria-busy={Boolean(loading)}
       style={({ pressed }) => [
         styles.base,
         size === 'lg' ? styles.lg : styles.md,
@@ -104,7 +105,7 @@ export function IconButton({ icon, label, onPress, size = TOUCH, tone = 'muted',
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ disabled: Boolean(disabled) }}
+      aria-disabled={Boolean(disabled)}
       hitSlop={Math.max(0, (TOUCH - size) / 2)}
       style={({ pressed }) => [
         styles.icon,

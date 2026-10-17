@@ -12,7 +12,7 @@ function run(data: AppData, ...actions: Parameters<typeof reducer>[1][]): AppDat
 describe('app reducer', () => {
   it('completes onboarding → workout → progress end to end', () => {
     const prefs = makePrefs({ equipment: [], experience: 'new' });
-    let data = run(INITIAL_DATA, { type: 'savePreferences', preferences: prefs });
+    let data = run(INITIAL_DATA, { type: 'savePreferences', preferences: prefs, now: prefs.planStartedAt });
     expect(data.preferences?.trainingDays).toEqual([0, 2, 4]);
 
     const startAt = at(2026, 10, 5, 18);
@@ -53,11 +53,46 @@ describe('app reducer', () => {
     const edited = makePrefs({ trainingDays: [4, 1], planStartedAt: at(2026, 11, 1).toISOString() });
     const data = run(
       INITIAL_DATA,
-      { type: 'savePreferences', preferences: first },
-      { type: 'savePreferences', preferences: edited },
+      { type: 'savePreferences', preferences: first, now: first.planStartedAt },
+      { type: 'savePreferences', preferences: edited, now: at(2026, 10, 17, 12).toISOString() },
     );
     expect(data.preferences?.planStartedAt).toBe(first.planStartedAt);
     expect(data.preferences?.trainingDays).toEqual([1, 4]);
+  });
+
+  it('records schedule changes from the day they are made', () => {
+    const first = makePrefs({ trainingDays: [0, 3] });
+    let data = run(INITIAL_DATA, { type: 'savePreferences', preferences: first, now: first.planStartedAt });
+    expect(data.preferences?.scheduleHistory).toEqual([{ from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] }]);
+
+    // Same days again: no new entry.
+    data = run(data, { type: 'savePreferences', preferences: first, now: at(2026, 10, 10).toISOString() });
+    expect(data.preferences?.scheduleHistory).toHaveLength(1);
+
+    // Two edits on Saturday collapse into one entry effective from Saturday.
+    data = run(
+      data,
+      { type: 'savePreferences', preferences: { ...first, trainingDays: [0, 2] }, now: at(2026, 10, 17, 9).toISOString() },
+      { type: 'savePreferences', preferences: { ...first, trainingDays: [4, 0, 2] }, now: at(2026, 10, 17, 20).toISOString() },
+    );
+    expect(data.preferences?.trainingDays).toEqual([0, 2, 4]);
+    expect(data.preferences?.scheduleHistory).toEqual([
+      { from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] },
+      { from: at(2026, 10, 17, 0).toISOString(), trainingDays: [0, 2, 4] },
+    ]);
+  });
+
+  it('starts a history for preferences saved before schedule history existed', () => {
+    const legacy = { ...makePrefs({ trainingDays: [0, 3] }) };
+    delete legacy.scheduleHistory;
+    const data = run(
+      { ...INITIAL_DATA, preferences: legacy },
+      { type: 'savePreferences', preferences: { ...legacy, trainingDays: [1, 4] }, now: at(2026, 10, 14).toISOString() },
+    );
+    expect(data.preferences?.scheduleHistory).toEqual([
+      { from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] },
+      { from: at(2026, 10, 14, 0).toISOString(), trainingDays: [1, 4] },
+    ]);
   });
 
   it('does not edit completed sessions and discards only open ones', () => {
@@ -81,7 +116,12 @@ describe('app reducer', () => {
   });
 
   it('resets everything', () => {
-    const data = run(INITIAL_DATA, { type: 'savePreferences', preferences: makePrefs() }, { type: 'setUnits', units: 'lb' });
+    const prefs = makePrefs();
+    const data = run(
+      INITIAL_DATA,
+      { type: 'savePreferences', preferences: prefs, now: prefs.planStartedAt },
+      { type: 'setUnits', units: 'lb' },
+    );
     expect(data.settings.units).toBe('lb');
     expect(run(data, { type: 'resetAll' })).toEqual(INITIAL_DATA);
   });

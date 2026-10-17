@@ -1,6 +1,6 @@
 import { addDays, dayKey, startOfDay, startOfWeek } from './dates';
 import { getExercise } from './exercises';
-import { buildWorkout, isTrainingDay, nextTrainingDay, nextWorkoutId } from './plan';
+import { buildWorkout, isTrainingDay, nextTrainingDay, nextWorkoutId, wasScheduledOn } from './plan';
 import { findOpenSession, sessionTotals } from './session';
 import type { Measure, Preferences, WorkoutPlan, WorkoutSession } from './types';
 
@@ -29,7 +29,7 @@ export function weekTarget(prefs: Preferences, weekStart: Date): number {
   let target = 0;
   for (let i = 0; i < 7; i += 1) {
     const day = addDays(weekStart, i);
-    if (day >= start && isTrainingDay(prefs, day)) {
+    if (day >= start && wasScheduledOn(prefs, day)) {
       target += 1;
     }
   }
@@ -71,7 +71,7 @@ export function weekSummary(prefs: Preferences, sessions: readonly WorkoutSessio
   const days: WeekDay[] = Array.from({ length: 7 }, (_, i) => {
     const date = addDays(weekStart, i);
     const key = dayKey(date);
-    const training = isTrainingDay(prefs, date) && date >= start;
+    const training = wasScheduledOn(prefs, date) && date >= start;
     let status: DayStatus;
     if (doneKeys.has(key)) {
       status = training ? 'done' : 'extra';
@@ -170,7 +170,7 @@ export function adherence(prefs: Preferences, sessions: readonly WorkoutSession[
     let weekScheduled = 0;
     for (let i = 0; i < 7; i += 1) {
       const day = addDays(weekStart, i);
-      if (day < start || !isTrainingDay(prefs, day)) {
+      if (day < start || !wasScheduledOn(prefs, day)) {
         continue;
       }
       if (day < today || (day.getTime() === today.getTime() && trainedToday)) {

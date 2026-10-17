@@ -211,14 +211,16 @@ export function sessionTotals(session: WorkoutSession, now: Date = new Date()): 
     if (done.length > 0) {
       exercises += 1;
     }
-    const measure = getExercise(log.exerciseId).measure;
+    const exercise = getExercise(log.exerciseId);
+    // Per-side exercises log reps for one side; both sides were trained.
+    const sides = exercise.perSide ? 2 : 1;
     for (const set of done) {
       sets += 1;
-      if (measure === 'seconds') {
-        seconds += set.value;
+      if (exercise.measure === 'seconds') {
+        seconds += set.value * sides;
       } else {
-        reps += set.value;
-        volumeKg += set.value * (set.loadKg ?? 0);
+        reps += set.value * sides;
+        volumeKg += set.value * (set.loadKg ?? 0) * sides;
       }
     }
   }

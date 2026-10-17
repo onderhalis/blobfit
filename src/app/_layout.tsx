@@ -19,6 +19,7 @@ import { AppText } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Illustration } from '@/components/Illustration';
+import { SaveErrorBanner } from '@/components/SaveErrorBanner';
 import { LoadingView } from '@/components/Screen';
 import { AppStoreProvider, useStore } from '@/state/AppStore';
 import { colors, space } from '@/theme/tokens';
@@ -61,6 +62,7 @@ function Navigation() {
   }
   const onboarded = data.preferences !== null;
   return (
+    <>
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Protected guard={onboarded}>
         <Stack.Screen name="(tabs)" />
@@ -75,6 +77,8 @@ function Navigation() {
         <Stack.Screen name="onboarding" />
       </Stack.Protected>
     </Stack>
+    <SaveErrorBanner />
+    </>
   );
 }
 

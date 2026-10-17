@@ -133,6 +133,35 @@ describe('weekStreak', () => {
   });
 });
 
+describe('schedule changes', () => {
+  // Mon/Thu for two weeks, then switched to Mon/Wed/Fri from Saturday 17 Oct.
+  const changed = makePrefs({
+    trainingDays: [0, 2, 4],
+    scheduleHistory: [
+      { from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] },
+      { from: at(2026, 10, 17, 0).toISOString(), trainingDays: [0, 2, 4] },
+    ],
+  });
+  const sessions = [5, 8, 12, 15].map((day) => completedSession(at(2026, 10, day, 18)));
+
+  it('keeps past weeks on the schedule they were planned with', () => {
+    expect(weekStreak(changed, sessions, at(2026, 10, 17, 12))).toBe(2);
+    expect(adherence(changed, sessions, at(2026, 10, 17, 12))).toMatchObject({ credited: 4, scheduled: 4 });
+    expect(weeklyHistory(changed, sessions, at(2026, 10, 17, 12)).map((week) => week.target)).toEqual([2, 2]);
+  });
+
+  it('applies the new schedule from its start day', () => {
+    const week = weekSummary(changed, sessions, at(2026, 10, 21, 12));
+    expect(week.target).toBe(3);
+    expect(week.days.map((day) => day.status).slice(0, 3)).toEqual(['missed', 'rest', 'planned']);
+  });
+
+  it('would have changed history without the snapshot (regression guard)', () => {
+    const naive = { ...changed, scheduleHistory: undefined };
+    expect(weekStreak(naive, sessions, at(2026, 10, 17, 12))).toBe(0);
+  });
+});
+
 describe('personal bests and then/now', () => {
   const first = completedSession(at(2026, 10, 5, 18), { values: 6, loadKg: 6 });
   const second = completedSession(at(2026, 10, 9, 18), { values: 8, loadKg: 8 });
@@ -186,8 +215,9 @@ describe('personal bests and then/now', () => {
     const t = totals([first, second]);
     expect(t.sessions).toBe(2);
     expect(t.sets).toBe(18);
-    expect(t.reps).toBe(9 * 6 + 9 * 8);
-    expect(t.volumeKg).toBe(3 * 6 * 6 + 3 * 8 * 8);
+    // Squat + incline push-up (3 sets each) plus the per-side row counted for both sides.
+    expect(t.reps).toBe(6 * 6 + 3 * 6 * 2 + (6 * 8 + 3 * 8 * 2));
+    expect(t.volumeKg).toBe(3 * 6 * 6 * 2 + 3 * 8 * 8 * 2);
     expect(t.activeMinutes).toBe(40);
   });
 });

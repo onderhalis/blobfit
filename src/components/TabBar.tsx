@@ -31,7 +31,7 @@ export function TabBar({ state, navigateToTab, insets }: BottomTabBarProps) {
               key={route.key}
               testID={`tab-${meta.label.toLowerCase()}`}
               accessibilityRole="tab"
-              accessibilityState={{ selected: focused }}
+              aria-selected={focused}
               accessibilityLabel={meta.label}
               onPress={() => navigateToTab(route.key)}
               style={({ pressed }) => [styles.tab, pressed && styles.pressed]}>

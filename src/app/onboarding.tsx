@@ -47,6 +47,7 @@ export default function Onboarding() {
         disclaimerAcceptedAt: now,
         planStartedAt: now,
       },
+      now,
     });
   };
 

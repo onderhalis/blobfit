@@ -192,6 +192,27 @@ try {
   await byId('library').waitFor();
   await shot('09-library');
 
+  step('a failed save is surfaced and can be retried');
+  await goTo(at(14, 9), '/more');
+  await byId('more').waitFor();
+  await page.evaluate(() => {
+    window.__realSetItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = () => {
+      throw new DOMException('Quota exceeded', 'QuotaExceededError');
+    };
+  });
+  await page.getByRole('radio', { name: 'Pounds' }).click();
+  await byId('save-error').waitFor();
+  await shot('10-save-error');
+  await page.evaluate(() => {
+    Storage.prototype.setItem = window.__realSetItem;
+  });
+  await page.getByRole('button', { name: 'Try saving again' }).click();
+  await byId('save-error').waitFor({ state: 'detached' });
+  await page.reload();
+  await byId('more').waitFor();
+  assert.equal(await page.getByRole('radio', { name: 'Pounds' }).getAttribute('aria-checked'), 'true', 'units saved after retry');
+
   step('a plan started on a Saturday explains when it begins (fresh device)');
   const weekend = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const wp = await weekend.newPage();

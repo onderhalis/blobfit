@@ -127,7 +127,8 @@ describe('completing', () => {
     expect(done.exercises[1].sets).toEqual([]);
     expect(done.exercises[2].sets).toHaveLength(1);
     const t = sessionTotals(done);
-    expect(t).toMatchObject({ sets: 3, reps: 29, volumeKg: 60, exercises: 2 });
+    // Row is logged per side: 10 reps each side at 6 kg = 20 reps, 120 kg.
+    expect(t).toMatchObject({ sets: 3, reps: 9 + 10 + 20, volumeKg: 120, exercises: 2 });
     expect(t.durationMs).toBe(18 * 60_000);
   });
 
@@ -143,6 +144,7 @@ describe('completing', () => {
     const b = completedSession(at(2026, 10, 14), { workoutId: 'B', prefs: makePrefs({ experience: 'new' }) });
     const t = sessionTotals(b);
     expect(t.seconds).toBe(40);
-    expect(t.reps).toBe(2 * 10 + 2 * 10);
+    // Hinge 2 × 10 plus the per-side row 2 × 10 on each side.
+    expect(t.reps).toBe(2 * 10 + 2 * 10 * 2);
   });
 });

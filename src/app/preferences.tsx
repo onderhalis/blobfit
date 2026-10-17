@@ -29,7 +29,7 @@ export default function PreferencesScreen() {
           label="Save changes"
           disabled={!valid}
           onPress={() => {
-            dispatch({ type: 'savePreferences', preferences: draft });
+            dispatch({ type: 'savePreferences', preferences: draft, now: new Date().toISOString() });
             router.back();
           }}
           style={styles.flex}
@@ -37,7 +37,8 @@ export default function PreferencesScreen() {
       }>
       <TopBar back title="Your plan settings" />
       <AppText tone="secondary">
-        Changes apply to your next workout. Your logged history stays exactly as it is.
+        Changes apply from today. Past weeks keep the schedule they were planned with, so your logged history and
+        streak stay exactly as they are.
       </AppText>
 
       <View style={styles.section}>

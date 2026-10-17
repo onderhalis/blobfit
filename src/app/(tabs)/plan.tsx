@@ -113,7 +113,7 @@ export default function Plan() {
             <Pressable
               key={id}
               accessibilityRole="tab"
-              accessibilityState={{ selected }}
+              aria-selected={selected}
               accessibilityLabel={`Full Body ${id}${id === nextId ? ', next up' : ''}`}
               onPress={() => setPreview(id)}
               style={[styles.switch, selected && styles.switchOn]}>

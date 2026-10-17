@@ -133,7 +133,7 @@ export default function Workout() {
         <Pressable
           onPress={() => setWarmUpOpen(!warmUpOpen)}
           accessibilityRole="button"
-          accessibilityState={{ expanded: warmUpOpen }}
+          aria-expanded={warmUpOpen}
           accessibilityLabel={`Warm-up, ${WARM_UP.minutes} minutes, ${warmUpDone.length} of ${WARM_UP.moves.length} moves done`}
           style={styles.warmHead}>
           <Ionicons name="walk" size={22} color={colors.tint.mint.fg} />
@@ -151,7 +151,7 @@ export default function Workout() {
             <Pressable
               key={move}
               accessibilityRole="checkbox"
-              accessibilityState={{ checked: done }}
+              aria-checked={done}
               accessibilityLabel={move}
               onPress={() => setWarmUpDone(done ? warmUpDone.filter((m) => m !== move) : [...warmUpDone, move])}
               style={styles.warmRow}>
@@ -285,7 +285,7 @@ function ExerciseCard({
             <Pressable
               testID={`set-${exercise.id}-${setIndex}-done`}
               accessibilityRole="checkbox"
-              accessibilityState={{ checked: set.done }}
+              aria-checked={set.done}
               accessibilityLabel={`Mark set ${setIndex + 1} done`}
               onPress={() => {
                 dispatch({ type: 'updateSet', ...base, setIndex, patch: { done: !set.done } });
@@ -380,7 +380,7 @@ function SmallAction({
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={a11y}
-      accessibilityState={{ disabled: Boolean(disabled) }}
+      aria-disabled={Boolean(disabled)}
       style={({ pressed }) => [styles.small, disabled && styles.smallDisabled, pressed && styles.pressed]}>
       <Ionicons name={icon} size={16} color={colors.ink} />
       <AppText variant="caption">{label}</AppText>
