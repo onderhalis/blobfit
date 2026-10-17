@@ -24,7 +24,140 @@
     ],
     "easier": "Box squat",
     "harder": "Goblet squat",
-    "reviewStatus": "needs-qualified-review"
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "squat",
+    "bodyArea": "Lower Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "Practice sitting down and standing up with control.",
+    "startingPosition": "Stand tall with feet about shoulder-width apart, toes turned out slightly, arms relaxed or reaching forward for balance.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Sit your hips back and down as your knees bend, taking two to three seconds."
+      },
+      {
+        "label": "Rising",
+        "text": "Push through your whole foot to stand back up, breathing out as you rise."
+      }
+    ],
+    "cues": [
+      "Spread your weight across the whole foot.",
+      "Let your knees travel in the direction of your toes.",
+      "Only go as deep as you can control without pain."
+    ],
+    "easierId": "box-squat",
+    "harderId": "goblet-squat",
+    "illustration": "squat"
+  },
+  {
+    "id": "box-squat",
+    "name": "Box Squat",
+    "primaryMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "core"
+    ],
+    "equipment": "sturdy chair or box",
+    "steps": [
+      "Place a sturdy chair or box behind you and stand just in front of it.",
+      "Sit back slowly until you lightly touch the seat.",
+      "Keep your chest tall and both feet flat.",
+      "Stand up by pressing through your feet without rocking forward."
+    ],
+    "mistakes": [
+      "dropping onto the seat",
+      "rocking forward to stand",
+      "knees collapsing inward"
+    ],
+    "easier": "Use a higher seat",
+    "harder": "Bodyweight squat",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "squat",
+    "bodyArea": "Lower Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "A squat with a seat behind you to guide depth and build confidence.",
+    "startingPosition": "Stand a short step in front of a sturdy chair or box, feet about shoulder-width apart.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Reach your hips back toward the seat and lower slowly until you just touch it."
+      },
+      {
+        "label": "Rising",
+        "text": "Press through your feet to stand tall without bouncing off the seat."
+      }
+    ],
+    "cues": [
+      "Touch the seat lightly, do not sit down heavily.",
+      "Keep your feet flat the whole time.",
+      "Pick a seat height that feels controlled."
+    ],
+    "harderId": "squat",
+    "illustration": "squat"
+  },
+  {
+    "id": "goblet-squat",
+    "name": "Goblet Squat",
+    "primaryMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "core",
+      "upper back"
+    ],
+    "equipment": "one dumbbell",
+    "steps": [
+      "Hold one dumbbell vertically at chest height with both hands.",
+      "Stand with feet about shoulder-width apart.",
+      "Sit down between your hips while keeping the weight close to your chest.",
+      "Stand up by pushing through your whole foot."
+    ],
+    "mistakes": [
+      "dumbbell drifting away from the chest",
+      "heels lifting",
+      "rushing the descent"
+    ],
+    "easier": "Bodyweight squat",
+    "harder": "Increase load gradually",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "squat",
+    "bodyArea": "Lower Body",
+    "requires": [
+      "dumbbells"
+    ],
+    "measure": "reps",
+    "loadable": true,
+    "perSide": false,
+    "summary": "A squat holding one dumbbell at your chest once bodyweight squats feel steady.",
+    "startingPosition": "Stand tall holding a dumbbell vertically against your chest, elbows pointing down.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Sit down slowly, keeping the dumbbell close and your chest tall."
+      },
+      {
+        "label": "Rising",
+        "text": "Drive through your feet to stand, breathing out on the way up."
+      }
+    ],
+    "cues": [
+      "Hug the dumbbell close to your body.",
+      "Keep elbows pointing down.",
+      "Choose a weight you can control for every rep."
+    ],
+    "easierId": "squat",
+    "illustration": "squat"
   },
   {
     "id": "push-up",
@@ -50,7 +183,84 @@
     ],
     "easier": "Incline push-up",
     "harder": "Tempo push-up",
-    "reviewStatus": "needs-qualified-review"
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "push",
+    "bodyArea": "Upper Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "Build upper-body pushing strength one controlled rep at a time.",
+    "startingPosition": "High plank: hands slightly wider than your shoulders, body in one line from head to heels.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Bend your elbows to lower your chest toward the floor over about two seconds."
+      },
+      {
+        "label": "Pressing",
+        "text": "Press the floor away until your arms are straight, keeping your body in one line."
+      }
+    ],
+    "cues": [
+      "Keep your elbows angled slightly back, not straight out.",
+      "Squeeze your glutes to keep hips level.",
+      "Stop the set when your form starts to change."
+    ],
+    "easierId": "incline-push-up",
+    "illustration": "push-up"
+  },
+  {
+    "id": "incline-push-up",
+    "name": "Incline Push-Up",
+    "primaryMuscles": [
+      "chest",
+      "triceps"
+    ],
+    "secondaryMuscles": [
+      "front shoulders",
+      "core"
+    ],
+    "equipment": "sturdy bench, table or counter",
+    "steps": [
+      "Place your hands slightly wider than shoulder-width on a stable raised surface.",
+      "Step your feet back so your body forms a straight line from head to heels.",
+      "Lower your chest toward the edge with control.",
+      "Press the surface away to return to the start."
+    ],
+    "mistakes": [
+      "hips sagging",
+      "elbows flaring straight out",
+      "using an unstable surface"
+    ],
+    "easier": "Use a higher surface, such as a wall",
+    "harder": "Push-up",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "push",
+    "bodyArea": "Upper Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "A push-up with hands raised, so you can practice good form with less load.",
+    "startingPosition": "Hands on a sturdy bench, table edge or counter; feet back so your body is one straight line.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Bend your elbows to bring your chest toward the edge over about two seconds."
+      },
+      {
+        "label": "Pressing",
+        "text": "Push the surface away until your arms are straight."
+      }
+    ],
+    "cues": [
+      "Higher surface = easier; lower surface = harder.",
+      "Make sure the surface cannot slide or tip.",
+      "Keep your body in one line."
+    ],
+    "harderId": "push-up",
+    "illustration": "incline-push-up"
   },
   {
     "id": "row",
@@ -73,6 +283,336 @@
     ],
     "easier": "Seated band row",
     "harder": "Increase resistance gradually",
-    "reviewStatus": "needs-qualified-review"
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "pull",
+    "bodyArea": "Upper Body",
+    "requires": [
+      "dumbbells"
+    ],
+    "measure": "reps",
+    "loadable": true,
+    "perSide": true,
+    "summary": "Train your upper back with one hand supported for stability.",
+    "startingPosition": "One hand and knee (or just one hand) on a bench or sturdy chair, dumbbell in the other hand, back long and flat.",
+    "phases": [
+      {
+        "label": "Pulling",
+        "text": "Draw your elbow back toward your hip, keeping your chest facing the floor."
+      },
+      {
+        "label": "Lowering",
+        "text": "Lower the dumbbell slowly until your arm is straight again."
+      }
+    ],
+    "cues": [
+      "Think elbow to hip, not hand to shoulder.",
+      "Keep your shoulders level.",
+      "Complete all reps on one side, then switch."
+    ],
+    "easierId": "band-row",
+    "illustration": "row"
+  },
+  {
+    "id": "band-row",
+    "name": "Seated Band Row",
+    "primaryMuscles": [
+      "back"
+    ],
+    "secondaryMuscles": [
+      "biceps",
+      "rear shoulders"
+    ],
+    "equipment": "resistance band",
+    "steps": [
+      "Sit tall with legs extended and loop the band around your feet.",
+      "Hold one end in each hand with arms straight.",
+      "Pull your elbows back toward your ribs, gently drawing your shoulder blades together.",
+      "Return slowly until your arms are straight."
+    ],
+    "mistakes": [
+      "leaning back to pull",
+      "shrugging shoulders",
+      "letting the band snap back"
+    ],
+    "easier": "Use a lighter band",
+    "harder": "Supported dumbbell row",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "pull",
+    "bodyArea": "Upper Body",
+    "requires": [
+      "band"
+    ],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "An upper-back pull you can do anywhere with a resistance band.",
+    "startingPosition": "Seated on the floor, legs straight, band looped around your feet, arms reaching forward.",
+    "phases": [
+      {
+        "label": "Pulling",
+        "text": "Draw your elbows back past your ribs while sitting tall."
+      },
+      {
+        "label": "Returning",
+        "text": "Let your arms extend slowly against the band's pull."
+      }
+    ],
+    "cues": [
+      "Sit tall the whole time.",
+      "Keep your shoulders away from your ears.",
+      "Control the band on the way back."
+    ],
+    "harderId": "row",
+    "illustration": "row"
+  },
+  {
+    "id": "prone-y-raise",
+    "name": "Prone Y Raise",
+    "primaryMuscles": [
+      "upper back"
+    ],
+    "secondaryMuscles": [
+      "rear shoulders"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Lie face down with your arms overhead in a Y shape, thumbs pointing up.",
+      "Rest your forehead on a folded towel.",
+      "Lift your arms a few centimetres off the floor by drawing your shoulder blades back and down.",
+      "Pause briefly, then lower slowly."
+    ],
+    "mistakes": [
+      "arching the lower back to lift higher",
+      "shrugging toward the ears",
+      "swinging the arms"
+    ],
+    "easier": "Use a smaller lift range",
+    "harder": "Seated band row",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "pull",
+    "bodyArea": "Upper Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "A no-equipment upper-back exercise when you have no dumbbell or band.",
+    "startingPosition": "Face down on a mat, arms overhead in a Y, forehead resting on a folded towel.",
+    "phases": [
+      {
+        "label": "Lifting",
+        "text": "Raise both arms slightly by drawing your shoulder blades back and down."
+      },
+      {
+        "label": "Lowering",
+        "text": "Lower your arms to the floor over two seconds."
+      }
+    ],
+    "cues": [
+      "Small lift, big focus on the upper back.",
+      "Keep your neck relaxed and long.",
+      "Breathe steadily."
+    ],
+    "harderId": "band-row"
+  },
+  {
+    "id": "hip-hinge",
+    "name": "Hip Hinge",
+    "primaryMuscles": [
+      "glutes",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "lower back",
+      "core"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Stand with feet hip-width apart, knees soft, hands on your hips.",
+      "Push your hips back, letting your torso tip forward as one unit.",
+      "Keep your back long; stop when you feel a stretch in the back of your thighs.",
+      "Drive your hips forward to stand tall."
+    ],
+    "mistakes": [
+      "bending mostly at the knees",
+      "rounding the back",
+      "leaning back at the top"
+    ],
+    "easier": "Glute bridge",
+    "harder": "Dumbbell Romanian deadlift",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "hinge",
+    "bodyArea": "Lower Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "Learn to bend from the hips, the basis for lifting things safely off the floor.",
+    "startingPosition": "Stand tall, feet hip-width apart, a slight bend in the knees, hands on your hips.",
+    "phases": [
+      {
+        "label": "Hinging",
+        "text": "Send your hips back slowly while your chest tips forward and your back stays long."
+      },
+      {
+        "label": "Standing",
+        "text": "Squeeze your glutes and bring your hips forward to stand tall."
+      }
+    ],
+    "cues": [
+      "Imagine closing a car door with your hips.",
+      "Keep the knee bend small and steady.",
+      "Finish tall, without leaning back."
+    ],
+    "easierId": "glute-bridge",
+    "harderId": "dumbbell-rdl"
+  },
+  {
+    "id": "dumbbell-rdl",
+    "name": "Dumbbell Romanian Deadlift",
+    "primaryMuscles": [
+      "glutes",
+      "hamstrings"
+    ],
+    "secondaryMuscles": [
+      "lower back",
+      "upper back",
+      "grip"
+    ],
+    "equipment": "two dumbbells",
+    "steps": [
+      "Hold a dumbbell in each hand in front of your thighs.",
+      "With soft knees, push your hips back and slide the weights down along your legs.",
+      "Keep the dumbbells close and your back long; stop at a comfortable stretch.",
+      "Squeeze your glutes to stand tall."
+    ],
+    "mistakes": [
+      "weights drifting away from the legs",
+      "rounding the back",
+      "going lower than you can control"
+    ],
+    "easier": "Hip hinge",
+    "harder": "Increase load gradually",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "hinge",
+    "bodyArea": "Lower Body",
+    "requires": [
+      "dumbbells"
+    ],
+    "measure": "reps",
+    "loadable": true,
+    "perSide": false,
+    "summary": "A loaded hip hinge once the bodyweight version feels natural.",
+    "startingPosition": "Stand tall holding a dumbbell in each hand against the front of your thighs.",
+    "phases": [
+      {
+        "label": "Lowering",
+        "text": "Hinge at the hips and slide the dumbbells down your legs over two to three seconds."
+      },
+      {
+        "label": "Standing",
+        "text": "Drive your hips forward to return to standing."
+      }
+    ],
+    "cues": [
+      "Dumbbells stay close to your legs.",
+      "Range ends where your back starts to round.",
+      "Choose a load you can control for every rep."
+    ],
+    "easierId": "hip-hinge"
+  },
+  {
+    "id": "glute-bridge",
+    "name": "Glute Bridge",
+    "primaryMuscles": [
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "hamstrings",
+      "core"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Lie on your back with knees bent, feet flat and hip-width apart.",
+      "Brace lightly and press through your heels to lift your hips.",
+      "Pause when your body forms a line from shoulders to knees.",
+      "Lower slowly to the floor."
+    ],
+    "mistakes": [
+      "over-arching the lower back at the top",
+      "pushing through the toes",
+      "rushing the reps"
+    ],
+    "easier": "Use a smaller range",
+    "harder": "Hip hinge",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "hinge",
+    "bodyArea": "Lower Body",
+    "requires": [],
+    "measure": "reps",
+    "loadable": false,
+    "perSide": false,
+    "summary": "A floor-based way to practice using your glutes.",
+    "startingPosition": "On your back, knees bent, feet flat and hip-width apart, arms by your sides.",
+    "phases": [
+      {
+        "label": "Lifting",
+        "text": "Press through your heels to raise your hips until shoulders, hips and knees line up."
+      },
+      {
+        "label": "Lowering",
+        "text": "Lower your hips back to the floor over two seconds."
+      }
+    ],
+    "cues": [
+      "Push through your heels.",
+      "Stop at a straight line; do not over-arch.",
+      "Pause for a breath at the top."
+    ],
+    "harderId": "hip-hinge"
+  },
+  {
+    "id": "plank",
+    "name": "Front Plank",
+    "primaryMuscles": [
+      "core"
+    ],
+    "secondaryMuscles": [
+      "shoulders",
+      "glutes"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Place your forearms on the floor with elbows under your shoulders.",
+      "Step your feet back to form a straight line from head to heels.",
+      "Brace your trunk and breathe steadily.",
+      "Hold for the target time, then lower your knees to rest."
+    ],
+    "mistakes": [
+      "hips sagging",
+      "hips piking up",
+      "holding your breath"
+    ],
+    "easier": "Plank from your knees or with forearms on a bench",
+    "harder": "Longer hold with steady breathing",
+    "reviewStatus": "needs-qualified-review",
+    "pattern": "core",
+    "bodyArea": "Core",
+    "requires": [],
+    "measure": "seconds",
+    "loadable": false,
+    "perSide": false,
+    "summary": "Practice holding your trunk steady. Quality matters more than time.",
+    "startingPosition": "Forearms on the floor, elbows under shoulders, legs extended behind you.",
+    "phases": [
+      {
+        "label": "Holding",
+        "text": "Keep a straight line from head to heels and breathe slowly; stop when your hips start to drop."
+      }
+    ],
+    "cues": [
+      "Shaking is normal; sagging is the signal to stop.",
+      "Squeeze your glutes gently.",
+      "Shorter, better holds beat long, sloppy ones."
+    ]
   }
 ]
