@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { cp, mkdtemp, readFile, rm } from 'node:fs/promises';
+import { copyFile, cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -14,6 +14,18 @@ import { main } from '../cli.mjs';
 const REPO = fileURLToPath(new URL('../../..', import.meta.url));
 const KEY = 'test-key-0001';
 const SECRET = 'test-secret';
+const CANONICAL_FRAME = 'video/inputs/ep003-squat-first-frame-canonical.png';
+
+/** Smallest byte sequence the size check reads: PNG signature + IHDR (no image data needed). */
+function pngHeader(width, height) {
+  const ihdr = Buffer.alloc(25);
+  ihdr.writeUInt32BE(13, 0);
+  ihdr.write('IHDR', 4, 'latin1');
+  ihdr.writeUInt32BE(width, 8);
+  ihdr.writeUInt32BE(height, 12);
+  ihdr.set([8, 6, 0, 0, 0], 16);
+  return Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), ihdr]);
+}
 
 function fakeWiro() {
   const state = { price: 0.35, runs: 0, uploads: 0, polls: 0, outcome: 'success', authFailures: 0, lastRunBody: null };
@@ -97,6 +109,7 @@ describe('wiro CLI flow (fake API)', () => {
     root = await mkdtemp(join(tmpdir(), 'blobfit-video-'));
     await cp(join(REPO, 'video/jobs'), join(root, 'video/jobs'), { recursive: true });
     await cp(join(REPO, 'video/inputs'), join(root, 'video/inputs'), { recursive: true });
+    await writeFile(join(root, CANONICAL_FRAME), pngHeader(1080, 1920));
     Object.assign(fake.state, { price: 0.35, runs: 0, uploads: 0, polls: 0, outcome: 'success', authFailures: 0, lastRunBody: null });
     lines = [];
     deps = {
@@ -116,6 +129,28 @@ describe('wiro CLI flow (fake API)', () => {
     assert.ok(lines.some((line) => line.includes('$0.350')));
     const saved = JSON.parse(await readFile(join(root, 'video/runs/ep003-squat-test/estimate.json'), 'utf8'));
     assert.equal(saved.estimate.priceUsd, 0.35);
+    await rm(root, { recursive: true, force: true });
+  });
+
+  it('shows the price but withholds the code while the canonical first frame is missing', async () => {
+    await rm(join(root, CANONICAL_FRAME));
+    assert.equal(await main(['estimate', 'ep003-squat-test'], deps), 2);
+    assert.equal(codeFrom(), undefined);
+    assert.ok(lines.some((line) => line.includes('$0.350')));
+    assert.ok(lines.some((line) => line.includes('NOT APPROVABLE') && line.includes('not in the repository yet')));
+    assert.equal(await main(['generate', 'ep003-squat-test', '--approve', 'deadbeef00'], deps), 2);
+    assert.equal(fake.state.runs + fake.state.uploads, 0);
+    await rm(root, { recursive: true, force: true });
+  });
+
+  it('withholds the code when the first frame is below spec', async () => {
+    await copyFile(join(root, 'video/inputs/ep003-squat-first-frame.png'), join(root, CANONICAL_FRAME)); // interim, 720x1280
+    assert.equal(await main(['estimate', 'ep003-squat-test'], deps), 2);
+    assert.ok(lines.some((line) => line.includes('720x1280')));
+    await writeFile(join(root, CANONICAL_FRAME), pngHeader(1440, 1920));
+    assert.equal(await main(['estimate', 'ep003-squat-test'], deps), 2);
+    assert.ok(lines.some((line) => line.includes('not 9:16')));
+    assert.equal(codeFrom(), undefined);
     await rm(root, { recursive: true, force: true });
   });
 

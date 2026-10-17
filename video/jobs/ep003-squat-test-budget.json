@@ -3,7 +3,13 @@
   "title": "EP003 Squat — 5 s movement test (9:16) — budget alternative",
   "episode": "EP003",
   "model": "klingai/kling-v2.5-turbo",
-  "firstFrame": "video/inputs/ep003-squat-first-frame.png",
+  "firstFrame": "video/inputs/ep003-squat-first-frame-canonical.png",
+  "firstFrameRequirements": {
+    "minWidth": 1080,
+    "minHeight": 1920,
+    "aspect": "9:16",
+    "spec": "docs/VIDEO_FIRST_FRAME_SPEC.md"
+  },
   "imageParam": "inputImageUrl",
   "params": {
     "mode": "std",
@@ -25,5 +31,5 @@
       "no text or logos"
     ]
   },
-  "firstFrameNotes": "Interim first frame: approved concept Blob (02-goals hero cut-out) on a plain warm studio backdrop. Replace with the canonical squat-cover / gym still once committed (asset request in issue #1)."
+  "firstFrameNotes": "Canonical first frame per docs/VIDEO_FIRST_FRAME_SPEC.md (CC-006). Until that PNG is committed, `estimate` shows the live price but issues no approval code, so no paid run is possible. The interim frame video/inputs/ep003-squat-first-frame.png (720x1280) is kept only for the reel preview."
 }

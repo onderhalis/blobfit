@@ -6,6 +6,7 @@ Budget-controlled image-to-video generation for Blob Fit Reels (issue #2, `CG-VI
 
 | Guard | What it does |
 |---|---|
+| First-frame gate | No approval code until the job's first frame exists and meets its `firstFrameRequirements` (CC-006: ≥1080×1920, 9:16). |
 | Live price check | `estimate` reads the model's price table from Wiro (`/Tool/Detail` → `dynamicprice`). That call is read-only and free. If the price for these exact parameters can't be determined, the run is blocked. |
 | Budget cap | Every job has `budgetCapUsd` (default **$1.00 per clip**). `WIRO_BUDGET_CAP_USD` can lower it further. A run whose verified price is above the cap is refused. |
 | Approval code | `estimate` prints a 10-character code. It is a hash of the model, parameters, first-frame bytes, attempt number and live price. `generate` only runs with that exact code. If anything changes, including Wiro's price, a new approval is needed. |
@@ -103,7 +104,13 @@ Model ids and parameters come from Wiro's official n8n node package (`@wiro-ai/n
 
 ## First frame
 
-`video/inputs/ep003-squat-first-frame.png` is **interim**. It is the approved concept Blob (goals-screen hero cut-out, unchanged) placed on a plain warm studio backdrop by `tools/video/make_first_frame.py`. The canonical squat cover / gym still is requested in issue #1; swap it in once it lands, then re-run `estimate`, because the approval code covers the image bytes.
+The paid jobs use the canonical still described in `docs/VIDEO_FIRST_FRAME_SPEC.md` (CC-006): `video/inputs/ep003-squat-first-frame-canonical.png`, a PNG of at least 1080×1920 at 9:16. It is **not committed yet**.
+
+Until it is, `estimate` still prints the live Wiro price, so the price can be verified, but it reports `NOT APPROVABLE` and issues no approval code. Without a code, `generate` refuses.
+
+When the PNG lands, `estimate` checks the size and aspect ratio and then issues a code. The approval code covers the image bytes, so any later edit to the frame needs a new approval.
+
+`video/inputs/ep003-squat-first-frame.png` (720×1280) is the **interim** frame. It is the approved concept Blob, cut out unchanged, on a plain studio backdrop (`tools/video/make_first_frame.py`). It is used only as the reel renderer's labelled preview, and it fails the spec's size check on purpose.
 
 ## Reel renderer prototype (no credits)
 

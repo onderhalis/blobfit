@@ -23,6 +23,7 @@ import {
   appendLedger,
   approvalCode,
   effectiveCap,
+  firstFrameIssue,
   listRuns,
   loadJob,
   runPath,
@@ -76,21 +77,21 @@ function client(config, deps) {
 async function prepare(jobId, config, deps, root, attemptFlag) {
   const job = await loadJob(jobId, root);
   const firstFramePath = job.firstFrame ? join(root, job.firstFrame) : null;
-  if (firstFramePath && !existsSync(firstFramePath)) throw new Error(`First frame missing: ${job.firstFrame}`);
-  const firstFrameSha256 = firstFramePath ? await sha256File(firstFramePath) : null;
+  const frameIssue = await firstFrameIssue(job, root);
+  const firstFrameSha256 = firstFramePath && existsSync(firstFramePath) ? await sha256File(firstFramePath) : null;
   const runs = await listRuns(job.id, root);
   const attempt = attemptFlag ? Number(attemptFlag) : runs.length + 1;
   const tool = await client(config, deps).modelDetail(job.model);
   const estimate = estimateCost(tool, job.params);
   const cap = effectiveCap(job, config.WIRO_BUDGET_CAP_USD);
-  return { job, firstFramePath, firstFrameSha256, runs, attempt, tool, estimate, cap };
+  return { job, firstFramePath, firstFrameSha256, frameIssue, runs, attempt, tool, estimate, cap };
 }
 
 function printEstimate(out, { job, estimate, cap, attempt, firstFrameSha256 }, code) {
   out(`Job        ${job.id} — ${job.title ?? ''}`);
   out(`Model      ${job.model}`);
   out(`Params     ${JSON.stringify(job.params)}`);
-  if (job.firstFrame) out(`First frame ${job.firstFrame} (sha256 ${firstFrameSha256.slice(0, 12)}…)`);
+  if (job.firstFrame) out(`First frame ${job.firstFrame} (${firstFrameSha256 ? `sha256 ${firstFrameSha256.slice(0, 12)}…` : 'missing'})`);
   out(`Price      ${formatUsd(estimate.priceUsd)} (${estimate.status}${estimate.method ? `, ${PRICE_METHODS[estimate.method] ?? estimate.method}` : ''})`);
   if (estimate.reason) out(`           ${estimate.reason}`);
   if (estimate.tier) out(`Tier       ${JSON.stringify(estimate.tier)}`);
@@ -319,7 +320,8 @@ export async function main(argv, deps = {}) {
 }
 
 /** Why a job may not run (or null). */
-export function blockReason({ estimate, cap }, acceptApproximate) {
+export function blockReason({ estimate, cap, frameIssue }, acceptApproximate) {
+  if (frameIssue) return frameIssue;
   if (estimate.status === 'unknown') return `price could not be verified (${estimate.reason ?? 'no matching price'}).`;
   if (estimate.status === 'approximate' && !acceptApproximate) {
     return 'price is only an approximation (compute-time billing). Re-run with --accept-approximate if the founder accepts that.';

@@ -25,6 +25,39 @@ export async function sha256File(path) {
   return crypto.createHash('sha256').update(await readFile(path)).digest('hex');
 }
 
+const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
+/** Width and height from a PNG's IHDR chunk, or null when the bytes are not a PNG. */
+export function pngSize(bytes) {
+  if (bytes.length < 24 || !bytes.subarray(0, 8).equals(PNG_SIGNATURE) || bytes.toString('latin1', 12, 16) !== 'IHDR') {
+    return null;
+  }
+  return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+}
+
+/**
+ * Why a first frame is not acceptable for a paid run (or null). Checks presence and the job's
+ * `firstFrameRequirements` (minimum size and aspect ratio), e.g. the CC-006 spec: >= 1080x1920, 9:16.
+ */
+export async function firstFrameIssue(job, root = ROOT) {
+  if (!job.firstFrame) return null;
+  const path = join(root, job.firstFrame);
+  if (!existsSync(path)) return `first frame ${job.firstFrame} is not in the repository yet.`;
+  const required = job.firstFrameRequirements;
+  if (!required) return null;
+  const size = pngSize(await readFile(path));
+  if (!size) return `first frame ${job.firstFrame} is not a PNG.`;
+  const { width, height } = size;
+  if (width < (required.minWidth ?? 0) || height < (required.minHeight ?? 0)) {
+    return `first frame is ${width}x${height}; the spec needs at least ${required.minWidth}x${required.minHeight}.`;
+  }
+  if (required.aspect) {
+    const [w, h] = required.aspect.split(':').map(Number);
+    if (Math.abs(width / height - w / h) > 0.005) return `first frame is ${width}x${height}, not ${required.aspect}.`;
+  }
+  return null;
+}
+
 /** Effective cap: the lower of the job's cap and WIRO_BUDGET_CAP_USD (if set). */
 export function effectiveCap(job, envCap) {
   const caps = [Number(job.budgetCapUsd)];

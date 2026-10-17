@@ -4,7 +4,7 @@ import { describe, it } from 'node:test';
 
 import { blockReason } from '../cli.mjs';
 import { describeSecret, parseEnvFile } from '../env.mjs';
-import { approvalCode, effectiveCap } from '../jobs.mjs';
+import { approvalCode, effectiveCap, pngSize } from '../jobs.mjs';
 import { estimateCost } from '../pricing.mjs';
 import { signatureHeaders, taskState } from '../wiro-client.mjs';
 
@@ -107,5 +107,17 @@ describe('credentials', () => {
     assert.equal(describeSecret('supersecretvalue'), 'set');
     assert.equal(describeSecret('apikey1234', { showTail: true }), 'set (ends …1234)');
     assert.equal(describeSecret(undefined), 'NOT SET');
+  });
+});
+
+describe('first frame', () => {
+  it('reads PNG dimensions from the header and rejects other files', () => {
+    const header = Buffer.alloc(24);
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(header);
+    header.write('IHDR', 12, 'latin1');
+    header.writeUInt32BE(1080, 16);
+    header.writeUInt32BE(1920, 20);
+    assert.deepEqual(pngSize(header), { width: 1080, height: 1920 });
+    assert.equal(pngSize(Buffer.from('GIF89a and more bytes here...')), null);
   });
 });
