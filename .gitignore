@@ -13,3 +13,5 @@ e2e-output/
 coverage/
 /ios
 /android
+# Generated video outputs stay out of git (metadata in video/runs is committed)
+video/output/

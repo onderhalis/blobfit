@@ -1,0 +1,36 @@
+{
+  "id": "ep003-squat",
+  "title": "EP003 — Squat Basics",
+  "size": [1080, 1920],
+  "fps": 30,
+  "voice": null,
+  "notes": "Prototype storyboard. Exercise text is pulled from data/exercises.json (review pending). Captions are English only; story frames stay text-free per the Visual Bible.",
+  "segments": [
+    {
+      "type": "card",
+      "seconds": 3.5,
+      "eyebrow": "EP003 · Beginner basics",
+      "title": "Squat Basics",
+      "body": "Learn the move before chasing numbers.",
+      "art": "assets/illustrations/interim/blob-thumbs-up.png"
+    },
+    {
+      "type": "clip",
+      "seconds": 5,
+      "job": "ep003-squat-test",
+      "fallback": "video/inputs/ep003-squat-first-frame.png"
+    },
+    { "type": "exercise-steps", "seconds": 4.5, "exercise": "squat", "title": "Set up", "pick": [0] },
+    { "type": "exercise-cues", "seconds": 4.5, "exercise": "squat", "title": "Form cues", "pick": [0, 1] },
+    { "type": "exercise-cues", "seconds": 4, "exercise": "squat", "title": "Depth", "pick": [2] },
+    { "type": "exercise-easier", "seconds": 4.5, "exercise": "squat" },
+    {
+      "type": "card",
+      "seconds": 4.5,
+      "eyebrow": "Save for later",
+      "title": "Same you. Real progress.",
+      "body": "Stop if you feel pain. General guidance only — not medical advice.",
+      "art": "assets/illustrations/interim/blob-peek.png"
+    }
+  ]
+}

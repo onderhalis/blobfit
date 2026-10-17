@@ -11,9 +11,11 @@
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "check": "npm run typecheck && npm run lint && npm test",
+    "check": "npm run typecheck && npm run lint && npm test && npm run test:tools",
     "build:web": "EXPO_OFFLINE=1 expo export --platform web --output-dir dist",
-    "e2e": "node e2e/smoke.mjs"
+    "e2e": "node e2e/smoke.mjs",
+    "video": "node tools/video/cli.mjs",
+    "test:tools": "node --test \"tools/video/__tests__/*.test.mjs\""
   },
   "dependencies": {
     "@expo-google-fonts/archivo-black": "^0.4.1",

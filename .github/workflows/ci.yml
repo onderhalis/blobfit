@@ -24,6 +24,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test -- --ci
+      - run: npm run test:tools
 
   web-smoke:
     name: Web build + end-to-end smoke test
