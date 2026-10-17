@@ -1,0 +1,78 @@
+[
+  {
+    "id": "squat",
+    "name": "Bodyweight Squat",
+    "primaryMuscles": [
+      "quadriceps",
+      "glutes"
+    ],
+    "secondaryMuscles": [
+      "adductors",
+      "core"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Stand with feet approximately shoulder-width apart and brace your trunk.",
+      "Bend at hips and knees to descend within a comfortable pain-free range.",
+      "Keep your whole foot in contact with the floor and knees moving in line with toes.",
+      "Stand tall by pushing through your feet."
+    ],
+    "mistakes": [
+      "heels lifting",
+      "knees collapsing inward",
+      "loss of trunk control"
+    ],
+    "easier": "Box squat",
+    "harder": "Goblet squat",
+    "reviewStatus": "needs-qualified-review"
+  },
+  {
+    "id": "push-up",
+    "name": "Push-Up",
+    "primaryMuscles": [
+      "chest",
+      "triceps"
+    ],
+    "secondaryMuscles": [
+      "front shoulders",
+      "core"
+    ],
+    "equipment": "none",
+    "steps": [
+      "Begin in a high plank with hands near shoulder-width.",
+      "Lower under control while keeping body aligned.",
+      "Press the floor away to return to plank."
+    ],
+    "mistakes": [
+      "sagging hips",
+      "flared elbows",
+      "reduced control"
+    ],
+    "easier": "Incline push-up",
+    "harder": "Tempo push-up",
+    "reviewStatus": "needs-qualified-review"
+  },
+  {
+    "id": "row",
+    "name": "Supported Dumbbell Row",
+    "primaryMuscles": [
+      "back"
+    ],
+    "secondaryMuscles": [
+      "biceps"
+    ],
+    "equipment": "dumbbell and bench",
+    "steps": [
+      "Brace one hand on a stable support.",
+      "Keep back controlled, pull dumbbell toward hip.",
+      "Lower slowly with control."
+    ],
+    "mistakes": [
+      "twisting trunk",
+      "jerking weight"
+    ],
+    "easier": "Seated band row",
+    "harder": "Increase resistance gradually",
+    "reviewStatus": "needs-qualified-review"
+  }
+]
