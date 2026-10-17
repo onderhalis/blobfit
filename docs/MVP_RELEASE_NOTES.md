@@ -76,6 +76,7 @@ Side-by-side sets: [393×852](screenshots/concept-vs-build-393.png) and [320×56
   - Light haptics on set completion and a success haptic on finishing.
 - **Exercise detail:** a simplified front/back muscle map (main muscles red, supporting yellow), labelled *pending coach review*.
 - **Regression guard:** the e2e smoke test also runs at 320×568 in CI (`E2E_VIEWPORT`).
+- **Web demo, ready to publish:** `.github/workflows/pages.yml` publishes the web build to `https://onderhalis.github.io/blobfit/` and checks that the live page serves the app. It is manual only: after merging, enable Pages (Settings → Pages → Source: GitHub Actions) and run the workflow. Its sub-path build passes the full smoke test locally. It is a web preview, not native proof.
 - **Not done yet, and why:**
   - Native tab bar (`NativeTabs`): waiting for the first device or simulator run, so the system tab bar is not switched in blind.
   - Step-by-step pose images and exercise-specific art: requested in issue #1 (CC-007).
