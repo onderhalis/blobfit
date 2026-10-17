@@ -1,7 +1,8 @@
 import { useState, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Svg, { Defs, Ellipse, RadialGradient, Stop } from 'react-native-svg';
 
-import { space, type } from '@/theme/tokens';
+import { colors, space, type } from '@/theme/tokens';
 
 import { AppText } from './AppText';
 import { ART, type ArtName } from './art';
@@ -65,6 +66,7 @@ export function Hero({ art, artHeight, artOverlay, headline, headlineVariant = '
         {after}
       </View>
       <View style={[styles.art, { width: artWidth, height }]} pointerEvents="none">
+        <SunGlow width={artWidth} height={height} />
         <Illustration name={art} height={height} width={artWidth} />
         {artOverlay}
       </View>
@@ -74,6 +76,27 @@ export function Hero({ art, artHeight, artOverlay, headline, headlineVariant = '
         </View>
       ) : null}
     </View>
+  );
+}
+
+/** Warm light behind Blob and a soft floor shadow: the concepts' sunlit studio, kept quiet. */
+function SunGlow({ width, height }: { width: number; height: number }) {
+  return (
+    <Svg width={width} height={height} style={StyleSheet.absoluteFill} accessibilityElementsHidden importantForAccessibility="no">
+      <Defs>
+        <RadialGradient id="sun" cx="50%" cy="42%" rx="50%" ry="42%">
+          <Stop offset="0" stopColor={colors.accentSoft} stopOpacity={0.95} />
+          <Stop offset="0.6" stopColor={colors.accentSoft} stopOpacity={0.35} />
+          <Stop offset="1" stopColor={colors.bg} stopOpacity={0} />
+        </RadialGradient>
+        <RadialGradient id="floor" cx="50%" cy="50%" rx="50%" ry="50%">
+          <Stop offset="0" stopColor={colors.ink} stopOpacity={0.12} />
+          <Stop offset="1" stopColor={colors.ink} stopOpacity={0} />
+        </RadialGradient>
+      </Defs>
+      <Ellipse cx={width / 2} cy={height * 0.44} rx={width * 0.55} ry={height * 0.42} fill="url(#sun)" />
+      <Ellipse cx={width / 2} cy={height * 0.97} rx={width * 0.36} ry={height * 0.035} fill="url(#floor)" />
+    </Svg>
   );
 }
 

@@ -255,7 +255,8 @@ function ExerciseCard({
           <Pressable
             onPress={() => router.push({ pathname: '/exercise/[id]', params: { id: exercise.id } })}
             accessibilityRole="link"
-            accessibilityHint="Opens technique and tips">
+            accessibilityHint="Opens technique and tips"
+            hitSlop={{ top: 10, bottom: 10 }}>
             <AppText variant="h3">{exercise.name}</AppText>
           </Pressable>
           <AppText variant="caption" tone="secondary">
@@ -429,7 +430,7 @@ const styles = StyleSheet.create({
   section: { gap: space.sm },
   skipped: { opacity: 0.7 },
   warmHead: { flexDirection: 'row', alignItems: 'center', gap: space.xs, minHeight: TOUCH },
-  warmRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 40 },
+  warmRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: TOUCH },
   exHead: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   setRow: {
     flexDirection: 'row',

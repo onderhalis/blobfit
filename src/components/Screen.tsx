@@ -1,8 +1,9 @@
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import type { ReactNode } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View, type StyleProp, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { SYSTEM_CHROME } from '@/lib/platform';
 import { colors, space, TAB_BAR_HEIGHT, type } from '@/theme/tokens';
 
 import { AppText } from './AppText';
@@ -34,22 +35,39 @@ interface ScreenProps {
 
 export function Screen({ children, withTabBar, footer, scroll = true, contentStyle, testID }: ScreenProps) {
   const insets = useSafeAreaInsets();
-  const bottomPad = (withTabBar ? TAB_BAR_HEIGHT + space.md : 0) + (footer ? 96 : 0) + insets.bottom + space.xl;
+  // iOS: UIKit insets the scroll view for the status bar, navigation bar, system tab bar and home
+  // indicator ('automatic'), and a footer on a tab screen sits at the end of the content, above
+  // the system tab bar. Elsewhere the insets and the floating tab bar are applied by hand.
+  const systemInsets = SYSTEM_CHROME && scroll;
+  const inlineFooter = SYSTEM_CHROME && withTabBar && footer;
+  const pinnedFooter = footer && !inlineFooter;
+  const bottomPad = systemInsets
+    ? (pinnedFooter ? 96 : 0) + space.xl
+    : (withTabBar ? TAB_BAR_HEIGHT + space.md : 0) + (pinnedFooter ? 96 : 0) + insets.bottom + space.xl;
   const content = (
-    <View style={[styles.column, { paddingTop: insets.top + space.xs, paddingBottom: bottomPad }, contentStyle]}>
+    <View
+      style={[
+        styles.column,
+        { paddingTop: (systemInsets ? 0 : insets.top) + space.xs, paddingBottom: bottomPad },
+        contentStyle,
+      ]}>
       {children}
+      {inlineFooter ? <View style={styles.inlineFooter}>{footer}</View> : null}
     </View>
   );
   return (
     <View style={styles.root} testID={testID}>
       {scroll ? (
-        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={styles.scroll}
+          contentInsetAdjustmentBehavior={systemInsets ? 'automatic' : 'never'}
+          showsVerticalScrollIndicator={false}>
           {content}
         </ScrollView>
       ) : (
         content
       )}
-      {footer ? (
+      {pinnedFooter ? (
         <View
           style={[
             styles.footer,
@@ -86,6 +104,10 @@ export function TopBar({
   trailing?: ReactNode;
   showProfile?: boolean;
 }) {
+  if (back && SYSTEM_CHROME) {
+    // iOS: the system navigation bar (back button, swipe-back, title) replaces the custom bar.
+    return <Stack.Screen options={{ headerShown: true, title: title ?? '', headerRight: trailing ? () => trailing : undefined }} />;
+  }
   return (
     <View style={styles.topBar}>
       {back ? (
@@ -159,6 +181,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
     gap: space.md,
   },
+  inlineFooter: { flexDirection: 'row', gap: space.sm, marginTop: space.xs },
   footer: {
     position: 'absolute',
     left: 0,

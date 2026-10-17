@@ -1,15 +1,16 @@
 import { router, type Href } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { Card, Chevron } from '@/components/Card';
 import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Icon, type IconName } from '@/components/Icon';
 import { Screen, TopBar } from '@/components/Screen';
+import { Segmented } from '@/components/Segmented';
 import type { Units } from '@/domain/types';
 import { useStore } from '@/state/AppStore';
-import { colors, radius, space } from '@/theme/tokens';
+import { colors, space } from '@/theme/tokens';
 
 function Row({
   icon,
@@ -40,6 +41,11 @@ function Row({
   );
 }
 
+const UNIT_OPTIONS = [
+  { value: 'kg', label: 'kg', accessibilityLabel: 'Kilograms' },
+  { value: 'lb', label: 'lb', accessibilityLabel: 'Pounds' },
+] as const;
+
 export default function More() {
   const { data, dispatch, eraseAll } = useStore();
   const [confirm, setConfirm] = useState(false);
@@ -61,21 +67,12 @@ export default function More() {
             Used when logging loads
           </AppText>
         </View>
-        <View style={styles.segment} accessibilityRole="radiogroup" accessibilityLabel="Weight units">
-          {(['kg', 'lb'] as Units[]).map((option) => (
-            <Pressable
-              key={option}
-              accessibilityRole="radio"
-              aria-checked={units === option}
-              accessibilityLabel={option === 'kg' ? 'Kilograms' : 'Pounds'}
-              onPress={() => dispatch({ type: 'setUnits', units: option })}
-              style={[styles.segmentItem, units === option && styles.segmentOn]}>
-              <AppText variant="bodyStrong" style={{ color: units === option ? colors.inkOnDark : colors.ink }}>
-                {option}
-              </AppText>
-            </Pressable>
-          ))}
-        </View>
+        <Segmented<Units>
+          options={UNIT_OPTIONS}
+          value={units}
+          onChange={(option) => dispatch({ type: 'setUnits', units: option })}
+          accessibilityLabel="Weight units"
+        />
       </Card>
 
       <Card style={styles.row} onPress={() => setConfirm(true)} accessibilityLabel="Erase all data on this device" testID="erase-all">
@@ -124,7 +121,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   units: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  segment: { flexDirection: 'row', backgroundColor: colors.surfaceMuted, borderRadius: radius.pill, padding: 4 },
-  segmentItem: { minWidth: 56, minHeight: 40, alignItems: 'center', justifyContent: 'center', borderRadius: radius.pill },
-  segmentOn: { backgroundColor: colors.ink },
 });

@@ -21,10 +21,22 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Illustration } from '@/components/Illustration';
 import { SaveErrorBanner } from '@/components/SaveErrorBanner';
 import { LoadingView } from '@/components/Screen';
+import { SYSTEM_CHROME } from '@/lib/platform';
 import { AppStoreProvider, useStore } from '@/state/AppStore';
-import { colors, space } from '@/theme/tokens';
+import { colors, fonts, space } from '@/theme/tokens';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
+
+/** iOS navigation bar for pushed screens: solid cream, ink tint, back chevron without a label. */
+const IOS_HEADER = {
+  headerStyle: { backgroundColor: colors.bg },
+  headerShadowVisible: false,
+  headerTintColor: colors.ink,
+  headerBackButtonDisplayMode: 'minimal',
+  headerTitleStyle: { fontFamily: fonts.semibold, fontSize: 17, color: colors.ink },
+} as const;
+/** Pushed screens get the native navigation bar (and swipe-back) on iOS; elsewhere they draw their own. */
+const pushed = { headerShown: SYSTEM_CHROME };
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -63,15 +75,24 @@ function Navigation() {
   const onboarded = data.preferences !== null;
   return (
     <>
-    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
+    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg }, ...(SYSTEM_CHROME ? IOS_HEADER : null) }}>
       <Stack.Protected guard={onboarded}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="exercise/[id]" />
-        <Stack.Screen name="workout" options={{ gestureEnabled: false }} />
-        <Stack.Screen name="session/[id]" />
-        <Stack.Screen name="library" />
-        <Stack.Screen name="preferences" />
-        <Stack.Screen name="about" />
+        <Stack.Screen name="exercise/[id]" options={pushed} />
+        {/* iOS: a sheet; swiping it down minimises the workout, which stays saved. */}
+        <Stack.Screen
+          name="workout"
+          options={SYSTEM_CHROME ? { presentation: 'modal', gestureEnabled: true } : { gestureEnabled: false }}
+        />
+        <Stack.Screen
+          name="session/[id]"
+          options={({ route }) => ({
+            headerShown: SYSTEM_CHROME && (route.params as { fresh?: string } | undefined)?.fresh !== '1',
+          })}
+        />
+        <Stack.Screen name="library" options={pushed} />
+        <Stack.Screen name="preferences" options={pushed} />
+        <Stack.Screen name="about" options={pushed} />
       </Stack.Protected>
       <Stack.Protected guard={!onboarded}>
         <Stack.Screen name="onboarding" />
