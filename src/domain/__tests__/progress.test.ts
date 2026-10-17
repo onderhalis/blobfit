@@ -166,6 +166,18 @@ describe('personal bests and then/now', () => {
     expect(row?.latest).toMatchObject({ value: 8, loadKg: 8 });
   });
 
+  it('only compares like with like: loaded with loaded, bodyweight with bodyweight', () => {
+    const bodyweightOnly = completedSession(at(2026, 10, 2, 18), { values: 10 }); // row logged without load
+    const loadedA = completedSession(at(2026, 10, 5, 18), { values: 8, loadKg: 6 });
+    const loadedB = completedSession(at(2026, 10, 9, 18), { values: 10, loadKg: 8 });
+    const row = thenAndNow([bodyweightOnly, loadedA, loadedB]).find((item) => item.exerciseId === 'row');
+    expect(row?.first).toMatchObject({ value: 8, loadKg: 6 });
+    expect(row?.latest).toMatchObject({ value: 10, loadKg: 8 });
+    expect(row?.sessions).toBe(2);
+    // A single loaded session after bodyweight-only ones has nothing comparable yet.
+    expect(thenAndNow([bodyweightOnly, loadedA]).find((item) => item.exerciseId === 'row')).toBeUndefined();
+  });
+
   it('needs two sessions before comparing', () => {
     expect(thenAndNow([first])).toEqual([]);
   });

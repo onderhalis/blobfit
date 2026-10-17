@@ -328,7 +328,11 @@ export interface ThenAndNow {
   sessions: number;
 }
 
-/** First logged best set vs most recent best set, for exercises logged in two or more sessions. */
+/**
+ * First logged best set vs most recent best set, for exercises logged in two or more sessions.
+ * Only like-for-like sets are compared (docs/DECISIONS.md, CC-002): a loaded latest set is
+ * compared with the first *loaded* set, a bodyweight latest set with the first bodyweight set.
+ */
 export function thenAndNow(sessions: readonly WorkoutSession[], limit = 3): ThenAndNow[] {
   const ordered = completedSessions(sessions);
   const byExercise = new Map<string, BestSet[]>();
@@ -342,13 +346,13 @@ export function thenAndNow(sessions: readonly WorkoutSession[], limit = 3): Then
     }
   }
   return [...byExercise.entries()]
-    .filter(([, bests]) => bests.length >= 2)
-    .map(([exerciseId, bests]) => ({
-      exerciseId,
-      first: bests[0],
-      latest: bests[bests.length - 1],
-      sessions: bests.length,
-    }))
+    .map(([exerciseId, bests]) => {
+      const latest = bests[bests.length - 1];
+      const loaded = (latest.loadKg ?? 0) > 0;
+      const comparable = bests.filter((best) => (best.loadKg ?? 0) > 0 === loaded);
+      return { exerciseId, first: comparable[0], latest, sessions: comparable.length };
+    })
+    .filter((row) => row.sessions >= 2)
     .sort((a, b) => b.sessions - a.sessions || a.exerciseId.localeCompare(b.exerciseId))
     .slice(0, limit);
 }
