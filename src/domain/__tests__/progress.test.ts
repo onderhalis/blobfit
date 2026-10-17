@@ -59,6 +59,15 @@ describe('weekSummary', () => {
     expect(week.weekNumber).toBe(2);
   });
 
+  it('has no target when the plan starts after the last training day of the week', () => {
+    const saturday = makePrefs({ planStartedAt: at(2026, 10, 10).toISOString() });
+    const week = weekSummary(saturday, [], at(2026, 10, 10, 12));
+    expect(week.target).toBe(0);
+    expect(week.days.every((day) => day.status === 'rest')).toBe(true);
+    expect(adherence(saturday, [], at(2026, 10, 11)).ratio).toBeNull();
+    expect(weekStreak(saturday, [], at(2026, 10, 11))).toBe(0);
+  });
+
   it('does not schedule days before the plan started', () => {
     const late = makePrefs({ planStartedAt: at(2026, 10, 8).toISOString() }); // Thursday
     const week = weekSummary(late, [], at(2026, 10, 8));

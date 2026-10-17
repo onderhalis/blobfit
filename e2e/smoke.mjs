@@ -192,6 +192,26 @@ try {
   await byId('library').waitFor();
   await shot('09-library');
 
+  step('a plan started on a Saturday explains when it begins (fresh device)');
+  const weekend = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  const wp = await weekend.newPage();
+  wp.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
+  await wp.clock.install({ time: at(17, 11) });
+  await wp.clock.resume();
+  await wp.goto(`${BASE}/`);
+  await wp.getByTestId('goal-get-stronger').click();
+  await wp.getByTestId('onboarding-continue').click();
+  await wp.getByTestId('experience-returning').click();
+  await wp.getByTestId('onboarding-continue').click();
+  await wp.getByTestId('onboarding-continue').click();
+  await wp.getByTestId('accept-disclaimer').click();
+  await wp.getByTestId('onboarding-continue').click();
+  await wp.getByTestId('home').getByText('Your first planned session is Monday.', { exact: false }).waitFor();
+  await wp.getByTestId('home').getByText('A stronger, happier you starts Monday.').waitFor();
+  await wp.waitForTimeout(400);
+  await wp.screenshot({ path: `${OUT}/01-home-weekend-start.png` });
+  await weekend.close();
+
   assert.deepEqual(errors, [], `browser errors:\n${errors.join('\n')}`);
   console.log(`\nSmoke test passed. Screenshots in ${OUT}/`);
 } catch (error) {

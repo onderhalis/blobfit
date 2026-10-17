@@ -8,7 +8,8 @@ import { Card, Chevron } from '@/components/Card';
 import { Illustration } from '@/components/Illustration';
 import { ProgressBar } from '@/components/Progress';
 import { Screen, TopBar } from '@/components/Screen';
-import { WEEKDAY_LONG, weekdayOf } from '@/domain/dates';
+import { WEEKDAY_LONG, WEEKDAY_SHORT, weekdayOf } from '@/domain/dates';
+import { nextTrainingDay } from '@/domain/plan';
 import { completedSessions, todayStatus, weekSummary, type TodayStatus } from '@/domain/progress';
 import { useStartWorkout } from '@/features/useWorkoutActions';
 import { greeting, plural } from '@/lib/format';
@@ -22,7 +23,9 @@ function heroCopy(status: TodayStatus, sessionsDone: number): { headline: string
     case 'done':
       return { headline: 'Done for today. Nice work.', cta: 'See your plan' };
     case 'rest':
-      return { headline: 'Rest is part of the plan.', cta: 'See your plan' };
+      return sessionsDone === 0
+        ? { headline: `A stronger, happier you starts ${WEEKDAY_LONG[weekdayOf(status.nextDay)]}.`, cta: 'See your plan' }
+        : { headline: 'Rest is part of the plan.', cta: 'See your plan' };
     case 'train':
       return sessionsDone === 0
         ? { headline: 'A stronger, happier you starts today.', cta: 'Start today' }
@@ -50,6 +53,8 @@ export default function Home() {
   const done = completedSessions(data.sessions).length;
   const week = weekSummary(prefs, data.sessions, now);
   const copy = heroCopy(status, done);
+  // A plan started late in the week can have no planned sessions left this week.
+  const firstDay = week.target === 0 ? nextTrainingDay(prefs, now) : null;
 
   const onHeroPress = () => {
     if (status.kind === 'in-progress') {
@@ -106,7 +111,11 @@ export default function Home() {
 
       <Card
         onPress={() => router.push('/progress')}
-        accessibilityLabel={`Your journey: week ${week.weekNumber}. ${week.done} of ${week.target} workouts done this week.`}
+        accessibilityLabel={
+          firstDay
+            ? `Your journey: week ${week.weekNumber}. Your plan starts ${WEEKDAY_LONG[weekdayOf(firstDay)]}.`
+            : `Your journey: week ${week.weekNumber}. ${week.done} of ${week.target} workouts done this week.`
+        }
         accessibilityHint="Opens your progress">
         <View style={styles.journeyTop}>
           <View style={styles.flame}>
@@ -117,19 +126,37 @@ export default function Home() {
             <AppText variant="h2">Week {week.weekNumber}</AppText>
           </View>
           <View style={styles.journeyCount}>
-            <AppText variant="h3">
-              {week.done}/{week.target}
-            </AppText>
-            <AppText variant="caption" tone="secondary">
-              Workouts
-            </AppText>
+            {firstDay ? (
+              <>
+                <AppText variant="caption" tone="secondary">
+                  Starts
+                </AppText>
+                <AppText variant="h3">{WEEKDAY_SHORT[weekdayOf(firstDay)]}</AppText>
+              </>
+            ) : (
+              <>
+                <AppText variant="h3">
+                  {week.done}/{week.target}
+                </AppText>
+                <AppText variant="caption" tone="secondary">
+                  Workouts
+                </AppText>
+              </>
+            )}
           </View>
           <Chevron />
         </View>
-        <ProgressBar
-          value={week.target === 0 ? 0 : week.done / week.target}
-          label={`${plural(week.done, 'workout')} of ${week.target} this week`}
-        />
+        {firstDay ? (
+          <AppText variant="caption" tone="secondary">
+            Your first planned session is {WEEKDAY_LONG[weekdayOf(firstDay)]}.
+            {week.done > 0 ? ` ${plural(week.done, 'extra session')} logged already.` : ' Training before then is optional.'}
+          </AppText>
+        ) : (
+          <ProgressBar
+            value={week.done / week.target}
+            label={`${plural(week.done, 'workout')} of ${week.target} this week`}
+          />
+        )}
       </Card>
 
       <View style={styles.links}>

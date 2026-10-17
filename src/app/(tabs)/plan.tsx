@@ -12,7 +12,7 @@ import { Screen, TopBar } from '@/components/Screen';
 import { WEEKDAY_LONG, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
 import { goalById } from '@/domain/goals';
-import { WARM_UP, buildWorkout } from '@/domain/plan';
+import { WARM_UP, buildWorkout, nextTrainingDay } from '@/domain/plan';
 import { completedSessions, todayStatus, weekStreak, weekSummary } from '@/domain/progress';
 import type { BodyArea, WorkoutId } from '@/domain/types';
 import { useStartWorkout } from '@/features/useWorkoutActions';
@@ -96,7 +96,11 @@ export default function Plan() {
         <View style={styles.weekHead}>
           <Ionicons name="flame" size={28} color={colors.accent} />
           <Eyebrow tone="ink">
-            {streak > 0 ? `${plural(streak, 'week')} on target` : `This week · ${week.done}/${week.target}`}
+            {streak > 0
+              ? `${plural(streak, 'week')} on target`
+              : week.target === 0
+                ? `Your plan starts ${WEEKDAY_LONG[weekdayOf(nextTrainingDay(prefs, now))]}`
+                : `This week · ${week.done}/${week.target}`}
           </Eyebrow>
         </View>
         <WeekDots days={week.days} />

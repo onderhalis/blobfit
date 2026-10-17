@@ -36,11 +36,11 @@ Stack: Expo SDK 58, React Native 0.88, React 19.3, TypeScript 6 (strict), Expo R
 
 | # | Gate | Result | Evidence |
 |---|---|---|---|
-| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **91 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`). |
+| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **92 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`). |
 | 2 | App starts, five screens navigable | ✅ web · ⚠️ native | Web: exported build driven end to end by `e2e/smoke.mjs`. Native: `expo export --platform ios --platform android` bundles successfully. No simulator or device was available, so native runtime is **unverified**. |
 | 3 | Onboarding persists across relaunch, editable | ✅ | e2e reloads after onboarding and after logging; the preferences screen saves edits. |
 | 4 | Safe rest days, no fake metrics | ✅ | Schedules are limited to 2–4 days and every default has rest days between sessions (unit tested). The concept numbers are not used anywhere. |
-| 5 | Complete a workout end to end, progress updates | ✅ | e2e logs 4 sessions across 2 simulated weeks, then checks the progress screen after a relaunch. The reducer flow is also unit tested. |
+| 5 | Complete a workout end to end, progress updates | ✅ | e2e logs 4 sessions across 2 simulated weeks, then checks the progress screen after a relaunch. It also covers a plan started on a Saturday (first session Monday) on a fresh device. The reducer flow is also unit tested. |
 | 6 | Instructions + review disclaimer | ✅ | Unit test asserts every exercise has muscles, ≥3 steps, ≥2 mistakes, phases, cues, easier/harder and `needs-qualified-review`. |
 | 7 | Blob identity / no competitor art | ✅ | Interim art is cut out of the approved concepts only. See `assets/illustrations/interim/README.md`. |
 | 8 | Screen reader labels, contrast, phone sizes, safe area | ✅ contrast · ⚠️ VoiceOver/TalkBack | WCAG AA contrast is unit tested for every text/background pair. Labels and roles are set throughout. A real VoiceOver/TalkBack pass on device is **not done**. |

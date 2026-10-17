@@ -7,9 +7,9 @@ import { Card, Chevron } from '@/components/Card';
 import { Illustration, MotionMarks } from '@/components/Illustration';
 import { ProgressRing } from '@/components/Progress';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
-import { formatShortDate, startOfDay, addDays } from '@/domain/dates';
+import { WEEKDAY_LONG, WEEKDAY_SHORT, addDays, formatShortDate, startOfDay, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
-import { WORKOUT_TEMPLATES } from '@/domain/plan';
+import { WORKOUT_TEMPLATES, nextTrainingDay } from '@/domain/plan';
 import {
   adherence,
   completedSessions,
@@ -82,21 +82,36 @@ export default function Progress() {
       </View>
 
       <View style={styles.pair}>
-        <Card style={[styles.ringCard]} onPress={() => router.push('/plan')} accessibilityLabel={`Week ${week.weekNumber}: ${week.done} of ${week.target} workouts`}>
+        <Card style={[styles.ringCard]} onPress={() => router.push('/plan')}>
           <ProgressRing
             value={week.target === 0 ? 0 : week.done / week.target}
             size={132}
             stroke={13}
-            label={`${week.done} of ${week.target} workouts this week`}>
+            label={
+              week.target === 0
+                ? `Week ${week.weekNumber}: no sessions planned yet, your plan starts ${WEEKDAY_LONG[weekdayOf(nextTrainingDay(prefs, now))]}`
+                : `Week ${week.weekNumber}: ${week.done} of ${week.target} workouts this week`
+            }>
             <AppText variant="eyebrow" tone="secondary" style={styles.ringEyebrow}>
               WEEK {week.weekNumber}
             </AppText>
-            <AppText variant="stat">
-              {week.done}/{week.target}
-            </AppText>
-            <AppText variant="caption" tone="secondary">
-              Workouts
-            </AppText>
+            {week.target === 0 ? (
+              <>
+                <AppText variant="caption" tone="secondary">
+                  Starts
+                </AppText>
+                <AppText variant="h2">{WEEKDAY_SHORT[weekdayOf(nextTrainingDay(prefs, now))]}</AppText>
+              </>
+            ) : (
+              <>
+                <AppText variant="stat">
+                  {week.done}/{week.target}
+                </AppText>
+                <AppText variant="caption" tone="secondary">
+                  Workouts
+                </AppText>
+              </>
+            )}
           </ProgressRing>
         </Card>
         <Card style={styles.streakCard} accessibilityLabel={`${plural(streak, 'week')} in a row on target`}>
