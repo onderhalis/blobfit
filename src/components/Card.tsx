@@ -69,7 +69,7 @@ export function Tag({
   return (
     <View style={[styles.tag, { backgroundColor: bg }]}>
       {icon ? <Icon name={icon} size={14} color={fg} /> : null}
-      <AppText variant="caption" style={{ color: fg }}>
+      <AppText variant="caption" numberOfLines={1} style={{ color: fg }}>
         {label}
       </AppText>
     </View>

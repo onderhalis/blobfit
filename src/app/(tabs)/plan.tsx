@@ -9,7 +9,7 @@ import { Icon, type IconName } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
 import { ExerciseArt, Illustration, MotionMarks } from '@/components/Illustration';
 import { WeekDots } from '@/components/Progress';
-import { Screen, TopBar } from '@/components/Screen';
+import { Screen, TopBar, useLayout } from '@/components/Screen';
 import { WEEKDAY_LONG, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
 import { goalById } from '@/domain/goals';
@@ -28,6 +28,8 @@ const AREA_TAG: Record<BodyArea, { tint: TintName; icon: IconName }> = {
 };
 
 export default function Plan() {
+  // 320pt phones: rows drop the chevron and shrink the art so exercise names never break mid-word.
+  const { narrow } = useLayout();
   const { data } = useStore();
   const now = useNow(60_000);
   const startWorkout = useStartWorkout();
@@ -139,11 +141,18 @@ export default function Plan() {
         <View style={styles.flex}>
           <Eyebrow>Total workout</Eyebrow>
           <AppText variant="stat">~{workout.estimatedMinutes} min</AppText>
+          {narrow ? (
+            <AppText variant="caption" tone="secondary">
+              {plural(workout.exercises.length, 'exercise')} + warm-up
+            </AppText>
+          ) : null}
         </View>
-        <AppText variant="caption" tone="secondary" style={styles.totalNote}>
-          {plural(workout.exercises.length, 'exercise')}
-          {'\n'}+ warm-up
-        </AppText>
+        {narrow ? null : (
+          <AppText variant="caption" tone="secondary" style={styles.totalNote}>
+            {plural(workout.exercises.length, 'exercise')}
+            {'\n'}+ warm-up
+          </AppText>
+        )}
       </Card>
 
       <Card style={styles.row} onPress={() => setWarmUpOpen(!warmUpOpen)} accessibilityLabel={`Warm-up, ${WARM_UP.minutes} minutes, ${WARM_UP.subtitle}`} accessibilityHint={warmUpOpen ? 'Hides the moves' : 'Shows the moves'}>
@@ -152,12 +161,12 @@ export default function Plan() {
             <Icon name="walk" size={24} color={colors.tint.mint.fg} />
           </View>
           <View style={[styles.flex, styles.rowText]}>
-            <AppText variant="h3">WARM-UP</AppText>
+            <AppText variant="h3">Warm-up</AppText>
             <AppText tone="secondary">
               {WARM_UP.minutes} min · {WARM_UP.subtitle}
             </AppText>
           </View>
-          <Illustration name="blob-warm-up" height={70} />
+          {narrow ? null : <Illustration name="blob-warm-up" height={70} />}
           <Icon name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
         </View>
         {warmUpOpen ? (
@@ -187,12 +196,14 @@ export default function Plan() {
                 <AppText variant="bodyStrong">{pad2(index + 1)}</AppText>
               </View>
               <View style={[styles.flex, styles.rowText]}>
-                <AppText variant="h3">{exercise.name.toUpperCase()}</AppText>
-                <AppText tone="secondary">{prescription(item)}</AppText>
+                <AppText variant="h3">{exercise.name}</AppText>
+                <AppText variant="caption" tone="secondary">
+                  {prescription(item)}
+                </AppText>
                 <Tag label={exercise.bodyArea} tint={tag.tint} icon={tag.icon} />
               </View>
-              <ExerciseArt exercise={exercise} kind="thumb" size={96} />
-              <Chevron />
+              <ExerciseArt exercise={exercise} kind="thumb" size={narrow ? 60 : 76} />
+              {narrow ? null : <Chevron />}
             </View>
           </Card>
         );
@@ -243,12 +254,12 @@ const styles = StyleSheet.create({
   },
   totalNote: { textAlign: 'right' },
   row: { paddingVertical: space.sm },
-  rowMain: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  rowMain: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
   rowText: { gap: space.xxs },
   number: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: colors.surfaceMuted,
     alignItems: 'center',
     justifyContent: 'center',
