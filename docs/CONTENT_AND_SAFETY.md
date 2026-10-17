@@ -1,0 +1,2 @@
+# Exercise content QA
+The Instagram comic references are marketing concept art, not anatomical proof. Educational movements must be checked by a qualified strength coach before production release. Avoid overconfident claims about fat loss, posture correction, injury prevention, or fixed results in 30 days. Make regressions appropriate to user level, not a promise of suitability for everyone. No mandatory shaming or physique comparisons. Real user progress only.
