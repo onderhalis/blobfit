@@ -11,9 +11,12 @@
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "check": "npm run typecheck && npm run lint && npm test"
+    "check": "npm run typecheck && npm run lint && npm test",
+    "build:web": "EXPO_OFFLINE=1 expo export --platform web --output-dir dist",
+    "e2e": "node e2e/smoke.mjs"
   },
   "dependencies": {
+    "@expo-google-fonts/archivo-black": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.2",
     "@expo/vector-icons": "^15.1.1",
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -44,6 +47,7 @@
     "eslint-config-expo": "~58.0.4",
     "jest": "^30.5.2",
     "jest-expo": "~58.0.11",
+    "playwright": "1.56.1",
     "typescript": "~6.0.3"
   },
   "jest": {
@@ -54,6 +58,11 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/e2e/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@/assets/(.*)$": "<rootDir>/assets/$1",
+      "^@/data/(.*)$": "<rootDir>/data/$1",
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
   }
 }

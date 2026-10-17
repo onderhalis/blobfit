@@ -101,8 +101,7 @@
       "Keep your feet flat the whole time.",
       "Pick a seat height that feels controlled."
     ],
-    "harderId": "squat",
-    "illustration": "squat"
+    "harderId": "squat"
   },
   {
     "id": "goblet-squat",
@@ -156,8 +155,7 @@
       "Keep elbows pointing down.",
       "Choose a weight you can control for every rep."
     ],
-    "easierId": "squat",
-    "illustration": "squat"
+    "easierId": "squat"
   },
   {
     "id": "push-up",
@@ -362,8 +360,7 @@
       "Keep your shoulders away from your ears.",
       "Control the band on the way back."
     ],
-    "harderId": "row",
-    "illustration": "row"
+    "harderId": "row"
   },
   {
     "id": "prone-y-raise",

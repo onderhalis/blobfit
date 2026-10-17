@@ -1,0 +1,29 @@
+# Interim mascot illustrations
+
+**Status:** interim. Replace with production exports from the design owner (request CC-001 in issue #1).
+
+## Provenance
+Every PNG here was cut out of the **five founder-approved app concepts** in `assets/reference-inbox/founder-chat-2026-10-17/`:
+- only the illustration region was cropped, never UI text, numbers or whole screens;
+- the background was removed locally with `rembg` (BiRefNet-general model, run offline in the dev container);
+- no character was redrawn, recolored or newly generated.
+
+The source concepts are about 941×1672 px, so these cutouts are low resolution (roughly 150–680 px). They look soft on 3× displays. Production exports should be at least 1200 px on the long edge.
+
+| File | Source concept | Used for |
+|---|---|---|
+| `blob-idle-towel.png` | 01 Home hero | Home hero |
+| `blob-stretch-peek.png` | 01 Home "Today's focus" | Rest-day card |
+| `blob-thumbs-up.png` | 02 Goals hero | Onboarding hero |
+| `goal-*.png` | 02 Goals cards | Goal cards (supporting-color characters, not the protagonist) |
+| `blob-lunge.png` | 03 Daily plan hero | Plan hero |
+| `blob-squat.png`, `blob-push-up-small.png`, `blob-row.png`, `blob-warm-up.png` | 03 Daily plan rows | Exercise thumbnails |
+| `blob-push-up.png` | 04 Exercise detail hero | Push-up detail hero |
+| `blob-incline-push-up.png`, `blob-knee-push-up.png` | 04 Variation cards | Incline push-up thumbnail |
+| `blob-flex-towel.png`, `blob-flex-small.png` | 05 Progress | Progress hero / session complete |
+| `blob-peek.png` | 05 Progress footer | Empty states and footer card |
+
+## Brand check (`docs/QUALITY_GATES.md` #7)
+The protagonist appears cream-white with two black pill eyes and **black shorts** in every pose except two crops. `blob-peek.png` is head-only. `blob-stretch-peek.png` shows the shorts. The colored `goal-*` figures are supporting characters, as in the approved goal concept.
+
+The exercises without approved art (hip hinge, glute bridge, plank, box squat, goblet squat, Romanian deadlift, band row, prone Y raise) use a neutral icon card. No substitute Blob was invented for them.
