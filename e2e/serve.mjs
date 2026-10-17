@@ -5,6 +5,8 @@ import { extname, join, normalize } from 'node:path';
 
 const root = join(process.cwd(), 'dist');
 const port = Number(process.env.PORT ?? 8099);
+/** Sub-path the build was exported for (Expo `experiments.baseUrl`), e.g. "/blobfit" for GitHub Pages. */
+const basePath = process.env.E2E_BASE_PATH ?? '';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -21,7 +23,12 @@ const TYPES = {
 export function startServer() {
   const server = createServer((req, res) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
-    const safe = normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, '');
+    if (basePath && !url.pathname.startsWith(`${basePath}/`) && url.pathname !== basePath) {
+      res.writeHead(404).end('Not found');
+      return;
+    }
+    const pathname = url.pathname.slice(basePath.length) || '/';
+    const safe = normalize(decodeURIComponent(pathname)).replace(/^(\.\.[/\\])+/, '');
     let file = join(root, safe);
     if (!file.startsWith(root) || !existsSync(file) || statSync(file).isDirectory()) {
       file = extname(safe) ? '' : join(root, 'index.html');
@@ -37,5 +44,5 @@ export function startServer() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  startServer().then(() => console.log(`Serving dist/ on http://localhost:${port}`));
+  startServer().then(() => console.log(`Serving dist/ on http://localhost:${port}${basePath}/`));
 }

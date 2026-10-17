@@ -1,0 +1,72 @@
+# Web demo on GitHub Pages: https://onderhalis.github.io/blobfit/
+#
+# Manual only. Nothing is published until the founder:
+#   1. merges this file to `main` (GitHub lists manual workflows only from the default branch, and the
+#      github-pages environment deploys from `main` by default);
+#   2. enables Pages once: repository Settings → Pages → Source: "GitHub Actions";
+#   3. runs it: Actions → "Web demo (GitHub Pages)" → Run workflow.
+#
+# The demo is the exported web build. It keeps all data in the visitor's own browser (no backend,
+# no analytics), and it is a web preview, not proof of the native iOS/Android apps.
+name: Web demo (GitHub Pages)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and smoke-test the demo
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Export for the /blobfit sub-path
+        run: |
+          node -e 'const f="app.json",j=JSON.parse(require("fs").readFileSync(f));j.expo.experiments.baseUrl="/blobfit";require("fs").writeFileSync(f,JSON.stringify(j,null,2))'
+          npm run build:web
+          cp dist/index.html dist/404.html   # deep links (e.g. /blobfit/plan) load the app
+          touch dist/.nojekyll
+      - name: Smoke test the exact files that will be published
+        run: npm run e2e
+        env:
+          E2E_BASE_PATH: /blobfit
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Publish and verify
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify the published page serves the app
+        run: |
+          url="${{ steps.deployment.outputs.page_url }}"
+          for i in 1 2 3 4 5 6; do
+            html=$(curl -fsSL "$url") && echo "$html" | grep -q '/blobfit/_expo/static/js/web/entry-' && break
+            sleep 10
+          done
+          echo "$html" | grep -q '/blobfit/_expo/static/js/web/entry-' || { echo "Page did not serve the app bundle"; exit 1; }
+          bundle=$(echo "$html" | grep -o '/blobfit/_expo/static/js/web/entry-[^"]*' | head -1)
+          curl -fsS -o /dev/null "https://onderhalis.github.io$bundle"
+          echo "Verified: $url"

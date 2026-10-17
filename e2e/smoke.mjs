@@ -4,6 +4,7 @@
 //
 //   npm run build:web && npm run e2e
 //   E2E_VIEWPORT=320x568 E2E_OUT=e2e-output/320 npm run e2e    # smallest supported phone
+//   E2E_BASE_PATH=/blobfit npm run e2e                           # a build exported for a sub-path (GitHub Pages)
 import assert from 'node:assert/strict';
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
@@ -12,7 +13,7 @@ import { startServer } from './serve.mjs';
 
 const OUT = process.env.E2E_OUT ?? 'e2e-output';
 const [VIEW_W, VIEW_H] = (process.env.E2E_VIEWPORT ?? '390x844').split('x').map(Number);
-const BASE = `http://localhost:${process.env.PORT ?? 8099}`;
+const BASE = `http://localhost:${process.env.PORT ?? 8099}${process.env.E2E_BASE_PATH ?? ''}`;
 mkdirSync(OUT, { recursive: true });
 
 const executablePath = process.env.CHROMIUM_PATH ?? (process.env.PLAYWRIGHT_BROWSERS_PATH ? '/opt/pw-browsers/chromium' : undefined);
