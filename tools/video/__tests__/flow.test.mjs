@@ -1,4 +1,5 @@
 // End-to-end CLI flow against a local fake Wiro API: no network, no credentials, no credits.
+import { Buffer } from 'node:buffer';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { existsSync } from 'node:fs';

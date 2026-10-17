@@ -10,6 +10,7 @@
 // Safety rules: generation needs an approval code bound to the job, first frame, attempt and live
 // price; it refuses when the price is not exact or exceeds the budget cap; it runs once and never
 // retries; the run record is written before waiting so a crash cannot cause a second submission.
+import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';

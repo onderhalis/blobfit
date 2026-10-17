@@ -1,4 +1,5 @@
 // Job specs, approval codes and run records for budget-controlled generation.
+import { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
