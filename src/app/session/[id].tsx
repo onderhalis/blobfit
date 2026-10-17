@@ -42,7 +42,11 @@ export default function SessionSummary() {
   const ordered = completedSessions(data.sessions);
   const number = ordered.findIndex((item) => item.id === session.id) + 1;
   const totals = sessionTotals(session);
-  const bests = newBestsIn(session, data.sessions);
+  const allBests = newBestsIn(session, data.sessions);
+  // A heavier load is the headline; don't also list the same exercise's rep best.
+  const bests = allBests.filter(
+    (best) => best.kind === 'load' || !allBests.some((other) => other.kind === 'load' && other.exerciseId === best.exerciseId),
+  );
   const units = data.settings.units;
   const ended = new Date(session.endedAt ?? session.startedAt);
   const isFresh = fresh === '1';

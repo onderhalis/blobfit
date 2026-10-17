@@ -92,7 +92,7 @@ export default function Home() {
           </AppText>
         </View>
         <View style={styles.heroArt} pointerEvents="none">
-          <Illustration name="blob-idle-towel" height={340} />
+          <Illustration name="blob-idle-towel" height={320} />
         </View>
       </View>
       <Button
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   heroText: { flex: 1.15, gap: space.md, paddingTop: space.md, zIndex: 1 },
   headline: { marginTop: space.xxs },
   heroArt: { flex: 1, alignItems: 'center', marginRight: -space.xl, marginLeft: -space.xxl },
-  cta: { alignSelf: 'flex-start', marginTop: -space.xl, paddingHorizontal: space.xxl },
+  cta: { alignSelf: 'flex-start', marginTop: -space.xxxl, paddingHorizontal: space.xxl },
   journeyTop: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
   flame: {
     width: 52,

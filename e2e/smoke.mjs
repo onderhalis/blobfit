@@ -51,6 +51,7 @@ const assertSingleTabBar = async () => {
 
 async function goTo(time, path = '/') {
   await page.clock.setSystemTime(time);
+  await page.clock.resume();
   await page.goto(`${BASE}${path}`);
   await page.waitForLoadState('networkidle');
 }
@@ -164,8 +165,10 @@ try {
   step('workout logging screen');
   await byId('plan-start').click();
   await byId('workout').waitFor();
+  await page.waitForTimeout(4000);
   const firstDone = page.locator('[data-testid$="-done"]').first();
   await firstDone.click();
+  await page.waitForTimeout(1500);
   await shot('07-workout-logging');
   await byId('pause-workout').click();
   await shot('07b-workout-paused');

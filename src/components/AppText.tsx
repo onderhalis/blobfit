@@ -40,9 +40,11 @@ export function AppText({ variant = 'body', tone = 'ink', center, style, ...rest
 }
 
 export function Eyebrow({ children, tone = 'secondary', ...rest }: AppTextProps) {
+  const parts = Array.isArray(children) ? children : [children];
+  const plain = parts.every((part) => typeof part === 'string' || typeof part === 'number');
   return (
     <AppText variant="eyebrow" tone={tone} {...rest}>
-      {typeof children === 'string' ? children.toUpperCase() : children}
+      {plain ? parts.join('').toUpperCase() : children}
     </AppText>
   );
 }

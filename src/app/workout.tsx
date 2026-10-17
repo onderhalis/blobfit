@@ -29,6 +29,7 @@ export default function Workout() {
   const [restUntil, setRestUntil] = useState<number | null>(null);
   const [confirm, setConfirm] = useState<'finish' | 'discard' | null>(null);
   const [warmUpDone, setWarmUpDone] = useState<string[]>([]);
+  const [warmUpOpen, setWarmUpOpen] = useState(false);
 
   if (!session || !data.preferences) {
     return (
@@ -129,8 +130,22 @@ export default function Workout() {
       ) : null}
 
       <Card tone="mint" style={styles.section}>
-        <AppText variant="h3">Warm-up · {WARM_UP.minutes} min</AppText>
-        {WARM_UP.moves.map((move) => {
+        <Pressable
+          onPress={() => setWarmUpOpen(!warmUpOpen)}
+          accessibilityRole="button"
+          accessibilityState={{ expanded: warmUpOpen }}
+          accessibilityLabel={`Warm-up, ${WARM_UP.minutes} minutes, ${warmUpDone.length} of ${WARM_UP.moves.length} moves done`}
+          style={styles.warmHead}>
+          <Ionicons name="walk" size={22} color={colors.tint.mint.fg} />
+          <AppText variant="h3" style={styles.flex}>
+            Warm-up · {WARM_UP.minutes} min
+          </AppText>
+          <AppText variant="caption" style={{ color: colors.tint.mint.fg }}>
+            {warmUpDone.length}/{WARM_UP.moves.length}
+          </AppText>
+          <Ionicons name={warmUpOpen ? 'chevron-up' : 'chevron-down'} size={20} color={colors.ink} />
+        </Pressable>
+        {warmUpOpen ? WARM_UP.moves.map((move) => {
           const done = warmUpDone.includes(move);
           return (
             <Pressable
@@ -146,7 +161,7 @@ export default function Workout() {
               </AppText>
             </Pressable>
           );
-        })}
+        }) : null}
       </Card>
 
       {session.exercises.map((log, index) => (
@@ -389,6 +404,7 @@ const styles = StyleSheet.create({
   skipRest: { minHeight: TOUCH, justifyContent: 'center' },
   section: { gap: space.sm },
   skipped: { opacity: 0.7 },
+  warmHead: { flexDirection: 'row', alignItems: 'center', gap: space.xs, minHeight: TOUCH },
   warmRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 40 },
   exHead: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   setRow: {
