@@ -1,0 +1,4 @@
+# Build Blob Fit MVP
+Read README.md, CLAUDE.md, docs/PRODUCT_REQUIREMENTS.md, docs/DESIGN_SYSTEM.md, docs/QUALITY_GATES.md and docs/ASSET_MANIFEST.md. Verify that all 5 image references exist. If not, request/upload the companion asset pack before final visual parity review.
+
+Implement an Expo React Native TypeScript app using native components. Produce Home, Goals, Daily Plan, Exercise Detail, Progress, and a functioning workout logging flow with local persistence and truthful data. Do not use visual screenshots as actual UI. Seed a modest exercise catalog, separate educational claims for professional review. Avoid paid services, backend and subscriptions. Work on a feature branch and PR; run all checks and report limitations. Do not commit secrets. Founder approves aesthetics and scope changes.
