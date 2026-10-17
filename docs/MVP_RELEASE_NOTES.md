@@ -60,11 +60,32 @@ Other checks: `expo-doctor` passed 18/20. The 2 failures need the Expo API, whic
 7. **Persistence:** a versioned AsyncStorage document with a migration hook. This is a deliberate deviation from the SQLite suggestion in `ARCHITECTURE.md`: it behaves identically on iOS, Android and web (web is the only runtime testable here), and the domain layer is storage-agnostic, so a later swap is contained.
 8. **Prescriptions** (sets, reps, holds, A/B split) are starting points pending qualified review.
 
+## Design QA round (issue #4, CG-IOS-001)
+
+Side-by-side sets: [393×852](screenshots/concept-vs-build-393.png) and [320×568, the smallest supported phone](screenshots/concept-vs-build-320.png). Both are the exported **web** build in Chromium, not an iOS simulator.
+
+- **Small phones:**
+  - A shared `Hero` scales the Blob art with the screen width and never lets it cover text.
+  - Headlines size themselves so their longest word fits, so 320pt phones no longer break "Wednesday" mid-word.
+  - There are no negative-margin overlaps (Home CTA, Plan week card, Progress cards).
+  - On 375pt phones and with large Dynamic Type, the quick links become 2×2 and the stat tiles reflow. On 320pt the ring and streak cards stack.
+- **iOS-native details:**
+  - SF Symbols via `expo-symbols`, with an explicit mapping in `src/components/Icon.tsx`; Android and web keep Ionicons.
+  - System alerts for confirmations, with the destructive style for discard and erase.
+  - `ActionSheetIOS` for exercise swaps.
+  - Light haptics on set completion and a success haptic on finishing.
+- **Exercise detail:** a simplified front/back muscle map (main muscles red, supporting yellow), labelled *pending coach review*.
+- **Regression guard:** the e2e smoke test also runs at 320×568 in CI (`E2E_VIEWPORT`).
+- **Not done yet, and why:**
+  - Native tab bar (`NativeTabs`): waiting for the first device or simulator run, so the system tab bar is not switched in blind.
+  - Step-by-step pose images and exercise-specific art: requested in issue #1 (CC-007).
+  - TestFlight / EAS: needs the founder's Apple Developer and Expo accounts.
+
 ## Known gaps and placeholders
 
 - **Art is interim.** The mascot cut-outs come from 941×1672 concept images and are soft on 3× screens. Hip hinge, glute bridge, plank, box/goblet squat, RDL, band row and prone Y raise have no approved pose, so they use a neutral icon tile. Production exports are requested in issue #1 (`CC-001`).
 - **Canonical asset PNGs** (11 files in `docs/ASSET_MANIFEST.md`) are still not on GitHub.
-- **Native runtime** has not been run on a simulator or device.
+- **Native runtime** has not been run on a simulator or device. iOS-only code paths (SF Symbols, system alerts, action sheet, haptics) are type-checked and bundled but unexercised. The quickest check is Expo Go: `npx expo start` on a computer, then scan the QR code with an iPhone.
 - **No notifications, no data export, no dark mode.** Dark mode is out of scope for the cream visual direction; `userInterfaceStyle` is locked to light.
 - **Copy review:** exercise text, the disclaimer and prescriptions need a qualified coach and legal review before any public release.
 - The working name "BLOB FIT" is pending trademark/app-store clearance. The app icon is a simple placeholder drawn from the canonical face.

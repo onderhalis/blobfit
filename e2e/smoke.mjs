@@ -3,13 +3,15 @@
 // with relaunches in between to prove local persistence. Screenshots land in e2e-output/.
 //
 //   npm run build:web && npm run e2e
+//   E2E_VIEWPORT=320x568 E2E_OUT=e2e-output/320 npm run e2e    # smallest supported phone
 import assert from 'node:assert/strict';
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 import { startServer } from './serve.mjs';
 
-const OUT = 'e2e-output';
+const OUT = process.env.E2E_OUT ?? 'e2e-output';
+const [VIEW_W, VIEW_H] = (process.env.E2E_VIEWPORT ?? '390x844').split('x').map(Number);
 const BASE = `http://localhost:${process.env.PORT ?? 8099}`;
 mkdirSync(OUT, { recursive: true });
 
@@ -21,7 +23,7 @@ const at = (day, hour, minute = 0) => new Date(2026, 9, day, hour, minute);
 const server = await startServer();
 const browser = await chromium.launch({ executablePath });
 const context = await browser.newContext({
-  viewport: { width: 390, height: 844 },
+  viewport: { width: VIEW_W, height: VIEW_H },
   deviceScaleFactor: 2,
   isMobile: true,
   hasTouch: true,
