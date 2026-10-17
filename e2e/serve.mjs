@@ -7,6 +7,8 @@ const root = join(process.cwd(), 'dist');
 const port = Number(process.env.PORT ?? 8099);
 /** Sub-path the build was exported for (Expo `experiments.baseUrl`), e.g. "/blobfit" for GitHub Pages. */
 const basePath = process.env.E2E_BASE_PATH ?? '';
+/** E2E_HOST=github-pages mimics GitHub Pages: directory redirects and 404.html with a 404 status. */
+const githubPages = process.env.E2E_HOST === 'github-pages';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -30,7 +32,20 @@ export function startServer() {
     const pathname = url.pathname.slice(basePath.length) || '/';
     const safe = normalize(decodeURIComponent(pathname)).replace(/^(\.\.[/\\])+/, '');
     let file = join(root, safe);
-    if (!file.startsWith(root) || !existsSync(file) || statSync(file).isDirectory()) {
+    if (githubPages) {
+      if (file.startsWith(root) && existsSync(file) && statSync(file).isDirectory()) {
+        if (!url.pathname.endsWith('/')) {
+          res.writeHead(301, { Location: `${url.pathname}/${url.search}` }).end();
+          return;
+        }
+        file = join(file, 'index.html');
+      }
+      if (!file.startsWith(root) || !existsSync(file)) {
+        res.writeHead(404, { 'Content-Type': TYPES['.html'] });
+        createReadStream(join(root, '404.html')).pipe(res);
+        return;
+      }
+    } else if (!file.startsWith(root) || !existsSync(file) || statSync(file).isDirectory()) {
       file = extname(safe) ? '' : join(root, 'index.html');
     }
     if (!file || !existsSync(file)) {
