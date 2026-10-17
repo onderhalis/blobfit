@@ -1,8 +1,8 @@
 # BLOB FIT — mobile app build brief
 
-**Status:** Design-approved handoff / implementation not started.  
+**Status:** Product and engineering handoff committed; image reference bundle must still be uploaded; implementation not started.  
 **Product:** An English-first, character-led beginner fitness application for iOS and Android.  
-**Source of truth:** The five images in [`assets/app-screens/`](assets/app-screens/) and the instructions in [`CLAUDE.md`](CLAUDE.md).
+**Source of truth:** [`CLAUDE.md`](CLAUDE.md) and the project documents. The five approved concept images are packaged in the [companion asset archive](#asset-installation) and need to be placed in `assets/app-screens/` before visual implementation.
 
 ## North star
 
@@ -23,7 +23,7 @@ Blob is the **same original warm-white, black-shorts mascot** audiences followed
 ## For Claude Code — fastest start
 
 1. Read [`CLAUDE.md`](CLAUDE.md) and [`docs/PRODUCT_REQUIREMENTS.md`](docs/PRODUCT_REQUIREMENTS.md) completely.
-2. Review all five assets in `assets/app-screens/` and brand rules in `docs/DESIGN_SYSTEM.md`.
+2. After installing the asset package, review all five assets in `assets/app-screens/` and brand rules in `docs/DESIGN_SYSTEM.md`.
 3. Follow [`.claude/commands/build-mvp.md`](.claude/commands/build-mvp.md) and implement/test the Expo app.
 4. Report what works, what remains placeholder, how to run it, and screenshots of the five screens.
 
@@ -52,3 +52,8 @@ Blob is the **same original warm-white, black-shorts mascot** audiences followed
 - No auth, Supabase, RevenueCat, paid plan, generative coaching or medical claims in MVP unless separately approved.
 - Exercise technique, muscle overlays and rep ranges require qualified review before production release.
 - Working product name “BLOB FIT” is provisional until trademark/app-store clearance.
+## Asset installation
+
+The connected GitHub integration can commit text and code but not the binary images from this ChatGPT handoff. Download the companion `blobfit-claude-handoff.zip` attached in the originating conversation. Extract it, then copy `blob-fit-starter/assets/` into this repository's `assets/` directory and commit the assets. The archive also holds the source documentation. **Do not assume the images are already in GitHub.** Claude Code should confirm all expected PNGs before claiming visual parity.
+
+**Repository access:** Initially created as PUBLIC by the user; change to PRIVATE in GitHub Settings if you prefer to keep the unreleased work confidential.
