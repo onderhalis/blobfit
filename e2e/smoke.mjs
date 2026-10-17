@@ -5,6 +5,7 @@
 //   npm run build:web && npm run e2e
 //   E2E_VIEWPORT=320x568 E2E_OUT=e2e-output/320 npm run e2e    # smallest supported phone
 //   E2E_BASE_PATH=/blobfit npm run e2e                           # a build exported for a sub-path (GitHub Pages)
+//   E2E_REMOTE_URL=https://onderhalis.github.io/blobfit npm run e2e   # the published preview, no local server
 import assert from 'node:assert/strict';
 import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
@@ -13,7 +14,8 @@ import { startServer } from './serve.mjs';
 
 const OUT = process.env.E2E_OUT ?? 'e2e-output';
 const [VIEW_W, VIEW_H] = (process.env.E2E_VIEWPORT ?? '390x844').split('x').map(Number);
-const BASE = `http://localhost:${process.env.PORT ?? 8099}${process.env.E2E_BASE_PATH ?? ''}`;
+const REMOTE = process.env.E2E_REMOTE_URL?.replace(/\/$/, '');
+const BASE = REMOTE ?? `http://localhost:${process.env.PORT ?? 8099}${process.env.E2E_BASE_PATH ?? ''}`;
 mkdirSync(OUT, { recursive: true });
 
 const executablePath = process.env.CHROMIUM_PATH ?? (process.env.PLAYWRIGHT_BROWSERS_PATH ? '/opt/pw-browsers/chromium' : undefined);
@@ -21,7 +23,7 @@ const executablePath = process.env.CHROMIUM_PATH ?? (process.env.PLAYWRIGHT_BROW
 /** Local wall-clock times (the app's calendar logic is local-time). Oct 2026: 5th, 12th and 19th are Mondays. */
 const at = (day, hour, minute = 0) => new Date(2026, 9, day, hour, minute);
 
-const server = await startServer();
+const server = REMOTE ? null : await startServer();
 const browser = await chromium.launch({ executablePath });
 const context = await browser.newContext({
   viewport: { width: VIEW_W, height: VIEW_H },
@@ -244,5 +246,5 @@ try {
   throw error;
 } finally {
   await browser.close();
-  server.close();
+  server?.close();
 }
