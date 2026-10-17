@@ -2,7 +2,11 @@
 
 **Branch:** `claude/zealous-cannon-9cvkob` · **Date:** 2026-10-17 · **Status:** feature-complete MVP preview. This is not an app-store release.
 
-![Approved concepts vs built app](screenshots/concept-vs-build.png)
+**Web preview:** https://onderhalis.github.io/blobfit/ (the exported web build; not the native app). See [Web preview](#web-preview) and, for iPhone, [`NATIVE_TESTING.md`](NATIVE_TESTING.md).
+
+![Approved concepts vs built app at 393pt](screenshots/concept-vs-build-393.png)
+
+All main screens: [`screenshots/all-screens-393.png`](screenshots/all-screens-393.png). Smallest supported phone: [`screenshots/concept-vs-build-320.png`](screenshots/concept-vs-build-320.png).
 
 ## Run it
 
@@ -76,17 +80,47 @@ Side-by-side sets: [393×852](screenshots/concept-vs-build-393.png) and [320×56
   - Light haptics on set completion and a success haptic on finishing.
 - **Exercise detail:** a simplified front/back muscle map (main muscles red, supporting yellow), labelled *pending coach review*.
 - **Regression guard:** the e2e smoke test also runs at 320×568 in CI (`E2E_VIEWPORT`).
-- **Web demo, ready to publish:** `.github/workflows/pages.yml` publishes the web build to `https://onderhalis.github.io/blobfit/` and checks that the live page serves the app. It is manual only: after merging, enable Pages (Settings → Pages → Source: GitHub Actions) and run the workflow. Its sub-path build passes the full smoke test locally. It is a web preview, not native proof.
-- **Not done yet, and why:**
-  - Native tab bar (`NativeTabs`): waiting for the first device or simulator run, so the system tab bar is not switched in blind.
-  - Step-by-step pose images and exercise-specific art: requested in issue #1 (CC-007).
-  - TestFlight / EAS: needs the founder's Apple Developer and Expo accounts.
+
+## Native iOS round
+
+iOS now uses the system chrome. Android and the web keep the custom chrome, which the e2e tests and the web preview exercise.
+
+| Area | iOS | Android / web |
+|---|---|---|
+| Tabs | `NativeTabs` (UITabBarController, Liquid Glass on iOS 26) with SF Symbols, `(tabs)/_layout.ios.tsx` | Floating custom tab bar |
+| Pushed screens | Native navigation bar, back chevron, edge swipe-back | Custom top bar with back button |
+| Workout | Sheet; swipe down minimises it (it stays saved) | Full screen, minimise button |
+| Insets | UIKit automatic scroll insets (status bar, nav bar, tab bar, home indicator) | Safe-area insets applied by hand |
+| Confirmations, swap, units | System alert, action sheet, UISegmentedControl | Modal sheet, inline list, pill control |
+| Icons | SF Symbols (explicit map, unit-tested) | Ionicons |
+
+Also in this round:
+- **Art:** the interim cut-outs are upscaled 2–4× (Real-ESRGAN, same art, nothing redrawn) and served as WebP, so they are sharp on 3× screens. See `assets/illustrations/interim/README.md`.
+- **Hero:** Blob sits on a soft warm glow with a floor shadow, as in the concepts' sunlit studio.
+- **Onboarding:** the goal step uses the shared hero and the concept's three promises.
+- **Plan rows:** title-case names, a smaller badge and thumbnail, one-line tags; nothing breaks mid-word, even at 320pt.
+- **Tests:** headline fitting has unit tests.
+- **EAS:** `eas.json` and a bundle identifier are added; `docs/NATIVE_TESTING.md` covers Expo Go, the Simulator, EAS and TestFlight.
+
+**Not verified:** none of the iOS-only paths has run on a simulator or device. This container has no macOS. They are type-checked and bundle for iOS and Android.
+
+## Web preview
+
+https://onderhalis.github.io/blobfit/ is served from the `gh-pages` branch (published with the founder's approval).
+
+- **Publish:** `tools/preview/deploy-pages.sh` builds the committed, pushed source for the `/blobfit` sub-path. It adds a page per route so deep links return 200, and commits the result to `gh-pages` with `preview.json`, which records the source commit and build id.
+- **Verify:** every deploy runs the "Verify web preview" workflow on `gh-pages`. It waits until the live URL serves that build id, then runs the full Playwright smoke test against the **live HTTPS URL** at 390×844 and 320×568 from a GitHub runner.
+- **Limits:** data stays in the visitor's browser (`localStorage`). There is no backend, analytics or account. It is the web build, so it shows the web chrome (custom tab bar and top bars), not the iOS system UI.
+
+Still open:
+- Step-by-step pose images and exercise-specific art: requested in issue #1 (CC-007, CC-009).
+- TestFlight / EAS: needs the founder's Apple Developer and Expo accounts.
 
 ## Known gaps and placeholders
 
-- **Art is interim.** The mascot cut-outs come from 941×1672 concept images and are soft on 3× screens. Hip hinge, glute bridge, plank, box/goblet squat, RDL, band row and prone Y raise have no approved pose, so they use a neutral icon tile. Production exports are requested in issue #1 (`CC-001`).
+- **Art is interim.** The mascot cut-outs come from 941×1672 concept images. They are upscaled for 3× screens, but they are not production exports. Hip hinge, glute bridge, plank, box/goblet squat, RDL, band row and prone Y raise have no approved pose, so they use a neutral icon tile. Production exports are requested in issue #1 (`CC-001`).
 - **Canonical asset PNGs** (11 files in `docs/ASSET_MANIFEST.md`) are still not on GitHub.
-- **Native runtime** has not been run on a simulator or device. iOS-only code paths (SF Symbols, system alerts, action sheet, haptics) are type-checked and bundled but unexercised. The quickest check is Expo Go: `npx expo start` on a computer, then scan the QR code with an iPhone.
+- **Native runtime** has not been run on a simulator or device. The iOS-only paths (system tab bar, navigation bars, sheet, automatic insets, SF Symbols, alerts, action sheet, segmented control, haptics) are type-checked and bundled but not exercised. The quickest check is Expo Go; see `docs/NATIVE_TESTING.md`.
 - **No notifications, no data export, no dark mode.** Dark mode is out of scope for the cream visual direction; `userInterfaceStyle` is locked to light.
 - **Copy review:** exercise text, the disclaimer and prescriptions need a qualified coach and legal review before any public release.
 - The working name "BLOB FIT" is pending trademark/app-store clearance. The app icon is a simple placeholder drawn from the canonical face.
