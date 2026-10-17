@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["wiro"],
+  "permissions": {
+    "ask": ["mcp__wiro__run_model", "mcp__wiro__upload_file"]
+  }
+}

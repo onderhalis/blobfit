@@ -64,6 +64,24 @@ npm run video -- generate ep003-squat-test --approve <code>             # one pa
 npm run video -- status ep003-squat-test [--refresh]                    # read-only follow-up
 ```
 
+## Optional: Wiro MCP server in Claude Code
+
+The repo ships a project MCP config (`.mcp.json`) for Wiro's hosted MCP server, `https://mcp.wiro.ai/v1`. It lets a Claude Code session browse models and read live prices (`search_models`, `get_model_schema`) without the CLI. It contains no secret; the header is filled from the environment variable `WIRO_MCP_AUTH`:
+
+- signature-auth projects: `WIRO_MCP_AUTH=<API_KEY>:<API_SECRET>`
+- key-only projects: `WIRO_MCP_AUTH=<API_KEY>`
+
+Setup:
+- **Claude Code cloud environment:**
+  1. Add `WIRO_MCP_AUTH` as a network secret or environment variable.
+  2. Allow `mcp.wiro.ai` and `api.wiro.ai` under Network access → Allowed domains.
+  3. Start a new session.
+- **Local:** `export WIRO_MCP_AUTH=...` in the shell that starts `claude`. Use `read -rs` as shown above. The first time, Claude Code asks you to approve the project's `wiro` server.
+
+Wiro's MCP server cannot be added as a claude.ai connector. Connectors that take only a URL need OAuth, and Wiro uses API keys.
+
+`.claude/settings.json` makes Claude Code ask for confirmation before every `run_model` call (spends credits) and every `upload_file` call. The approval rule still applies: a clip is generated only after the founder approves a specific estimate. For paid runs, prefer the CLI: it enforces the budget cap and approval code, writes the ledger, and never retries. MCP's `run_model` does none of that.
+
 ## Where things go
 
 | Path | In git? | Contents |
@@ -102,6 +120,6 @@ Requires Python 3.10+ with Pillow, ffmpeg, and `npm install` (for the bundled fo
 
 ## Known limitations
 
-- This repo's cloud container cannot reach `api.wiro.ai` (network policy). Run the commands locally, or allow the domain as described above.
+- This repo's cloud container cannot reach `api.wiro.ai` or `mcp.wiro.ai` (network policy). Run the commands locally, or allow the domains as described above.
 - Prices are only known for the live parameters. Models billed by compute time give an approximate figure and require `--accept-approximate` plus a cap of at least twice the estimate.
 - Image-to-video output quality depends on the first frame. The interim frame comes from a 941×1672 concept, so expect softness until a production still is available.
