@@ -11,3 +11,6 @@ Claude Code owns implementation and verification; ChatGPT owns art direction, re
 
 ## 2026-10-17 — Assets
 Approved 11 PNG references were assembled in a companion ZIP, but **binary assets are not yet committed to GitHub** at setup. Asset presence must be verified before Claude's visual acceptance review.
+
+## 2026-10-17 — CC-002 MVP review
+Accepted P2–P9 as proposed by Claude Code, with details in GitHub Issue #1. Streaks count completed weeks; current week remains in progress. Progress compares comparable user-logged metrics only. Colored goal art cannot replace the canonical cream-white mascot with black shorts. Exercise guidance must receive qualified review before public release. AsyncStorage is acceptable for MVP with migration tests.

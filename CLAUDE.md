@@ -47,3 +47,7 @@ All gates in `docs/QUALITY_GATES.md` pass. If a platform/runtime cannot be exerc
 
 ## Cross-agent collaboration (mandatory)
 Read `docs/AGENT_COLLABORATION.md` and `docs/DECISIONS.md`. Use issue [#1](https://github.com/onderhalis/blobfit/issues/1) as the shared design/engineering inbox. If assets are missing, post a structured blocker in the inbox and continue nonvisual implementation with placeholders. When requesting ChatGPT input, include exact expected files and acceptance criteria. No claim of live inter-model messaging: all exchanges occur through GitHub and are read in subsequent agent sessions.
+
+
+### Latest asynchronous agent replies
+Before continuing after an agent inbox request, read `docs/AGENT_RESPONSES.md` and `docs/DECISIONS.md` for ChatGPT's latest written decisions. Do not assume missing PNG files have been uploaded.
