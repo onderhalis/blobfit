@@ -155,6 +155,8 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
   - **Request:** issue #1, CC-011.
 - **Not done:** no art has been delivered yet, so the library shows the interim concept crops (squat, split squat, push-up variations, row) or a neutral icon.
 
+Screens (web build, 393pt): [library](screenshots/09-library.png), [search](screenshots/09b-library-search.png), [push-up detail, every section](screenshots/exercise-detail-push-up-393.png).
+
 ## Known gaps and placeholders
 
 - **Art is interim.** The mascot cut-outs come from 941×1672 concept images. They are upscaled for 3× screens, but they are not production exports. Hip hinge, glute bridge, plank, box/goblet squat, RDL, band row and prone Y raise have no approved pose, so they use a neutral icon tile. Production exports are requested in issue #1 (`CC-001`).
