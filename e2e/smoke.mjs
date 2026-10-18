@@ -131,7 +131,8 @@ try {
   step('brand-new progress shows the empty state, no fake numbers');
   await byId('tab-progress').click();
   await byId('progress').waitFor();
-  await byId('progress').getByText('No workouts logged yet').waitFor();
+  await byId('progress').getByText('No workouts yet').waitFor();
+  await byId('progress-first').waitFor();
   await shot('05-progress-empty');
 
   step('plan + exercise detail');
@@ -153,7 +154,7 @@ try {
   await byId('summary-done').click();
   await byId('progress').waitFor();
   await assertSingleTabBar();
-  await byId('progress').getByText('1 in last 30 days').waitFor();
+  await byId('progress').getByText('1 workout logged').waitFor();
 
   step('log sessions 2–4 on later days with a little more each time');
   await logWorkout({ startTime: at(7, 18), reps: 1, load: 2, expectHistory: true });

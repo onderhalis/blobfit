@@ -7,8 +7,8 @@ import { Icon } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
 import { MotionMarks } from '@/components/Illustration';
 import { ProgressRing } from '@/components/Progress';
-import { EmptyState, Screen, TopBar, useLayout } from '@/components/Screen';
-import { WEEKDAY_LONG, WEEKDAY_SHORT, addDays, formatShortDate, startOfDay, weekdayOf } from '@/domain/dates';
+import { Screen, TopBar, useLayout } from '@/components/Screen';
+import { WEEKDAY_LONG, WEEKDAY_SHORT, formatShortDate, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
 import { WORKOUT_TEMPLATES, nextTrainingDay } from '@/domain/plan';
 import {
@@ -16,6 +16,7 @@ import {
   completedSessions,
   personalBests,
   thenAndNow,
+  todayStatus,
   totals,
   weekStreak,
   trainingCalendar,
@@ -71,14 +72,15 @@ export default function Progress() {
   const adh = adherence(prefs, data.sessions, now);
   const comparisons = thenAndNow(data.sessions);
   const bests = personalBests(data.sessions).slice(0, 5);
-  const monthStart = startOfDay(addDays(now, -29));
-  const last30 = sessions.filter((session) => new Date(session.endedAt as string) >= monthStart).length;
+  const status = todayStatus(prefs, data.sessions, now);
+  const nextWhen =
+    status.kind === 'train' || status.kind === 'in-progress' ? 'Today' : WEEKDAY_LONG[weekdayOf(status.nextDay)];
   const calendar = trainingCalendar(prefs, data.sessions, now);
   const firstDate = sessions.length > 0 ? new Date(sessions[0].endedAt as string) : null;
   const headline = sessions.length === 0 ? 'No workouts yet' : `${plural(sessions.length, 'workout')} logged`;
   const detail = firstDate
     ? `Since ${formatShortDate(firstDate)} · ${plural(t.activeMinutes, 'minute')} of training`
-    : 'Log your first workout and it will show up here.';
+    : 'Your history starts with your first logged session. Nothing here is estimated.';
 
   return (
     <Screen withTabBar testID="progress">
@@ -134,28 +136,48 @@ export default function Progress() {
             )}
           </ProgressRing>
         </Card>
-        <Card style={styles.streakCard} accessibilityLabel={`${plural(streak, 'week')} in a row on target`}>
-          <View style={styles.row}>
-            <Icon name="flame" size={34} color={colors.accent} />
-            <AppText variant="stat">{streak}</AppText>
-          </View>
-          <AppText variant="bodyStrong">{streak === 1 ? 'Week on target' : 'Weeks on target'}</AppText>
-          <AppText variant="caption" tone="secondary">
-            Weeks in a row you hit your planned sessions. Rest days never break it.
-          </AppText>
-        </Card>
+        {sessions.length === 0 ? (
+          // Nothing to count yet: point at the first session instead of showing zeros.
+          <Card
+            style={styles.streakCard}
+            testID="progress-first"
+            onPress={() => router.push('/plan')}
+            accessibilityLabel={`First workout: ${status.workout.name}, ${nextWhen}`}
+            accessibilityHint="Opens your plan">
+            <Eyebrow>First workout</Eyebrow>
+            <AppText variant="h3">{status.workout.name}</AppText>
+            <AppText tone="secondary">{nextWhen}</AppText>
+            <View style={styles.row}>
+              <AppText variant="bodyStrong">See the plan</AppText>
+              <Icon name="arrow-forward" size={16} color={colors.ink} />
+            </View>
+          </Card>
+        ) : (
+          <Card style={styles.streakCard} accessibilityLabel={`${plural(streak, 'week')} in a row on target`}>
+            <View style={styles.row}>
+              <Icon name="flame" size={34} color={colors.accent} />
+              <AppText variant="stat">{streak}</AppText>
+            </View>
+            <AppText variant="bodyStrong">{streak === 1 ? 'Week on target' : 'Weeks on target'}</AppText>
+            <AppText variant="caption" tone="secondary">
+              Weeks in a row you hit your planned sessions. Rest days never break it.
+            </AppText>
+          </Card>
+        )}
       </View>
 
       {sessions.length > 0 ? (
         <View style={[styles.tiles, compact && styles.wrap]}>
-          <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.sessions} workouts in total, ${last30} in the last 30 days`}>
+          <Card
+            style={[styles.tile, tileWidth]}
+            accessibilityLabel={`${t.sets} sets in total, about ${Math.round(t.sets / t.sessions)} per workout`}>
             <Icon name="barbell" size={26} color={colors.ink} />
-            <AppText variant="h2">{t.sessions}</AppText>
+            <AppText variant="h2">{t.sets}</AppText>
             <AppText variant="caption" tone="secondary">
-              Workouts
+              Sets
             </AppText>
-            <AppText variant="caption" tone={last30 > 0 ? 'success' : 'secondary'}>
-              {last30} in last 30 days
+            <AppText variant="caption" tone="secondary">
+              About {Math.round(t.sets / t.sessions)} per workout
             </AppText>
           </Card>
           <Card
@@ -183,16 +205,7 @@ export default function Progress() {
         </View>
       ) : null}
 
-      {sessions.length === 0 ? (
-        <Card>
-          <EmptyState
-            title="No workouts logged yet"
-            body="Finish your first session and your real numbers will appear here. Nothing is estimated."
-            action="Go to today's plan"
-            onAction={() => router.push('/plan')}
-          />
-        </Card>
-      ) : (
+      {sessions.length === 0 ? null : (
         <>
           <Card style={styles.section}>
             <View style={styles.row}>
