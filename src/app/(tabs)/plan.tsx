@@ -7,6 +7,8 @@ import { Button } from '@/components/Button';
 import { Card, Chevron, ReviewBadge, Tag } from '@/components/Card';
 import { Icon, type IconName } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
+import { suggestTarget } from '@/domain/progression';
+import { suggestionCopy } from '@/features/progressionCopy';
 import { ExerciseArt, Illustration, MotionMarks } from '@/components/Illustration';
 import { WeekDots } from '@/components/Progress';
 import { Screen, TopBar, useLayout } from '@/components/Screen';
@@ -183,13 +185,19 @@ export default function Plan() {
       {workout.exercises.map((item, index) => {
         const exercise = getExercise(item.exerciseId);
         const tag = AREA_TAG[exercise.bodyArea];
+        const suggestion = suggestTarget(exercise, item.target, data.sessions, {
+          units: data.settings.units,
+          equipment: prefs.equipment,
+        });
+        const note = suggestionCopy(exercise.id, suggestion, data.settings.units);
+        const planned = { ...item, target: suggestion.value };
         return (
           <Card
             key={item.slot}
             testID={`plan-exercise-${exercise.id}`}
             style={styles.row}
             onPress={() => router.push({ pathname: '/exercise/[id]', params: { id: exercise.id } })}
-            accessibilityLabel={`${index + 1}. ${exercise.name}, ${prescription(item)}`}
+            accessibilityLabel={`${index + 1}. ${exercise.name}, ${prescription(planned)}${note.tone === 'up' ? `, ${note.title}` : ''}`}
             accessibilityHint="Opens technique and tips">
             <View style={styles.rowMain}>
               <View style={styles.number}>
@@ -198,8 +206,13 @@ export default function Plan() {
               <View style={[styles.flex, styles.rowText]}>
                 <AppText variant="h3">{exercise.name}</AppText>
                 <AppText variant="caption" tone="secondary">
-                  {prescription(item)}
+                  {prescription(planned)}
                 </AppText>
+                {note.tone === 'up' ? (
+                  <AppText variant="caption" style={{ color: colors.successInk }}>
+                    {note.title}
+                  </AppText>
+                ) : null}
                 <Tag label={exercise.bodyArea} tint={tag.tint} icon={tag.icon} />
               </View>
               <ExerciseArt exercise={exercise} kind="thumb" size={narrow ? 60 : 76} />

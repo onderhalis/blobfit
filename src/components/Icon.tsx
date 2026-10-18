@@ -27,6 +27,8 @@ export const SF_SYMBOLS: Partial<Record<IconName, SFSymbolName>> = {
   pause: 'pause.fill',
   'play-skip-forward': 'forward.end.fill',
   repeat: 'repeat',
+  'trending-up': 'chart.line.uptrend.xyaxis',
+  sparkles: 'sparkles',
   home: 'house.fill',
   'home-outline': 'house',
   'calendar-clear': 'calendar',

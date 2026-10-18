@@ -12,10 +12,12 @@ import { EmptyState, Screen } from '@/components/Screen';
 import { Stepper } from '@/components/Stepper';
 import { formatDuration } from '@/domain/dates';
 import { getExercise, substitutesFor } from '@/domain/exercises';
-import { WARM_UP, buildWorkout } from '@/domain/plan';
+import { WARM_UP, buildWorkout, slotTarget } from '@/domain/plan';
+import { suggestTarget } from '@/domain/progression';
 import { canComplete, doneSets, elapsedMs, findOpenSession, MAX_SETS } from '@/domain/session';
 import type { ExerciseLog, Units, WorkoutSession } from '@/domain/types';
 import { goToTab } from '@/features/navigation';
+import { EFFORT_LABEL, lastTimeLine, suggestionCopy } from '@/features/progressionCopy';
 import { fromDisplayLoad, plural, toDisplayLoad } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
 import { useNow, useStore } from '@/state/AppStore';
@@ -218,11 +220,15 @@ function ExerciseCard({
   equipment: Parameters<typeof substitutesFor>[1];
   onSetDone: () => void;
 }) {
-  const { dispatch } = useStore();
+  const { data, dispatch } = useStore();
   const [swapOpen, setSwapOpen] = useState(false);
   const exercise = getExercise(log.exerciseId);
+  // Same inputs the session used to set today's target, so the note explains the numbers shown.
+  const suggestion = suggestTarget(exercise, slotTarget(log.slot) ?? log.target, data.sessions, { units, equipment });
+  const note = suggestionCopy(exercise.id, suggestion, units);
   const timed = exercise.measure === 'seconds';
   const options = substitutesFor(log.exerciseId, equipment);
+  const harder = suggestion.harderId ? options.find((option) => option.id === suggestion.harderId) : undefined;
   const base = { sessionId: session.id, exerciseIndex: index } as const;
   const done = log.sets.filter((set) => set.done).length;
   const swapTo = (exerciseId: string) => dispatch({ type: 'substituteExercise', ...base, exerciseId });
@@ -268,8 +274,36 @@ function ExerciseCard({
         </View>
       </View>
 
+      {!log.skipped ? (
+        <View style={[styles.note, note.tone === 'up' && styles.noteUp]} testID={`note-${exercise.id}`}>
+          <Icon
+            name={note.tone === 'up' ? 'trending-up' : note.tone === 'same' ? 'repeat' : 'sparkles'}
+            size={18}
+            color={note.tone === 'up' ? colors.successInk : colors.inkSecondary}
+          />
+          <View style={styles.flex}>
+            <AppText variant="bodyStrong" style={note.tone === 'up' ? { color: colors.successInk } : undefined}>
+              {note.title}
+            </AppText>
+            {note.detail ? (
+              <AppText variant="caption" tone="secondary">
+                {note.detail}
+              </AppText>
+            ) : null}
+            {suggestion.last ? (
+              <AppText variant="caption" tone="secondary">
+                {lastTimeLine(exercise.id, suggestion.last, units)}
+              </AppText>
+            ) : null}
+          </View>
+        </View>
+      ) : null}
+      {harder && !log.skipped ? (
+        <Button label={`Try ${harder.name}`} variant="secondary" size="md" icon="swap-horizontal" onPress={() => swapTo(harder.id)} />
+      ) : null}
+
       {log.skipped ? (
-        <AppText tone="secondary">Skipped. That&apos;s okay — listen to your body.</AppText>
+        <AppText tone="secondary">Skipped today. It stays out of your totals.</AppText>
       ) : (
         log.sets.map((set, setIndex) => (
           <View key={setIndex} style={[styles.setRow, set.done && styles.setDone]}>
@@ -324,6 +358,33 @@ function ExerciseCard({
           </View>
         ))
       )}
+
+      {!log.skipped && log.sets.length > 0 && done === log.sets.length ? (
+        <View style={styles.effort}>
+          <AppText variant="caption" tone="secondary">
+            How did that feel? It sets next time&apos;s target.
+          </AppText>
+          <View style={styles.effortRow} accessibilityRole="radiogroup" accessibilityLabel={`How did ${exercise.name} feel?`}>
+            {(['easy', 'right', 'hard'] as const).map((effort) => {
+              const selected = log.effort === effort;
+              return (
+                <Pressable
+                  key={effort}
+                  testID={`effort-${exercise.id}-${effort}`}
+                  accessibilityRole="radio"
+                  aria-checked={selected}
+                  accessibilityLabel={EFFORT_LABEL[effort]}
+                  onPress={() => dispatch({ type: 'setEffort', ...base, effort: selected ? undefined : effort })}
+                  style={[styles.effortChip, selected && styles.effortChipOn]}>
+                  <AppText variant="bodyStrong" style={{ color: selected ? colors.inkOnDark : colors.ink }}>
+                    {EFFORT_LABEL[effort]}
+                  </AppText>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+      ) : null}
 
       <View style={styles.actions}>
         {!log.skipped ? (
@@ -455,6 +516,26 @@ const styles = StyleSheet.create({
   },
   doneButtonOn: { backgroundColor: colors.success, borderColor: colors.success },
   actions: { flexDirection: 'row', flexWrap: 'wrap', gap: space.xs },
+  note: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: space.xs,
+    padding: space.sm,
+    borderRadius: radius.md,
+    backgroundColor: colors.surfaceMuted,
+  },
+  noteUp: { backgroundColor: colors.successSoft },
+  effort: { gap: space.xs },
+  effortRow: { flexDirection: 'row', gap: space.xs },
+  effortChip: {
+    flex: 1,
+    minHeight: TOUCH,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: radius.pill,
+    backgroundColor: colors.surfaceMuted,
+  },
+  effortChipOn: { backgroundColor: colors.ink },
   small: {
     flexDirection: 'row',
     alignItems: 'center',

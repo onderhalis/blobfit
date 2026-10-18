@@ -11,11 +11,13 @@ import { Illustration } from '@/components/Illustration';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
 import { formatDuration, formatShortDate, WEEKDAY_LONG, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
-import { WORKOUT_TEMPLATES } from '@/domain/plan';
+import { slotTarget, WORKOUT_TEMPLATES } from '@/domain/plan';
+import { lastPerformance, suggestTarget } from '@/domain/progression';
 import { completedSessions, newBestsIn } from '@/domain/progress';
 import { sessionTotals } from '@/domain/session';
-import { formatLoad, formatVolume, plural, setValueLabel } from '@/lib/format';
 import { goToTab } from '@/features/navigation';
+import { EFFORT_LABEL, nextTimeLine } from '@/features/progressionCopy';
+import { formatLoad, formatVolume, plural, setValueLabel } from '@/lib/format';
 import { useStore } from '@/state/AppStore';
 import { colors, space } from '@/theme/tokens';
 
@@ -74,11 +76,11 @@ export default function SessionSummary() {
           <Eyebrow>
             {WEEKDAY_LONG[weekdayOf(ended)]} · {formatShortDate(ended)}
           </Eyebrow>
-          <AppText variant="h1">{isFresh ? 'Workout saved.' : WORKOUT_TEMPLATES[session.workoutId].name}</AppText>
+          <AppText variant="h1">
+            {isFresh ? `${WORKOUT_TEMPLATES[session.workoutId].name} done` : WORKOUT_TEMPLATES[session.workoutId].name}
+          </AppText>
           <AppText variant="lead" tone="secondary">
-            {isFresh
-              ? `Session ${number} is in your log. You showed up — that counts.`
-              : `Session ${number} · ${WORKOUT_TEMPLATES[session.workoutId].focus}`}
+            Session {number} · {WORKOUT_TEMPLATES[session.workoutId].focus}
           </AppText>
         </View>
         <View style={styles.heroArt} pointerEvents="none">
@@ -124,6 +126,15 @@ export default function SessionSummary() {
 
       {session.exercises.map((log) => {
         const exercise = getExercise(log.exerciseId);
+        // "Next time" only for the latest log of this exercise; older sessions are history.
+        const isLatest = lastPerformance(exercise.id, data.sessions)?.date === session.endedAt;
+        const next =
+          isLatest && !log.skipped && log.sets.length > 0
+            ? suggestTarget(exercise, slotTarget(log.slot) ?? log.target, data.sessions, {
+                units,
+                equipment: data.preferences?.equipment ?? [],
+              })
+            : null;
         return (
           <Card key={log.slot} style={styles.section}>
             <View style={styles.row}>
@@ -131,6 +142,7 @@ export default function SessionSummary() {
                 {exercise.name}
               </AppText>
               {log.skipped || log.sets.length === 0 ? <Tag label="Skipped" tint="butter" /> : null}
+              {log.effort ? <Tag label={`Felt ${EFFORT_LABEL[log.effort].toLowerCase()}`} tint="blue" /> : null}
             </View>
             {log.substitutedFrom ? (
               <AppText variant="caption" tone="secondary">
@@ -146,6 +158,11 @@ export default function SessionSummary() {
                     set.loadKg ? `${setValueLabel(exercise.id, set.value)} × ${formatLoad(set.loadKg, units)}` : setValueLabel(exercise.id, set.value),
                   )
                   .join(' · ')}
+              </AppText>
+            ) : null}
+            {next ? (
+              <AppText variant="bodyStrong" style={{ color: colors.successInk }} testID={`next-${exercise.id}`}>
+                {nextTimeLine(exercise.id, next, units)}
               </AppText>
             ) : null}
           </Card>
