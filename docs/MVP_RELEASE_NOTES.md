@@ -1,6 +1,6 @@
 # BLOB FIT — MVP implementation report
 
-**Branch:** `claude/zealous-cannon-9cvkob` · **Date:** 2026-10-17 · **Status:** feature-complete MVP preview. This is not an app-store release.
+**Branch:** `claude/zealous-cannon-9cvkob` · **Date:** 2026-10-18 · **Status:** feature-complete MVP preview. This is not an app-store release.
 
 **Web preview:** https://onderhalis.github.io/blobfit/ (the exported web build; not the native app). See [Web preview](#web-preview) and, for iPhone, [`NATIVE_TESTING.md`](NATIVE_TESTING.md).
 
@@ -26,21 +26,21 @@ Stack: Expo SDK 58, React Native 0.88, React 19.3, TypeScript 6 (strict), Expo R
 | Area | Behaviour |
 |---|---|
 | **Onboarding** | Four steps: goal, experience, training days (2–4, with a warning for three days in a row), equipment, plus a required general-fitness disclaimer. The answers persist across relaunch and can be edited later in *More → Your plan settings*. |
-| **Home** | Greeting and a hero whose copy follows today's real state: first session, session N ready, rest day, done today, or resume. Also shows the week's journey card (sessions done vs planned), quick links and a focus card. |
+| **Home** | Today's date and plain status from real state ("Full Body B today", "Rest day", "Done for today", "… in progress") with one action. Below: this week (done vs planned, streak), today's or the next workout with each exercise's target and what changed since last time, and the last workout. |
 | **Plan** | Beginner full-body A/B rotation. A is squat, incline push-up and a pull; B is hip hinge, a pull and plank. Sets depend on experience. The pull adapts to equipment: dumbbell row, then band row, then prone Y raise. The screen also has week dots (done / planned / missed / rest / extra), a ~duration estimate, an expandable warm-up and A/B preview. Rest days are real days off, and you can still start a workout if you want. |
 | **Exercise detail** | Muscles (text chips, no anatomy overlay), starting position, numbered steps, rep phases, form cues, common mistakes, and linked easier/harder variations. Every exercise shows a **Content review pending** badge. |
 | **Library** | 12 movements grouped by pattern. Exercises needing equipment you didn't select are flagged. |
-| **Workout logging** | Per-set reps or seconds and load (kg/lb), done ticks, add/remove sets, skip, swap to a same-pattern exercise your equipment allows, a persistent timer with pause/resume, a 60 s rest countdown and a warm-up checklist. Discarding asks for confirmation. Only ticked sets are saved. |
-| **Session summary** | Duration, sets, reps, hold time, volume, and new personal bests compared only with your own earlier sessions. Delete also asks for confirmation. |
-| **Progress** | All numbers come from logs (per-side exercises count both sides): this week's ring, weeks-on-target streak, total workouts (and last 30 days), consistency (completed ÷ scheduled days so far), total reps/volume, first-vs-latest best set (like-for-like only: loaded vs loaded, bodyweight vs bodyweight), weekly bar history, personal bests and recent sessions. Brand-new users see an empty state. |
-| **More** | Plan settings, library, safety & about, kg/lb, and erase all data (with confirmation). |
+| **Workout logging** | Per-set reps or seconds and load (kg/lb), done ticks, add/remove sets, skip, swap to a same-pattern exercise your equipment allows, a persistent timer with pause/resume, a 60 s rest countdown and a warm-up checklist. Each exercise shows what you did last time and why today's target is what it is; after its last set it asks how it felt (easy / just right / hard). Discarding asks for confirmation. Only ticked sets are saved. |
+| **Session summary** | Duration, sets, reps, hold time, volume, new personal bests compared only with your own earlier sessions, how each exercise felt, and the next target for each. Delete also asks for confirmation. |
+| **Progress** | All numbers come from logs (per-side exercises count both sides): workouts and minutes since the first one, this week's ring, weeks-on-target streak, sets, consistency (completed ÷ scheduled days so far), total reps/volume, first-vs-latest best set (like-for-like only), a six-week training calendar, personal bests and recent sessions. A brand-new user sees no zero tiles, only this week's target and their first workout. |
+| **More** | Plan settings, library, safety & about, kg/lb, training-day reminder (iOS/Android only, off by default), and erase all data (with confirmation). |
 | **Robustness** | Loading state. Saved data is validated down to every set: unreadable or incomplete data shows a recovery screen and is never silently wiped. A failed write to device storage shows a *Not saved* banner with retry. Schedule edits apply from the day they are made, so past weeks keep their original targets. Safe areas respected. 44 pt minimum touch targets. Screen-reader roles, labels, values and states on all controls (cross-platform `aria-*` props, so checked/selected/disabled states also reach the web). Every progress ring and bar also has a text value. There are no animations, so reduced-motion settings are honoured by default. |
 
 ## Quality gates (`docs/QUALITY_GATES.md`)
 
 | # | Gate | Result | Evidence |
 |---|---|---|---|
-| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **99 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`). |
+| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **117 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`). |
 | 2 | App starts, five screens navigable | ✅ web · ⚠️ native | Web: exported build driven end to end by `e2e/smoke.mjs`. Native: `expo export --platform ios --platform android` bundles successfully. No simulator or device was available, so native runtime is **unverified**. |
 | 3 | Onboarding persists across relaunch, editable | ✅ | e2e reloads after onboarding and after logging; the preferences screen saves edits. |
 | 4 | Safe rest days, no fake metrics | ✅ | Schedules are limited to 2–4 days and every default has rest days between sessions (unit tested). The concept numbers are not used anywhere. |
@@ -116,12 +116,36 @@ Still open:
 - Step-by-step pose images and exercise-specific art: requested in issue #1 (CC-007, CC-009).
 - TestFlight / EAS: needs the founder's Apple Developer and Expo accounts.
 
+## Training round: what successful fitness apps do
+
+Founder feedback (2026-10-18): parts of the app read as generic AI output. This round removes that and adds the features that the best-known training apps share, inside BLOB FIT's own design. Every number shown comes from the user's own logs.
+
+**Removed:** slogans and affirmation copy, Home quick-link tiles that repeated the tab bar, the generic "Today's focus" tip, zero-value tiles for new users, the slogan footer on Progress, and repeated text (two "no workouts" messages; a workouts tile that repeated the headline).
+
+| Pattern in established apps | In BLOB FIT now |
+|---|---|
+| Previous performance inline while logging (Strong, Hevy) | "Last time (Oct 9): 12, 12 reps · 8 kg" under every exercise, plus a per-exercise history on the exercise screen. |
+| Automatic progressive overload (Fitbod, Jefit, Progress) | Double progression from your own last session (`src/domain/progression.ts`). Reps: +1 per session (+2 if it felt easy). Bodyweight goes up to target +4, then suggests the harder variation if your equipment allows. Loaded: up to target +2 reps, then +2 kg (5 lb). Holds: +5 s (+10 s if it felt easy). Missed reps or "hard" repeat the target. Never below the plan. Each change states its reason. |
+| Effort rating (RPE in Strong/Hevy, "how did it feel" in Fitbod) | Easy / just right / hard after each exercise; it feeds the next target. |
+| Next-time targets | Session summary lists the next target per exercise; Plan and Home show the progressed prescription. |
+| Consistency calendar (Apple Fitness, Hevy) | Six-week training calendar on Progress (trained, extra, planned, missed, rest). It replaces the weekly bar chart. |
+| Workout reminders | Opt-in, one local notification per training day at a chosen hour. Nothing leaves the device. |
+| Rest timer (Strong) | Already present: 60 s countdown after each set. |
+
+Not added yet, and why:
+- **Apple Health, widgets, Live Activities:** need a development build and a device to verify; Expo Go cannot run them.
+- **Focus mode (one exercise per screen):** a reasonable next step; it needs device testing of gestures and VoiceOver order first.
+- **Plate calculator:** the plan uses bodyweight, bands and dumbbells; there is no barbell yet.
+- **Badges, social feed, AI coach chat:** easy to make look busy without helping a beginner; left out on purpose.
+
+Tests: `src/domain/__tests__/progression.test.ts` covers the rules above; the e2e smoke test logs four sessions and checks "Last time", the effort question, "Next time", Home's "from last time" line, the calendar and the new-user Progress state.
+
 ## Known gaps and placeholders
 
 - **Art is interim.** The mascot cut-outs come from 941×1672 concept images. They are upscaled for 3× screens, but they are not production exports. Hip hinge, glute bridge, plank, box/goblet squat, RDL, band row and prone Y raise have no approved pose, so they use a neutral icon tile. Production exports are requested in issue #1 (`CC-001`).
 - **Canonical asset PNGs** (11 files in `docs/ASSET_MANIFEST.md`) are still not on GitHub.
 - **Native runtime** has not been run on a simulator or device. The iOS-only paths (system tab bar, navigation bars, sheet, automatic insets, SF Symbols, alerts, action sheet, segmented control, haptics) are type-checked and bundled but not exercised. The quickest check is Expo Go; see `docs/NATIVE_TESTING.md`.
-- **No notifications, no data export, no dark mode.** Dark mode is out of scope for the cream visual direction; `userInterfaceStyle` is locked to light.
+- **Reminders are local and native-only.** The web preview has none. There is still no data export and no dark mode. Dark mode is out of scope for the cream visual direction; `userInterfaceStyle` is locked to light.
 - **Copy review:** exercise text, the disclaimer and prescriptions need a qualified coach and legal review before any public release.
 - The working name "BLOB FIT" is pending trademark/app-store clearance. The app icon is a simple placeholder drawn from the canonical face.
 
