@@ -28,8 +28,8 @@ Stack: Expo SDK 58, React Native 0.88, React 19.3, TypeScript 6 (strict), Expo R
 | **Onboarding** | Four steps: goal, experience, training days (2–4, with a warning for three days in a row), equipment, plus a required general-fitness disclaimer. The answers persist across relaunch and can be edited later in *More → Your plan settings*. |
 | **Home** | Today's date and plain status from real state ("Full Body B today", "Rest day", "Done for today", "… in progress") with one action. Below: this week (done vs planned, streak), today's or the next workout with each exercise's target and what changed since last time, and the last workout. |
 | **Plan** | Beginner full-body A/B rotation. A is squat, incline push-up and a pull; B is hip hinge, a pull and plank. Sets depend on experience. The pull adapts to equipment: dumbbell row, then band row, then prone Y raise. The screen also has week dots (done / planned / missed / rest / extra), a ~duration estimate, an expandable warm-up and A/B preview. Rest days are real days off, and you can still start a workout if you want. |
-| **Exercise detail** | Muscles (text chips, no anatomy overlay), starting position, numbered steps, rep phases, form cues, common mistakes, and linked easier/harder variations. Every exercise shows a **Content review pending** badge. |
-| **Library** | 12 movements grouped by pattern. Exercises needing equipment you didn't select are flagged. |
+| **Exercise detail** | Taught in the order a coach teaches:<ul><li>setup and numbered steps;</li><li>each rep with tempo, plus breathing;</li><li>coach cues;</li><li>*Check your form*: what to look for from the side, front, back or above when you film a set;</li><li>3–4 common mistakes, each with the view it shows from, what it looks like, why it matters and the fix;</li><li>when to stop, swap or go easier;</li><li>a muscle map and linked easier/harder variations.</li></ul>Every exercise shows a **Content review pending** badge. |
+| **Library** | 51 movements in seven groups: squat, single leg, hinge, push, pull, core, arms and shoulders. It has search (name, muscle, movement family or equipment), equipment filters and a level tag on each row (starter / beginner / next step). Exercises that need equipment you didn't select are flagged. |
 | **Workout logging** | Per-set reps or seconds and load (kg/lb), done ticks, add/remove sets, skip, swap to a same-pattern exercise your equipment allows, a persistent timer with pause/resume, a 60 s rest countdown and a warm-up checklist. Each exercise shows what you did last time and why today's target is what it is; after its last set it asks how it felt (easy / just right / hard). Discarding asks for confirmation. Only ticked sets are saved. |
 | **Session summary** | Duration, sets, reps, hold time, volume, new personal bests compared only with your own earlier sessions, how each exercise felt, and the next target for each. Delete also asks for confirmation. |
 | **Progress** | All numbers come from logs (per-side exercises count both sides): workouts and minutes since the first one, this week's ring, weeks-on-target streak, sets, consistency (completed ÷ scheduled days so far), total reps/volume, first-vs-latest best set (like-for-like only), a six-week training calendar, personal bests and recent sessions. A brand-new user sees no zero tiles, only this week's target and their first workout. |
@@ -40,7 +40,7 @@ Stack: Expo SDK 58, React Native 0.88, React 19.3, TypeScript 6 (strict), Expo R
 
 | # | Gate | Result | Evidence |
 |---|---|---|---|
-| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **117 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`). |
+| 1 | install / typecheck / test / lint | ✅ | `npm run check`: tsc clean, eslint 0 problems, **111 unit tests** pass (also run under `TZ=America/New_York` and `TZ=Asia/Tokyo`), plus the exercise content rules and an up-to-date art brief. |
 | 2 | App starts, five screens navigable | ✅ web · ⚠️ native | Web: exported build driven end to end by `e2e/smoke.mjs`. Native: `expo export --platform ios --platform android` bundles successfully. No simulator or device was available, so native runtime is **unverified**. |
 | 3 | Onboarding persists across relaunch, editable | ✅ | e2e reloads after onboarding and after logging; the preferences screen saves edits. |
 | 4 | Safe rest days, no fake metrics | ✅ | Schedules are limited to 2–4 days and every default has rest days between sessions (unit tested). The concept numbers are not used anywhere. |
@@ -139,6 +139,21 @@ Not added yet, and why:
 - **Badges, social feed, AI coach chat:** easy to make look busy without helping a beginner; left out on purpose.
 
 Tests: `src/domain/__tests__/progression.test.ts` covers the rules above; the e2e smoke test logs four sessions and checks "Last time", the effort question, "Next time", Home's "from last time" line, the calendar and the new-user Progress state.
+
+## Exercise library round
+
+The founder asked for at least 40 movements, taught the way a coach teaches them, with Blob illustrations from Astra.
+
+- **Content:** 51 exercises in `data/exercises.json`. The founder's original squat, push-up and row steps are kept word for word; their original mistakes are now titles with full explanations.
+  - **Schema:** `src/domain/types.ts`. It has `formChecks` (camera view plus what to check), `mistakes` (`title`, `view`, `looksLike`, `why`, `fix`), `breathing`, `safety`, `level` and `artBrief`.
+  - **Rules:** `tools/content/exercise-rules.cjs` covers field lengths, the muscle vocabulary, links (an easier variation is never at a higher level), at least 40 exercises and at least 4 per group. It also rejects claims about injury prevention, cures, fat burning and "toning". The unit tests and `npm run content:check` both run it.
+  - **Review:** everything is still `needs-qualified-review`. Angle numbers in the mistakes (for example "elbows near 90°, a T") are coaching estimates for spotting faults on video, not measured thresholds.
+- **Swaps:** a workout swap stays within the same movement family and the same measure, so a timed hold never replaces a rep exercise.
+- **Art pipeline:**
+  - **Brief:** `docs/EXERCISE_ART_BRIEF.md` is generated from the data (`npm run art:brief`). It lists 258 images in three batches (the beginner plan first), each with its file path, camera view and pose. The delivery checklist updates itself.
+  - **Sync:** after Astra uploads to `assets/exercises/<id>/`, `npm run art:sync` checks each PNG (transparency, size, padding, a known id and mistake number) and writes optimized WebP copies. It also regenerates `src/components/exerciseFrames.ts`. The detail screen then shows the start and end frames side by side, and each mistake image next to its fix.
+  - **Request:** issue #1, CC-011.
+- **Not done:** no art has been delivered yet, so the library shows the interim concept crops (squat, split squat, push-up variations, row) or a neutral icon.
 
 ## Known gaps and placeholders
 
