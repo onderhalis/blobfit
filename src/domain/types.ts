@@ -128,6 +128,8 @@ export interface WorkoutSession {
 
 export interface Settings {
   units: Units;
+  /** Local hour (0–23) for a training-day reminder, or null when reminders are off. */
+  reminderHour: number | null;
 }
 
 export interface AppData {

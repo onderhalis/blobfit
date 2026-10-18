@@ -21,8 +21,10 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Illustration } from '@/components/Illustration';
 import { SaveErrorBanner } from '@/components/SaveErrorBanner';
 import { LoadingView } from '@/components/Screen';
+import { REMINDERS_SUPPORTED, syncReminders } from '@/features/reminders';
 import { SYSTEM_CHROME } from '@/lib/platform';
 import { AppStoreProvider, useStore } from '@/state/AppStore';
+import type { Weekday } from '@/domain/types';
 import { colors, fonts, space } from '@/theme/tokens';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
@@ -64,8 +66,21 @@ export default function RootLayout() {
   );
 }
 
+/** Keeps the scheduled training-day reminders in line with the schedule and the chosen time. */
+function useReminderSync(days: readonly Weekday[] | undefined, hour: number | null) {
+  const key = days ? `${days.join(',')}@${hour}` : null;
+  useEffect(() => {
+    if (REMINDERS_SUPPORTED && key !== null && days) {
+      syncReminders(days, hour).catch(() => undefined);
+    }
+    // The key captures days and hour; re-running on identical values would only reschedule the same reminders.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+}
+
 function Navigation() {
   const { load, data } = useStore();
+  useReminderSync(data.preferences?.trainingDays, data.settings.reminderHour);
   if (load.status === 'loading') {
     return <LoadingView />;
   }

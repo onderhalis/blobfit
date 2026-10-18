@@ -16,7 +16,7 @@ import type { AppData, Effort, Preferences, ScheduleEntry, SetLog, Units, Weekda
 export const INITIAL_DATA: AppData = {
   preferences: null,
   sessions: [],
-  settings: { units: 'kg' },
+  settings: { units: 'kg', reminderHour: null },
 };
 
 export type Action =
@@ -35,6 +35,7 @@ export type Action =
   | { type: 'discardSession'; sessionId: string }
   | { type: 'deleteSession'; sessionId: string }
   | { type: 'setUnits'; units: Units }
+  | { type: 'setReminder'; hour: number | null }
   | { type: 'resetAll' };
 
 function mapSession(
@@ -151,6 +152,8 @@ export function reducer(data: AppData, action: Action): AppData {
       return { ...data, sessions: data.sessions.filter((session) => session.id !== action.sessionId) };
     case 'setUnits':
       return { ...data, settings: { ...data.settings, units: action.units } };
+    case 'setReminder':
+      return { ...data, settings: { ...data.settings, reminderHour: action.hour } };
     case 'resetAll':
       return INITIAL_DATA;
     default:

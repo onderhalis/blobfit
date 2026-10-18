@@ -149,6 +149,14 @@ export function isValidTrainingDays(days: readonly Weekday[]): boolean {
   return unique.length >= MIN_TRAINING_DAYS && unique.length <= MAX_TRAINING_DAYS;
 }
 
+/**
+ * Weekly reminder slots for the training days, in the notification scheduler's numbering
+ * (1 = Sunday … 7 = Saturday; ours is 0 = Monday … 6 = Sunday).
+ */
+export function reminderSlots(days: readonly Weekday[], hour: number): { weekday: number; hour: number; minute: number }[] {
+  return normalizeTrainingDays(days).map((day) => ({ weekday: ((day + 1) % 7) + 1, hour, minute: 0 }));
+}
+
 /** True when the schedule has three or more training days in a row (wrapping Sunday → Monday). */
 export function hasBackToBackRisk(days: readonly Weekday[]): boolean {
   const set = new Set(days);

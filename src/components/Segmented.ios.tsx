@@ -10,7 +10,7 @@ import type { SegmentedProps } from './Segmented';
 const SystemSegmentedControl = SegmentedControl as unknown as ComponentType<SegmentedControlProps>;
 
 /** iOS: the system segmented control (VoiceOver and Dynamic Type come with it). */
-export function Segmented<T extends string>({ options, value, onChange, accessibilityLabel }: SegmentedProps<T>) {
+export function Segmented<T extends string>({ options, value, onChange, accessibilityLabel, wide }: SegmentedProps<T>) {
   return (
     <SystemSegmentedControl
       values={options.map((option) => option.label)}
@@ -22,11 +22,12 @@ export function Segmented<T extends string>({ options, value, onChange, accessib
       tintColor={colors.ink}
       fontStyle={{ fontFamily: fonts.semibold, color: colors.ink, fontSize: 15 }}
       activeFontStyle={{ fontFamily: fonts.semibold, color: colors.inkOnDark, fontSize: 15 }}
-      style={styles.control}
+      style={[styles.control, wide && styles.wide]}
     />
   );
 }
 
 const styles = StyleSheet.create({
   control: { width: 120, height: 36 },
+  wide: { width: '100%' },
 });

@@ -6,6 +6,7 @@ import {
   isValidTrainingDays,
   nextTrainingDay,
   nextWorkoutId,
+  reminderSlots,
 } from '../plan';
 import { createSession } from '../session';
 import { at, completedSession, makePrefs } from './helpers';
@@ -95,5 +96,15 @@ describe('schedule', () => {
     expect(nextTrainingDay(prefs, at(2026, 10, 12), true).getDate()).toBe(12);
     // Saturday → Monday.
     expect(nextTrainingDay(prefs, at(2026, 10, 17)).getDate()).toBe(19);
+  });
+});
+
+describe('reminderSlots', () => {
+  it('maps Monday-first training days to the scheduler weekday numbering (1 = Sunday)', () => {
+    expect(reminderSlots([0, 2, 6], 18)).toEqual([
+      { weekday: 2, hour: 18, minute: 0 },
+      { weekday: 4, hour: 18, minute: 0 },
+      { weekday: 1, hour: 18, minute: 0 },
+    ]);
   });
 });

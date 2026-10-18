@@ -11,7 +11,7 @@ describe('storage', () => {
     const data = {
       preferences: makePrefs(),
       sessions: [completedSession(at(2026, 10, 5, 18))],
-      settings: { units: 'lb' as const },
+      settings: { units: 'lb' as const, reminderHour: 18 },
     };
     const text = serialize(data);
     expect(JSON.parse(text).version).toBe(SCHEMA_VERSION);
@@ -50,7 +50,7 @@ describe('storage', () => {
   it('keeps a logged effort and rejects an unknown one', () => {
     const session = completedSession(at(2026, 10, 5, 18));
     const withEffort = { ...session, exercises: session.exercises.map((log, i) => (i === 0 ? { ...log, effort: 'easy' as const } : log)) };
-    const data = { preferences: makePrefs(), sessions: [withEffort], settings: { units: 'kg' as const } };
+    const data = { preferences: makePrefs(), sessions: [withEffort], settings: { units: 'kg' as const, reminderHour: null } };
     expect(deserialize(serialize(data)).sessions[0].exercises[0].effort).toBe('easy');
     const bad = JSON.parse(serialize(data));
     bad.data.sessions[0].exercises[0].effort = 'brutal';
@@ -65,6 +65,8 @@ describe('storage', () => {
 
   it('fills in settings added later', () => {
     const text = JSON.stringify({ version: 1, data: { preferences: null, sessions: [], settings: {} } });
-    expect(deserialize(text).settings.units).toBe('kg');
+    expect(deserialize(text).settings).toEqual({ units: 'kg', reminderHour: null });
+    const odd = JSON.stringify({ version: 1, data: { preferences: null, sessions: [], settings: { reminderHour: 25 } } });
+    expect(deserialize(odd).settings.reminderHour).toBeNull();
   });
 });

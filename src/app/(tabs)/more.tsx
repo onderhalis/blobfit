@@ -1,6 +1,6 @@
 import { router, type Href } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, Switch, View } from 'react-native';
 
 import { AppText } from '@/components/AppText';
 import { Card, Chevron } from '@/components/Card';
@@ -8,7 +8,9 @@ import { ConfirmDialog } from '@/components/ConfirmDialog';
 import { Icon, type IconName } from '@/components/Icon';
 import { Screen, TopBar } from '@/components/Screen';
 import { Segmented } from '@/components/Segmented';
+import { WEEKDAY_SHORT } from '@/domain/dates';
 import type { Units } from '@/domain/types';
+import { REMINDERS_SUPPORTED, enableReminders } from '@/features/reminders';
 import { useStore } from '@/state/AppStore';
 import { colors, space } from '@/theme/tokens';
 
@@ -41,6 +43,13 @@ function Row({
   );
 }
 
+const REMINDER_HOURS = [
+  { value: '7', label: '07:00', accessibilityLabel: '7 in the morning' },
+  { value: '12', label: '12:00', accessibilityLabel: 'Noon' },
+  { value: '18', label: '18:00', accessibilityLabel: '6 in the evening' },
+  { value: '20', label: '20:00', accessibilityLabel: '8 in the evening' },
+] as const;
+
 const UNIT_OPTIONS = [
   { value: 'kg', label: 'kg', accessibilityLabel: 'Kilograms' },
   { value: 'lb', label: 'lb', accessibilityLabel: 'Pounds' },
@@ -50,6 +59,20 @@ export default function More() {
   const { data, dispatch, eraseAll } = useStore();
   const [confirm, setConfirm] = useState(false);
   const units = data.settings.units;
+  const reminderHour = data.settings.reminderHour;
+  const trainingDays = data.preferences?.trainingDays ?? [];
+
+  const toggleReminder = async (on: boolean) => {
+    if (!on) {
+      dispatch({ type: 'setReminder', hour: null });
+      return;
+    }
+    if (await enableReminders()) {
+      dispatch({ type: 'setReminder', hour: 18 });
+    } else {
+      Alert.alert('Notifications are off', 'Allow notifications for Blob Fit in Settings to get training-day reminders.');
+    }
+  };
 
   return (
     <Screen withTabBar testID="more">
@@ -74,6 +97,38 @@ export default function More() {
           accessibilityLabel="Weight units"
         />
       </Card>
+
+      {REMINDERS_SUPPORTED ? (
+        <Card style={styles.reminder}>
+          <View style={styles.units}>
+            <View style={styles.flex}>
+              <AppText variant="bodyStrong">Training-day reminder</AppText>
+              <AppText variant="caption" tone="secondary">
+                {reminderHour === null
+                  ? 'Off'
+                  : `${trainingDays.map((day) => WEEKDAY_SHORT[day]).join(', ')} at ${String(reminderHour).padStart(2, '0')}:00`}
+              </AppText>
+            </View>
+            <Switch
+              value={reminderHour !== null}
+              onValueChange={(on) => {
+                toggleReminder(on).catch(() => undefined);
+              }}
+              accessibilityLabel="Training-day reminder"
+              trackColor={{ true: colors.success, false: colors.track }}
+            />
+          </View>
+          {reminderHour !== null ? (
+            <Segmented
+              options={REMINDER_HOURS}
+              value={String(reminderHour) as (typeof REMINDER_HOURS)[number]['value']}
+              onChange={(hour) => dispatch({ type: 'setReminder', hour: Number(hour) })}
+              accessibilityLabel="Reminder time"
+              wide
+            />
+          ) : null}
+        </Card>
+      ) : null}
 
       <Card style={styles.row} onPress={() => setConfirm(true)} accessibilityLabel="Erase all data on this device" testID="erase-all">
         <View style={styles.icon}>
@@ -121,4 +176,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   units: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  reminder: { gap: space.sm },
 });

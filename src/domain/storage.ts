@@ -110,7 +110,13 @@ function validate(data: unknown): AppData {
   return {
     preferences: data.preferences as AppData['preferences'],
     sessions: data.sessions as AppData['sessions'],
-    settings: { units: data.settings.units === 'lb' ? 'lb' : 'kg' },
+    settings: {
+      units: data.settings.units === 'lb' ? 'lb' : 'kg',
+      reminderHour:
+        isNumber(data.settings.reminderHour) && Number.isInteger(data.settings.reminderHour) && data.settings.reminderHour >= 0 && data.settings.reminderHour <= 23
+          ? data.settings.reminderHour
+          : null,
+    },
   };
 }
 
