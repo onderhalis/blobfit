@@ -47,6 +47,16 @@ describe('storage', () => {
     expect(() => deserialize(doc({ ...good, preferences: badDays }))).toThrow(StorageError);
   });
 
+  it('keeps a logged effort and rejects an unknown one', () => {
+    const session = completedSession(at(2026, 10, 5, 18));
+    const withEffort = { ...session, exercises: session.exercises.map((log, i) => (i === 0 ? { ...log, effort: 'easy' as const } : log)) };
+    const data = { preferences: makePrefs(), sessions: [withEffort], settings: { units: 'kg' as const } };
+    expect(deserialize(serialize(data)).sessions[0].exercises[0].effort).toBe('easy');
+    const bad = JSON.parse(serialize(data));
+    bad.data.sessions[0].exercises[0].effort = 'brutal';
+    expect(() => deserialize(JSON.stringify(bad))).toThrow(StorageError);
+  });
+
   it('refuses data from a newer app version', () => {
     expect(() => deserialize(JSON.stringify({ version: SCHEMA_VERSION + 1, data: INITIAL_DATA }))).toThrow(
       'newer version',

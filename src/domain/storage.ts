@@ -73,7 +73,8 @@ function isExerciseLog(value: unknown): boolean {
     typeof value.skipped === 'boolean' &&
     isNumber(value.target) &&
     Array.isArray(value.sets) &&
-    value.sets.every(isSet)
+    value.sets.every(isSet) &&
+    (value.effort === undefined || oneOf(value.effort, ['easy', 'right', 'hard']))
   );
 }
 

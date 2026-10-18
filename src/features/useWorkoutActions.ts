@@ -21,11 +21,13 @@ export function useStartWorkout() {
           id: createId(now),
           now,
           history: data.sessions,
+          units: data.settings.units,
+          equipment: prefs.equipment,
         });
         dispatch({ type: 'startSession', session });
       }
       router.push('/workout');
     },
-    [data.preferences, data.sessions, dispatch],
+    [data.preferences, data.sessions, data.settings.units, dispatch],
   );
 }

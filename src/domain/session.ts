@@ -1,5 +1,17 @@
 import { getExercise } from './exercises';
-import type { ExerciseLog, SetLog, WorkoutPlan, WorkoutSession } from './types';
+import { slotTarget } from './plan';
+import { suggestTarget } from './progression';
+import type { Effort, EquipmentId, ExerciseLog, SetLog, Units, WorkoutPlan, WorkoutSession } from './types';
+
+/** What progression needs to know about the user. Defaults keep older callers working. */
+export interface ProgressionContext {
+  units?: Units;
+  equipment?: readonly EquipmentId[];
+}
+
+function context(options: ProgressionContext) {
+  return { units: options.units ?? 'kg', equipment: options.equipment ?? [] };
+}
 
 export function createId(now: Date, random: () => number = Math.random): string {
   return `${now.getTime().toString(36)}-${Math.floor(random() * 1e9).toString(36)}`;
@@ -29,9 +41,13 @@ function freshSets(count: number, target: number, loadKg: number | null): SetLog
   return Array.from({ length: count }, () => ({ value: target, loadKg, done: false }));
 }
 
+/**
+ * A new session for `plan`. Each exercise starts from its suggested target (progression from the
+ * last time it was logged) and the last load used.
+ */
 export function createSession(
   plan: WorkoutPlan,
-  options: { id: string; now: Date; history: readonly WorkoutSession[] },
+  options: { id: string; now: Date; history: readonly WorkoutSession[] } & ProgressionContext,
 ): WorkoutSession {
   return {
     id: options.id,
@@ -41,13 +57,14 @@ export function createSession(
     pausedMs: 0,
     exercises: plan.exercises.map((planned) => {
       const exercise = getExercise(planned.exerciseId);
-      const load = exercise.loadable ? lastLoadFor(exercise.id, options.history) : null;
+      const suggestion = suggestTarget(exercise, planned.target, options.history, context(options));
+      const load = exercise.loadable ? (suggestion.loadKg ?? lastLoadFor(exercise.id, options.history)) : null;
       return {
         slot: planned.slot,
         exerciseId: planned.exerciseId,
         skipped: false,
-        target: planned.target,
-        sets: freshSets(planned.sets, planned.target, load),
+        target: suggestion.value,
+        sets: freshSets(planned.sets, suggestion.value, load),
       };
     }),
   };
@@ -120,19 +137,27 @@ export function substituteExercise(
   exerciseIndex: number,
   exerciseId: string,
   history: readonly WorkoutSession[],
+  options: ProgressionContext = {},
 ): WorkoutSession {
   const next = getExercise(exerciseId);
   return mapExercise(session, exerciseIndex, (log) => {
     const original = log.substitutedFrom ?? log.exerciseId;
-    const load = next.loadable ? lastLoadFor(next.id, history) : null;
+    const suggestion = suggestTarget(next, slotTarget(log.slot) ?? log.target, history, context(options));
+    const load = next.loadable ? (suggestion.loadKg ?? lastLoadFor(next.id, history)) : null;
     return {
       ...log,
       exerciseId: next.id,
       substitutedFrom: original === next.id ? undefined : original,
       skipped: false,
-      sets: freshSets(log.sets.length, log.target, load),
+      target: suggestion.value,
+      effort: undefined,
+      sets: freshSets(log.sets.length, suggestion.value, load),
     };
   });
+}
+
+export function setEffort(session: WorkoutSession, exerciseIndex: number, effort: Effort | undefined): WorkoutSession {
+  return mapExercise(session, exerciseIndex, (log) => ({ ...log, effort }));
 }
 
 export function pauseSession(session: WorkoutSession, now: Date): WorkoutSession {

@@ -6,11 +6,12 @@ import {
   pauseSession,
   removeSet,
   resumeSession,
+  setEffort,
   setSkipped,
   substituteExercise,
   updateSet,
 } from './session';
-import type { AppData, Preferences, ScheduleEntry, SetLog, Units, Weekday, WorkoutSession } from './types';
+import type { AppData, Effort, Preferences, ScheduleEntry, SetLog, Units, Weekday, WorkoutSession } from './types';
 
 export const INITIAL_DATA: AppData = {
   preferences: null,
@@ -27,6 +28,7 @@ export type Action =
   | { type: 'removeSet'; sessionId: string; exerciseIndex: number }
   | { type: 'skipExercise'; sessionId: string; exerciseIndex: number; skipped: boolean }
   | { type: 'substituteExercise'; sessionId: string; exerciseIndex: number; exerciseId: string }
+  | { type: 'setEffort'; sessionId: string; exerciseIndex: number; effort: Effort | undefined }
   | { type: 'pauseSession'; sessionId: string; now: string }
   | { type: 'resumeSession'; sessionId: string; now: string }
   | { type: 'completeSession'; sessionId: string; now: string }
@@ -121,8 +123,15 @@ export function reducer(data: AppData, action: Action): AppData {
     case 'substituteExercise':
       return mapSession(data, action.sessionId, (session) =>
         isOpen(session)
-          ? substituteExercise(session, action.exerciseIndex, action.exerciseId, data.sessions)
+          ? substituteExercise(session, action.exerciseIndex, action.exerciseId, data.sessions, {
+              units: data.settings.units,
+              equipment: data.preferences?.equipment,
+            })
           : session,
+      );
+    case 'setEffort':
+      return mapSession(data, action.sessionId, (session) =>
+        isOpen(session) ? setEffort(session, action.exerciseIndex, action.effort) : session,
       );
     case 'pauseSession':
       return mapSession(data, action.sessionId, (session) => pauseSession(session, new Date(action.now)));

@@ -97,6 +97,9 @@ export interface SetLog {
   done: boolean;
 }
 
+/** How an exercise felt, logged after its last set. Optional; it steers the next target. */
+export type Effort = 'easy' | 'right' | 'hard';
+
 export interface ExerciseLog {
   slot: string;
   exerciseId: string;
@@ -105,6 +108,7 @@ export interface ExerciseLog {
   skipped: boolean;
   target: number;
   sets: SetLog[];
+  effort?: Effort;
 }
 
 export type SessionStatus = 'active' | 'paused' | 'completed';

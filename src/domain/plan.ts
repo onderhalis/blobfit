@@ -54,6 +54,17 @@ export const WORKOUT_TEMPLATES: Record<WorkoutId, WorkoutTemplate> = {
   },
 };
 
+/** The plan's base target for a slot (before any progression), or undefined for unknown slots. */
+export function slotTarget(slot: string): number | undefined {
+  for (const template of Object.values(WORKOUT_TEMPLATES)) {
+    const match = template.slots.find((entry) => entry.slot === slot);
+    if (match) {
+      return match.target;
+    }
+  }
+  return undefined;
+}
+
 export const WARM_UP = {
   minutes: 5,
   title: 'Warm-up',
