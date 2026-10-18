@@ -17,9 +17,9 @@ import { colors, radius, space } from '@/theme/tokens';
 
 /** From the approved goals concept; each is something the plan actually does. */
 const PROMISES = [
-  { icon: 'barbell', label: 'Workouts that fit you' },
-  { icon: 'heart', label: 'Short, simple sessions' },
-  { icon: 'stats-chart', label: 'Progress from your own logs' },
+  { icon: 'barbell', label: '2–4 days a week, built from your answers' },
+  { icon: 'time-outline', label: 'About 15–25 minutes a session' },
+  { icon: 'trending-up', label: 'Next targets from what you logged' },
 ] as const;
 
 const STEPS = [

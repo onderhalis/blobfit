@@ -8,9 +8,13 @@ import { Icon, type IconName } from '@/components/Icon';
 import { ExerciseArt } from '@/components/Illustration';
 import { MUSCLE_COLORS, MuscleMap } from '@/components/MuscleMap';
 import { EmptyState, Screen, TopBar } from '@/components/Screen';
+import { formatShortDate } from '@/domain/dates';
 import { EQUIPMENT_LABEL, findExercise } from '@/domain/exercises';
+import { slotTarget } from '@/domain/plan';
+import { performances, suggestTarget } from '@/domain/progression';
 import { findOpenSession } from '@/domain/session';
 import type { Exercise } from '@/domain/types';
+import { lastTimeSummary, nextTimeLine } from '@/features/progressionCopy';
 import { useStore } from '@/state/AppStore';
 import { colors, radius, space } from '@/theme/tokens';
 
@@ -94,6 +98,15 @@ export default function ExerciseDetail() {
     );
   }
 
+  const units = data.settings.units;
+  const history = performances(exercise.id, data.sessions, 4);
+  const next =
+    history.length > 0
+      ? suggestTarget(exercise, slotTarget(exercise.pattern) ?? history[0].target, data.sessions, {
+          units,
+          equipment: data.preferences?.equipment ?? [],
+        })
+      : null;
   const open = findOpenSession(data.sessions);
   const inOpenSession = open?.exercises.some((log) => log.exerciseId === exercise.id);
   const equipment =
@@ -137,6 +150,25 @@ export default function ExerciseDetail() {
       </View>
 
       <ReviewBadge />
+
+      {history.length > 0 ? (
+        <Card style={styles.section} testID="exercise-history">
+          <AppText variant="h2">Your history</AppText>
+          {history.map((entry) => (
+            <View key={entry.date} style={styles.historyRow}>
+              <AppText variant="caption" tone="secondary" style={styles.historyDate}>
+                {formatShortDate(new Date(entry.date))}
+              </AppText>
+              <AppText style={styles.flex}>{lastTimeSummary(exercise.id, entry, units)}</AppText>
+            </View>
+          ))}
+          {next ? (
+            <AppText variant="bodyStrong" style={{ color: colors.successInk }}>
+              {nextTimeLine(exercise.id, next, units)}
+            </AppText>
+          ) : null}
+        </Card>
+      ) : null}
 
       <Card style={styles.section}>
         <AppText variant="h2">Muscles worked</AppText>
@@ -244,6 +276,8 @@ const styles = StyleSheet.create({
     marginBottom: space.xxs,
   },
   section: { gap: space.sm },
+  historyRow: { flexDirection: 'row', alignItems: 'baseline', gap: space.sm },
+  historyDate: { width: 52 },
   sectionHead: { flexDirection: 'row', alignItems: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.xs },
   chip: {

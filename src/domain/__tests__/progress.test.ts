@@ -9,6 +9,7 @@ import {
   weekStreak,
   weekSummary,
   weeklyHistory,
+  trainingCalendar,
 } from '../progress';
 import { createSession } from '../session';
 import { at, completedSession, makePrefs } from './helpers';
@@ -251,5 +252,17 @@ describe('todayStatus', () => {
     const status = todayStatus(prefs, [open], at(2026, 10, 13, 10));
     expect(status.kind).toBe('in-progress');
     expect(status.workout.id).toBe('B');
+  });
+});
+
+describe('trainingCalendar', () => {
+  it('marks each day of each plan week as done, missed, planned or rest', () => {
+    const prefs = makePrefs(); // Mon, Wed, Fri from Mon 5 Oct
+    const sessions = [completedSession(at(2026, 10, 5, 18)), completedSession(at(2026, 10, 10, 10))];
+    const weeks = trainingCalendar(prefs, sessions, at(2026, 10, 14, 8));
+    expect(weeks).toHaveLength(2);
+    expect(weeks[0].days.map((day) => day.status)).toEqual(['done', 'rest', 'missed', 'rest', 'missed', 'extra', 'rest']);
+    expect(weeks[1].days.map((day) => day.status)).toEqual(['missed', 'rest', 'planned', 'rest', 'planned', 'rest', 'rest']);
+    expect(weeks[1].days[2].isToday).toBe(true);
   });
 });

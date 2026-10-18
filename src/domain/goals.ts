@@ -21,7 +21,7 @@ export const GOALS: readonly GoalOption[] = [
     title: 'Lose Fat',
     subtitle: 'Build an active routine you can keep.',
     focusNote:
-      'Strength training is one part of an active routine. Body changes depend on much more than workouts and differ from person to person, so focus on showing up.',
+      'Strength training is one part of an active routine. Body changes depend on much more than workouts and differ from person to person, so this plan tracks the sessions you complete, not your body.',
   },
   {
     id: 'move-better',
@@ -33,7 +33,7 @@ export const GOALS: readonly GoalOption[] = [
     id: 'get-stronger',
     title: 'Get Stronger',
     subtitle: 'Be more capable in everyday life.',
-    focusNote: 'When every set feels controlled, add one rep next time. Small steps add up.',
+    focusNote: 'When every set feels controlled, add one rep next time.',
   },
 ];
 

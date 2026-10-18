@@ -58,7 +58,7 @@ export default function Plan() {
       ? `Recover today. Next up on ${WEEKDAY_LONG[weekdayOf(status.nextDay)]}.`
       : status.kind === 'done'
         ? `Next up: ${status.workout.name} on ${WEEKDAY_LONG[weekdayOf(status.nextDay)]}.`
-        : 'Keep going.\nA stronger, happier you is in progress.';
+        : `${plural(workout.exercises.length, 'exercise')} · about ${workout.estimatedMinutes} min`;
 
   const footer =
     status.kind === 'in-progress' ? (

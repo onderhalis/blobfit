@@ -11,25 +11,38 @@ export interface LastPerformance {
   effort?: Effort;
 }
 
-/** The most recent completed session in which this exercise had at least one completed set. */
-export function lastPerformance(exerciseId: string, sessions: readonly WorkoutSession[]): LastPerformance | null {
+/** Completed logs of this exercise, newest first (at most `limit`). */
+export function performances(
+  exerciseId: string,
+  sessions: readonly WorkoutSession[],
+  limit = Number.POSITIVE_INFINITY,
+): LastPerformance[] {
   const completed = sessions
     .filter((session) => session.status === 'completed' && session.endedAt)
     .sort((a, b) => (b.endedAt as string).localeCompare(a.endedAt as string));
+  const result: LastPerformance[] = [];
   for (const session of completed) {
+    if (result.length >= limit) {
+      break;
+    }
     const log = session.exercises.find(
       (entry) => entry.exerciseId === exerciseId && !entry.skipped && entry.sets.some((set) => set.done),
     );
     if (log) {
-      return {
+      result.push({
         date: session.endedAt as string,
         target: log.target,
         sets: log.sets.filter((set) => set.done).map((set) => ({ value: set.value, loadKg: set.loadKg })),
         effort: log.effort,
-      };
+      });
     }
   }
-  return null;
+  return result;
+}
+
+/** The most recent completed session in which this exercise had at least one completed set. */
+export function lastPerformance(exerciseId: string, sessions: readonly WorkoutSession[]): LastPerformance | null {
+  return performances(exerciseId, sessions, 1)[0] ?? null;
 }
 
 export type SuggestionReason =

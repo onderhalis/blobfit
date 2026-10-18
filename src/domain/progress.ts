@@ -62,13 +62,12 @@ export interface WeekSummary {
   target: number;
 }
 
-export function weekSummary(prefs: Preferences, sessions: readonly WorkoutSession[], now: Date): WeekSummary {
-  const weekStart = startOfWeek(now);
-  const inWeek = sessionsInWeek(sessions, weekStart);
-  const doneKeys = new Set(inWeek.map((session) => dayKey(sessionDate(session))));
+/** Each day of the week starting `weekStart`, judged against the schedule in effect that day. */
+function daysOfWeek(prefs: Preferences, sessions: readonly WorkoutSession[], weekStart: Date, now: Date): WeekDay[] {
+  const doneKeys = new Set(sessionsInWeek(sessions, weekStart).map((session) => dayKey(sessionDate(session))));
   const today = startOfDay(now);
   const start = planStart(prefs);
-  const days: WeekDay[] = Array.from({ length: 7 }, (_, i) => {
+  return Array.from({ length: 7 }, (_, i) => {
     const date = addDays(weekStart, i);
     const key = dayKey(date);
     const training = wasScheduledOn(prefs, date) && date >= start;
@@ -82,6 +81,13 @@ export function weekSummary(prefs: Preferences, sessions: readonly WorkoutSessio
     }
     return { date, key, isToday: key === dayKey(today), status };
   });
+}
+
+export function weekSummary(prefs: Preferences, sessions: readonly WorkoutSession[], now: Date): WeekSummary {
+  const weekStart = startOfWeek(now);
+  const inWeek = sessionsInWeek(sessions, weekStart);
+  const start = planStart(prefs);
+  const days = daysOfWeek(prefs, sessions, weekStart, now);
   const weekNumber = Math.floor((weekStart.getTime() - startOfWeek(start).getTime()) / (7 * 86_400_000) + 0.5) + 1;
   return {
     weekStart,
@@ -120,6 +126,27 @@ export function weeklyHistory(
     });
   }
   return entries;
+}
+
+export interface CalendarWeek {
+  weekStart: Date;
+  days: WeekDay[];
+}
+
+/**
+ * The last `count` weeks (oldest first, never before the plan's first week), day by day:
+ * done, extra (trained on a rest day), missed, planned (today or later) or rest.
+ */
+export function trainingCalendar(
+  prefs: Preferences,
+  sessions: readonly WorkoutSession[],
+  now: Date,
+  count = 6,
+): CalendarWeek[] {
+  return weeklyHistory(prefs, sessions, now, count).map(({ weekStart }) => ({
+    weekStart,
+    days: daysOfWeek(prefs, sessions, weekStart, now),
+  }));
 }
 
 /**

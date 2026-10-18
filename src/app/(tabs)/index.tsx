@@ -1,49 +1,63 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
 import { Card, Chevron } from '@/components/Card';
-import { Icon } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
-import { Illustration } from '@/components/Illustration';
-import { ProgressBar } from '@/components/Progress';
-import { Screen, TopBar, useLayout } from '@/components/Screen';
-import { WEEKDAY_LONG, WEEKDAY_SHORT, weekdayOf } from '@/domain/dates';
-import { nextTrainingDay } from '@/domain/plan';
-import { completedSessions, todayStatus, weekSummary, type TodayStatus } from '@/domain/progress';
+import { Icon } from '@/components/Icon';
+import { ExerciseArt } from '@/components/Illustration';
+import { WeekDots } from '@/components/Progress';
+import { Screen, TopBar } from '@/components/Screen';
+import { WEEKDAY_LONG, formatDuration, formatShortDate, weekdayOf } from '@/domain/dates';
+import { getExercise } from '@/domain/exercises';
+import { WORKOUT_TEMPLATES, nextTrainingDay } from '@/domain/plan';
+import { suggestTarget } from '@/domain/progression';
+import { completedSessions, newBestsIn, todayStatus, weekStreak, weekSummary, type TodayStatus } from '@/domain/progress';
+import { doneSets, sessionTotals } from '@/domain/session';
+import { suggestionCopy } from '@/features/progressionCopy';
 import { useStartWorkout } from '@/features/useWorkoutActions';
-import { greeting, plural } from '@/lib/format';
+import { plural, prescription } from '@/lib/format';
 import { useNow, useStore } from '@/state/AppStore';
-import { colors, radius, space } from '@/theme/tokens';
+import { colors, space } from '@/theme/tokens';
 
-function heroCopy(status: TodayStatus, sessionsDone: number): { headline: string; cta: string } {
+/** Plain status, no slogans: what today is and what happens next. */
+function heroCopy(status: TodayStatus, now: Date): { headline: string; detail: string; cta: string } {
+  const next = (date: Date) => WEEKDAY_LONG[weekdayOf(date)];
   switch (status.kind) {
-    case 'in-progress':
-      return { headline: 'Your workout is waiting for you.', cta: 'Resume workout' };
-    case 'done':
-      return { headline: 'Done for today. Nice work.', cta: 'See your plan' };
+    case 'in-progress': {
+      const total = status.session.exercises.reduce((n, log) => n + (log.skipped ? 0 : log.sets.length), 0);
+      return {
+        headline: `${status.workout.name} in progress`,
+        detail: `${doneSets(status.session)} of ${plural(total, 'set')} done.`,
+        cta: 'Resume workout',
+      };
+    }
+    case 'done': {
+      const t = sessionTotals(status.session, now);
+      return {
+        headline: 'Done for today',
+        detail: `${plural(t.sets, 'set')} in ${formatDuration(t.durationMs)}. Next: ${status.workout.name} on ${next(status.nextDay)}.`,
+        cta: 'See summary',
+      };
+    }
     case 'rest':
-      return sessionsDone === 0
-        ? { headline: `A stronger, happier you starts ${WEEKDAY_LONG[weekdayOf(status.nextDay)]}.`, cta: 'See your plan' }
-        : { headline: 'Rest is part of the plan.', cta: 'See your plan' };
+      return {
+        headline: 'Rest day',
+        detail: `Next: ${status.workout.name} on ${next(status.nextDay)}.`,
+        cta: 'See your plan',
+      };
     case 'train':
-      return sessionsDone === 0
-        ? { headline: 'A stronger, happier you starts today.', cta: 'Start today' }
-        : { headline: `Session ${sessionsDone + 1} is ready.`, cta: 'Start workout' };
+      return {
+        headline: `${status.workout.name} today`,
+        detail: `${plural(status.workout.exercises.length, 'exercise')} · about ${status.workout.estimatedMinutes} min`,
+        cta: 'Start workout',
+      };
   }
 }
 
-const QUICK_LINKS = [
-  { icon: 'barbell', title: 'Workouts', sub: "Today's session", href: '/plan', tint: colors.ink },
-  { icon: 'book', title: 'Exercises', sub: 'Learn the moves', href: '/library', tint: colors.tint.blue.fg },
-  { icon: 'leaf', title: 'Safety', sub: 'Rest & form', href: '/about', tint: colors.tint.lavender.fg },
-  { icon: 'stats-chart', title: 'Progress', sub: 'Your real logs', href: '/progress', tint: colors.ink },
-] as const;
-
 export default function Home() {
   const { data } = useStore();
-  const { compact, narrow, content } = useLayout();
   const now = useNow(60_000);
   const startWorkout = useStartWorkout();
   const prefs = data.preferences;
@@ -51,10 +65,13 @@ export default function Home() {
     return null;
   }
 
+  const units = data.settings.units;
   const status = todayStatus(prefs, data.sessions, now);
-  const done = completedSessions(data.sessions).length;
   const week = weekSummary(prefs, data.sessions, now);
-  const copy = heroCopy(status, done);
+  const streak = weekStreak(prefs, data.sessions, now);
+  const copy = heroCopy(status, now);
+  const history = completedSessions(data.sessions);
+  const last = history[history.length - 1];
   // A plan started late in the week can have no planned sessions left this week.
   const firstDay = week.target === 0 ? nextTrainingDay(prefs, now) : null;
 
@@ -63,23 +80,12 @@ export default function Home() {
       router.push('/workout');
     } else if (status.kind === 'train') {
       startWorkout(status.workout.id);
+    } else if (status.kind === 'done') {
+      router.push({ pathname: '/session/[id]', params: { id: status.session.id } });
     } else {
       router.push('/plan');
     }
   };
-
-  const focus =
-    status.kind === 'rest' || status.kind === 'done'
-      ? {
-          eyebrow: "Today's focus",
-          title: 'Rest counts, too.',
-          body: `A gentle walk is plenty. Next session: ${WEEKDAY_LONG[weekdayOf(status.nextDay)]}.`,
-        }
-      : {
-          eyebrow: "Today's focus",
-          title: 'Warm up first.',
-          body: '5 minutes of easy movement before your first set.',
-        };
 
   return (
     <Screen withTabBar testID="home">
@@ -87,18 +93,17 @@ export default function Home() {
 
       <Hero
         art="blob-idle-towel"
-        artHeight={320}
-        gap={space.md}
+        artHeight={300}
+        gap={space.sm}
         before={
-          <AppText variant="lead" tone="secondary">
-            {greeting(now)}
-            {'\n'}You&apos;ve got this.
-          </AppText>
+          <Eyebrow>
+            {WEEKDAY_LONG[weekdayOf(now)]} · {formatShortDate(now)}
+          </Eyebrow>
         }
         headline={copy.headline}
         after={
           <AppText variant="lead" tone="secondary">
-            Small steps.{'\n'}Real progress.{'\n'}Same you.
+            {copy.detail}
           </AppText>
         }
         footer={
@@ -114,109 +119,110 @@ export default function Home() {
       />
 
       <Card
+        style={styles.section}
         onPress={() => router.push('/progress')}
         accessibilityLabel={
           firstDay
-            ? `Your journey: week ${week.weekNumber}. Your plan starts ${WEEKDAY_LONG[weekdayOf(firstDay)]}.`
-            : `Your journey: week ${week.weekNumber}. ${week.done} of ${week.target} workouts done this week.`
+            ? `This week: your plan starts ${WEEKDAY_LONG[weekdayOf(firstDay)]}.`
+            : `This week: ${week.done} of ${week.target} workouts done. ${plural(streak, 'week')} on target in a row.`
         }
         accessibilityHint="Opens your progress">
-        <View style={styles.journeyTop}>
-          {narrow ? null : (
-            <View style={styles.flame}>
-              <Icon name="flame" size={26} color={colors.accent} />
-            </View>
-          )}
-          <View style={styles.flex}>
-            <Eyebrow>Your journey</Eyebrow>
-            <AppText variant="h2">Week {week.weekNumber}</AppText>
-          </View>
-          <View style={styles.journeyCount}>
-            {firstDay ? (
-              <>
-                <AppText variant="caption" tone="secondary">
-                  Starts
-                </AppText>
-                <AppText variant="h3">{WEEKDAY_SHORT[weekdayOf(firstDay)]}</AppText>
-              </>
-            ) : (
-              <>
-                <AppText variant="h3">
-                  {week.done}/{week.target}
-                </AppText>
-                <AppText variant="caption" tone="secondary">
-                  Workouts
-                </AppText>
-              </>
-            )}
-          </View>
-          <Chevron />
+        <View style={styles.row}>
+          <AppText variant="h3" style={styles.flex}>
+            This week
+          </AppText>
+          <AppText variant="bodyStrong">{firstDay ? `Starts ${WEEKDAY_LONG[weekdayOf(firstDay)]}` : `${week.done} of ${week.target}`}</AppText>
         </View>
+        <WeekDots days={week.days} />
         {firstDay ? (
           <AppText variant="caption" tone="secondary">
             Your first planned session is {WEEKDAY_LONG[weekdayOf(firstDay)]}.
             {week.done > 0 ? ` ${plural(week.done, 'extra session')} logged already.` : ' Training before then is optional.'}
           </AppText>
-        ) : (
-          <ProgressBar
-            value={week.done / week.target}
-            label={`${plural(week.done, 'workout')} of ${week.target} this week`}
-          />
-        )}
+        ) : streak > 0 ? (
+          <View style={styles.row}>
+            <Icon name="flame" size={16} color={colors.accent} />
+            <AppText variant="caption" tone="secondary">
+              {plural(streak, 'week')} in a row on target
+            </AppText>
+          </View>
+        ) : null}
       </Card>
 
-      <View style={[styles.links, compact && styles.linksGrid]}>
-        {QUICK_LINKS.map((link) => (
-          <Card
-            key={link.title}
-            style={[styles.link, compact ? { width: (content - space.xs) / 2 - 1 } : styles.flex]}
-            onPress={() => router.push(link.href)}
-            accessibilityLabel={`${link.title}. ${link.sub}`}>
-            <Icon name={link.icon} size={28} color={link.tint} />
-            <AppText variant="bodyStrong" center style={styles.linkTitle}>
-              {link.title}
-            </AppText>
-            <AppText variant="caption" tone="secondary" center>
-              {link.sub}
-            </AppText>
-          </Card>
-        ))}
-      </View>
-
-      <Card tone="deep" style={styles.focus} onPress={() => router.push('/plan')} accessibilityLabel={`${focus.title} ${focus.body}`}>
-        <View style={styles.focusText}>
-          <Eyebrow>{focus.eyebrow}</Eyebrow>
-          <AppText variant="h2">{focus.title}</AppText>
+      <Card style={styles.section} testID="home-up-next">
+        <View style={styles.row}>
+          <AppText variant="h3" style={styles.flex}>
+            {status.kind === 'in-progress' ? 'In this workout' : status.kind === 'train' ? "Today's exercises" : 'Next workout'}
+          </AppText>
           <AppText variant="caption" tone="secondary">
-            {focus.body}
+            {status.workout.name}
           </AppText>
         </View>
-        <View style={styles.focusArt}>
-          <Illustration name="blob-stretch-peek" height={96} />
-        </View>
+        {status.workout.exercises.map((item, index) => {
+          const exercise = getExercise(item.exerciseId);
+          const suggestion = suggestTarget(exercise, item.target, data.sessions, { units, equipment: prefs.equipment });
+          const note = suggestionCopy(exercise.id, suggestion, units);
+          return (
+            <Pressable
+              key={item.slot}
+              style={({ pressed }) => [styles.exercise, index > 0 && styles.divider, pressed && styles.pressed]}
+              onPress={() => router.push({ pathname: '/exercise/[id]', params: { id: exercise.id } })}
+              accessibilityRole="button"
+              accessibilityLabel={`${exercise.name}, ${prescription({ ...item, target: suggestion.value })}${note.tone === 'up' ? `, ${note.title}` : ''}`}>
+              <ExerciseArt exercise={exercise} kind="thumb" size={48} />
+              <View style={styles.flex}>
+                <AppText variant="bodyStrong">{exercise.name}</AppText>
+                <AppText variant="caption" tone="secondary">
+                  {prescription({ ...item, target: suggestion.value })}
+                </AppText>
+                {note.tone === 'up' ? (
+                  <AppText variant="caption" style={{ color: colors.successInk }}>
+                    {note.title}
+                  </AppText>
+                ) : null}
+              </View>
+              <Icon name="chevron-forward" size={18} color={colors.inkSecondary} />
+            </Pressable>
+          );
+        })}
       </Card>
+
+      {last ? (
+        <Card
+          style={styles.lastCard}
+          onPress={() => router.push({ pathname: '/session/[id]', params: { id: last.id } })}
+          accessibilityLabel={`Last workout, ${WORKOUT_TEMPLATES[last.workoutId].name}, ${formatShortDate(new Date(last.endedAt as string))}`}>
+          <View style={styles.flex}>
+            <AppText variant="caption" tone="secondary">
+              Last workout · {formatShortDate(new Date(last.endedAt as string))}
+            </AppText>
+            <AppText variant="bodyStrong">{WORKOUT_TEMPLATES[last.workoutId].name}</AppText>
+            <AppText variant="caption" tone="secondary">
+              {lastLine(last, data.sessions)}
+            </AppText>
+          </View>
+          <Chevron />
+        </Card>
+      ) : null}
     </Screen>
   );
+}
+
+function lastLine(session: Parameters<typeof sessionTotals>[0], sessions: Parameters<typeof newBestsIn>[1]): string {
+  const t = sessionTotals(session);
+  const bests = newBestsIn(session, sessions).length;
+  return [plural(t.sets, 'set'), formatDuration(t.durationMs), bests > 0 ? plural(bests, 'new best') : null]
+    .filter(Boolean)
+    .join(' · ');
 }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   cta: { paddingHorizontal: space.xxl },
-  journeyTop: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginBottom: space.md },
-  flame: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: colors.accentSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  journeyCount: { alignItems: 'center' },
-  links: { flexDirection: 'row', gap: space.xs },
-  linksGrid: { flexWrap: 'wrap' },
-  link: { alignItems: 'center', paddingHorizontal: space.xxs, paddingVertical: space.md, gap: 2 },
-  linkTitle: { marginTop: space.xs, fontSize: 14 },
-  focus: { flexDirection: 'row', alignItems: 'flex-end', overflow: 'hidden', paddingBottom: 0, borderRadius: radius.lg },
-  focusText: { flex: 1, gap: space.xxs, paddingBottom: space.md },
-  focusArt: { marginRight: -space.xs },
+  section: { gap: space.sm },
+  row: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
+  exercise: { flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 64, paddingVertical: space.xs },
+  divider: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border },
+  pressed: { opacity: 0.7 },
+  lastCard: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
 });

@@ -5,7 +5,7 @@ import { AppText, Eyebrow } from '@/components/AppText';
 import { Card, Chevron } from '@/components/Card';
 import { Icon } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
-import { Illustration, MotionMarks } from '@/components/Illustration';
+import { MotionMarks } from '@/components/Illustration';
 import { ProgressRing } from '@/components/Progress';
 import { EmptyState, Screen, TopBar, useLayout } from '@/components/Screen';
 import { WEEKDAY_LONG, WEEKDAY_SHORT, addDays, formatShortDate, startOfDay, weekdayOf } from '@/domain/dates';
@@ -18,14 +18,31 @@ import {
   thenAndNow,
   totals,
   weekStreak,
+  trainingCalendar,
   weekSummary,
-  weeklyHistory,
   type BestSet,
+  type DayStatus,
 } from '@/domain/progress';
 import type { Units } from '@/domain/types';
 import { formatLoad, formatVolume, percent, plural } from '@/lib/format';
 import { useNow, useStore } from '@/state/AppStore';
-import { colors, radius, space } from '@/theme/tokens';
+import { colors, space } from '@/theme/tokens';
+
+const CALENDAR_LABEL: Record<DayStatus, string> = {
+  done: 'Trained',
+  extra: 'Trained (extra day)',
+  missed: 'Planned, not logged',
+  planned: 'Planned',
+  rest: 'Rest',
+};
+
+const CELL_STYLE: Record<DayStatus, object> = {
+  done: { backgroundColor: colors.accent },
+  extra: { backgroundColor: colors.accentSoft, borderWidth: 2, borderColor: colors.accent },
+  missed: { backgroundColor: colors.track },
+  planned: { borderWidth: 2, borderColor: colors.accent, backgroundColor: colors.surface },
+  rest: { backgroundColor: colors.bg },
+};
 
 function describeSet(exerciseId: string, set: BestSet, units: Units): string {
   const exercise = getExercise(exerciseId);
@@ -54,16 +71,14 @@ export default function Progress() {
   const adh = adherence(prefs, data.sessions, now);
   const comparisons = thenAndNow(data.sessions);
   const bests = personalBests(data.sessions).slice(0, 5);
-  const history = weeklyHistory(prefs, data.sessions, now);
-  const maxBar = Math.max(1, ...history.map((entry) => Math.max(entry.done, entry.target)));
   const monthStart = startOfDay(addDays(now, -29));
   const last30 = sessions.filter((session) => new Date(session.endedAt as string) >= monthStart).length;
-  const improved = comparisons.some(
-    (row) => row.latest.value > row.first.value || (row.latest.loadKg ?? 0) > (row.first.loadKg ?? 0),
-  );
-
-  const headline =
-    sessions.length === 0 ? 'Your progress starts with session one.' : improved ? "You're getting stronger." : "You're showing up.";
+  const calendar = trainingCalendar(prefs, data.sessions, now);
+  const firstDate = sessions.length > 0 ? new Date(sessions[0].endedAt as string) : null;
+  const headline = sessions.length === 0 ? 'No workouts yet' : `${plural(sessions.length, 'workout')} logged`;
+  const detail = firstDate
+    ? `Since ${formatShortDate(firstDate)} · ${plural(t.activeMinutes, 'minute')} of training`
+    : 'Log your first workout and it will show up here.';
 
   return (
     <Screen withTabBar testID="progress">
@@ -77,11 +92,11 @@ export default function Progress() {
             <MotionMarks size={32} />
           </View>
         }
-        before={<Eyebrow>Your progress</Eyebrow>}
+        before={<Eyebrow>Progress</Eyebrow>}
         headline={headline}
         after={
           <AppText variant="lead" tone="secondary">
-            Same you.{'\n'}Real progress.
+            {detail}
           </AppText>
         }
       />
@@ -131,40 +146,42 @@ export default function Progress() {
         </Card>
       </View>
 
-      <View style={[styles.tiles, compact && styles.wrap]}>
-        <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.sessions} workouts in total, ${last30} in the last 30 days`}>
-          <Icon name="barbell" size={26} color={colors.ink} />
-          <AppText variant="h2">{t.sessions}</AppText>
-          <AppText variant="caption" tone="secondary">
-            Workouts
-          </AppText>
-          <AppText variant="caption" tone={last30 > 0 ? 'success' : 'secondary'}>
-            {last30} in last 30 days
-          </AppText>
-        </Card>
-        <Card
-          style={[styles.tile, tileWidth]}
-          accessibilityLabel={adh.ratio === null ? 'Consistency: not enough data yet' : `Consistency ${percent(adh.ratio)}`}>
-          <Icon name="heart" size={26} color={colors.tint.pink.fg} />
-          <AppText variant="h2">{adh.ratio === null ? '—' : percent(adh.ratio)}</AppText>
-          <AppText variant="caption" tone="secondary">
-            Consistency
-          </AppText>
-          <AppText variant="caption" tone="secondary">
-            {adh.ratio === null ? 'After your first planned day' : `${adh.credited} of ${adh.scheduled} planned`}
-          </AppText>
-        </Card>
-        <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.reps} total reps`}>
-          <Icon name="repeat" size={26} color={colors.tint.lavender.fg} />
-          <AppText variant="h2">{t.reps}</AppText>
-          <AppText variant="caption" tone="secondary">
-            Total reps
-          </AppText>
-          <AppText variant="caption" tone="secondary">
-            {t.volumeKg > 0 ? formatVolume(t.volumeKg, units) : `${t.seconds}s held`}
-          </AppText>
-        </Card>
-      </View>
+      {sessions.length > 0 ? (
+        <View style={[styles.tiles, compact && styles.wrap]}>
+          <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.sessions} workouts in total, ${last30} in the last 30 days`}>
+            <Icon name="barbell" size={26} color={colors.ink} />
+            <AppText variant="h2">{t.sessions}</AppText>
+            <AppText variant="caption" tone="secondary">
+              Workouts
+            </AppText>
+            <AppText variant="caption" tone={last30 > 0 ? 'success' : 'secondary'}>
+              {last30} in last 30 days
+            </AppText>
+          </Card>
+          <Card
+            style={[styles.tile, tileWidth]}
+            accessibilityLabel={adh.ratio === null ? 'Consistency: not enough data yet' : `Consistency ${percent(adh.ratio)}`}>
+            <Icon name="heart" size={26} color={colors.tint.pink.fg} />
+            <AppText variant="h2">{adh.ratio === null ? '—' : percent(adh.ratio)}</AppText>
+            <AppText variant="caption" tone="secondary">
+              Consistency
+            </AppText>
+            <AppText variant="caption" tone="secondary">
+              {adh.ratio === null ? 'After your first planned day' : `${adh.credited} of ${adh.scheduled} planned`}
+            </AppText>
+          </Card>
+          <Card style={[styles.tile, tileWidth]} accessibilityLabel={`${t.reps} total reps`}>
+            <Icon name="repeat" size={26} color={colors.tint.lavender.fg} />
+            <AppText variant="h2">{t.reps}</AppText>
+            <AppText variant="caption" tone="secondary">
+              Total reps
+            </AppText>
+            <AppText variant="caption" tone="secondary">
+              {t.volumeKg > 0 ? formatVolume(t.volumeKg, units) : `${t.seconds}s held`}
+            </AppText>
+          </Card>
+        </View>
+      ) : null}
 
       {sessions.length === 0 ? (
         <Card>
@@ -208,29 +225,45 @@ export default function Progress() {
             </AppText>
           </Card>
 
-          <Card style={styles.section}>
-            <AppText variant="h3">Weekly sessions</AppText>
-            <View style={styles.chart} accessibilityLabel="Sessions per week chart">
-              {history.map((entry) => (
-                <View
-                  key={entry.weekStart.toISOString()}
-                  style={styles.barCol}
-                  accessible
-                  accessibilityLabel={`Week of ${formatShortDate(entry.weekStart)}: ${entry.done} of ${entry.target}`}>
-                  <AppText variant="caption">{entry.done}</AppText>
-                  <View style={styles.barTrack}>
-                    <View style={[styles.barTarget, { height: `${(entry.target / maxBar) * 100}%` }]} />
-                    <View style={[styles.bar, { height: `${(entry.done / maxBar) * 100}%` }]} />
+          <Card style={styles.section} testID="progress-calendar">
+            <View style={styles.row}>
+              <AppText variant="h3" style={styles.flex}>
+                Training calendar
+              </AppText>
+              <AppText variant="caption" tone="secondary">
+                Last {plural(calendar.length, 'week')}
+              </AppText>
+            </View>
+            <View style={styles.calendarRow}>
+              <View style={styles.calendarLabel} />
+              {WEEKDAY_SHORT.map((day) => (
+                <AppText key={day} variant="caption" tone="secondary" center style={styles.calendarCell}>
+                  {day.charAt(0)}
+                </AppText>
+              ))}
+            </View>
+            {calendar.map((week) => (
+              <View key={week.weekStart.toISOString()} style={styles.calendarRow}>
+                <AppText variant="caption" tone="secondary" style={styles.calendarLabel}>
+                  {formatShortDate(week.weekStart)}
+                </AppText>
+                {week.days.map((day) => (
+                  <View key={day.key} style={styles.calendarCell} accessible accessibilityLabel={`${formatShortDate(day.date)}: ${CALENDAR_LABEL[day.status]}`}>
+                    <View style={[styles.cell, CELL_STYLE[day.status], day.isToday && styles.cellToday]} />
                   </View>
-                  <AppText variant="caption" tone="secondary" style={styles.barLabel}>
-                    {formatShortDate(entry.weekStart).split(' ')[1]}
+                ))}
+              </View>
+            ))}
+            <View style={styles.legend}>
+              {(['done', 'missed', 'planned', 'rest'] as const).map((status) => (
+                <View key={status} style={styles.row}>
+                  <View style={[styles.legendCell, CELL_STYLE[status]]} />
+                  <AppText variant="caption" tone="secondary">
+                    {CALENDAR_LABEL[status]}
                   </AppText>
                 </View>
               ))}
             </View>
-            <AppText variant="caption" tone="secondary">
-              Orange: sessions done · Outline: planned. Labels show each week&apos;s Monday.
-            </AppText>
           </Card>
 
           {bests.length > 0 ? (
@@ -281,14 +314,6 @@ export default function Progress() {
             })}
         </>
       )}
-
-      <Card tone="deep" style={styles.footerCard}>
-        <View style={[styles.flex, styles.footerText]}>
-          <Eyebrow>A stronger, happier you</Eyebrow>
-          <AppText variant="h2">Progress isn&apos;t perfect.{'\n'}It&apos;s real. And it&apos;s you.</AppText>
-        </View>
-        <Illustration name="blob-peek" height={70} />
-      </Card>
     </Screen>
   );
 }
@@ -308,21 +333,12 @@ const styles = StyleSheet.create({
   section: { gap: space.sm },
   compare: { flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 32 },
   compareValues: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
-  chart: { flexDirection: 'row', alignItems: 'flex-end', gap: space.xs, height: 140 },
-  barCol: { flex: 1, alignItems: 'center', gap: space.xxs, height: '100%', justifyContent: 'flex-end' },
-  barTrack: { width: '70%', flex: 1, justifyContent: 'flex-end' },
-  barTarget: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderWidth: 2,
-    borderColor: colors.track,
-    borderRadius: 8,
-  },
-  bar: { backgroundColor: colors.accent, borderRadius: 8, minHeight: 0 },
-  barLabel: { fontSize: 11 },
-  footerText: { gap: space.xxs, paddingBottom: space.md },
+  calendarRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  calendarLabel: { width: 48 },
+  calendarCell: { flex: 1, alignItems: 'center' },
+  cell: { width: '100%', maxWidth: 34, aspectRatio: 1, borderRadius: 8 },
+  cellToday: { borderWidth: 2, borderColor: colors.ink },
+  legend: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, marginTop: space.xxs },
+  legendCell: { width: 12, height: 12, borderRadius: 3 },
   recent: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  footerCard: { flexDirection: 'row', alignItems: 'flex-end', paddingBottom: 0, overflow: 'hidden', borderRadius: radius.lg },
 });

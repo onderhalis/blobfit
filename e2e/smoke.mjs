@@ -61,10 +61,14 @@ async function goTo(time, path = '/') {
   await page.waitForLoadState('networkidle');
 }
 
-async function logWorkout({ startTime, reps = 0, load = 0 }) {
+async function logWorkout({ startTime, reps = 0, load = 0, effort = null, expectHistory = false }) {
   await goTo(startTime, '/plan');
   await byId('plan-start').click();
   await byId('workout').waitFor();
+  if (expectHistory) {
+    // Every exercise explains today's target from what was logged last time.
+    await page.getByTestId('workout').getByText(/^Last time \(/).first().waitFor();
+  }
   // Mark every set of every exercise done, optionally adding reps / load first.
   const doneButtons = page.locator('[data-testid$="-done"]');
   const count = await doneButtons.count();
@@ -80,6 +84,14 @@ async function logWorkout({ startTime, reps = 0, load = 0 }) {
       }
     }
     await doneButtons.nth(i).click();
+  }
+  if (effort) {
+    const chips = page.locator(`[data-testid^="effort-"][data-testid$="-${effort}"]`);
+    const chipCount = await chips.count();
+    assert.ok(chipCount > 0, 'effort question appears after the last set');
+    for (let i = 0; i < chipCount; i += 1) {
+      await chips.nth(i).click();
+    }
   }
   await page.clock.setSystemTime(new Date(startTime.getTime() + 21 * 60_000));
   await byId('finish-workout').click();
@@ -135,7 +147,8 @@ try {
   await shot('04-exercise-push-up');
 
   step('log session 1 (Mon) end to end');
-  await logWorkout({ startTime: at(5, 18) });
+  await logWorkout({ startTime: at(5, 18), effort: 'right' });
+  await byId('session-summary').getByText(/^Next time:/).first().waitFor();
   await shot('06-session-summary');
   await byId('summary-done').click();
   await byId('progress').waitFor();
@@ -143,7 +156,7 @@ try {
   await byId('progress').getByText('1 in last 30 days').waitFor();
 
   step('log sessions 2–4 on later days with a little more each time');
-  await logWorkout({ startTime: at(7, 18), reps: 1, load: 2 });
+  await logWorkout({ startTime: at(7, 18), reps: 1, load: 2, expectHistory: true });
   await byId('summary-done').click();
   await logWorkout({ startTime: at(9, 18), reps: 1, load: 4 });
   await byId('summary-done').click();
@@ -155,12 +168,14 @@ try {
   step('progress reflects only the logged sessions, after relaunch');
   await goTo(at(14, 8), '/progress');
   await byId('progress').waitFor();
-  await byId('progress').getByText("You're getting stronger.").waitFor();
+  await byId('progress').getByText('4 workouts logged').waitFor();
+  await byId('progress-calendar').waitFor();
   await shot('05-progress');
 
   step('home on a training day with history');
   await goTo(at(14, 8), '/');
   await byId('home').waitFor();
+  await byId('home-up-next').getByText(/from last time/).first().waitFor();
   await shot('01-home');
 
   step('plan mid-week');
@@ -233,7 +248,8 @@ try {
   await wp.getByTestId('accept-disclaimer').click();
   await wp.getByTestId('onboarding-continue').click();
   await wp.getByTestId('home').getByText('Your first planned session is Monday.', { exact: false }).waitFor();
-  await wp.getByTestId('home').getByText('A stronger, happier you starts Monday.').waitFor();
+  await wp.getByTestId('home').getByText('Rest day').waitFor();
+  await wp.getByTestId('home').getByText('Next: Full Body A on Monday.').waitFor();
   await wp.waitForTimeout(400);
   await wp.screenshot({ path: `${OUT}/01-home-weekend-start.png` });
   await weekend.close();
