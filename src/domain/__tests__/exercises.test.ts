@@ -1,5 +1,12 @@
-import { EXERCISES, findExercise, getExercise, isAvailable, substitutesFor } from '../exercises';
+import { EXERCISES, PATTERN_GROUPS, findExercise, getExercise, isAvailable, searchExercises, substitutesFor } from '../exercises';
 import { WORKOUT_TEMPLATES } from '../plan';
+
+// Same rules as `node tools/content/validate-exercises.mjs` (plain CommonJS so Jest and Node share them).
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const rules = require('../../../tools/content/exercise-rules.cjs') as {
+  validateExercises: (exercises: unknown[]) => string[];
+  PATTERNS: string[];
+};
 
 describe('exercise catalog', () => {
   it('has unique ids', () => {
@@ -13,20 +20,28 @@ describe('exercise catalog', () => {
     expect(findExercise('row')?.name).toBe('Supported Dumbbell Row');
   });
 
-  it.each(EXERCISES.map((exercise) => [exercise.id, exercise] as const))(
-    '%s has complete technique content and is marked for review',
-    (_, exercise) => {
-      expect(exercise.primaryMuscles.length).toBeGreaterThan(0);
-      expect(exercise.steps.length).toBeGreaterThanOrEqual(3);
-      expect(exercise.mistakes.length).toBeGreaterThanOrEqual(2);
-      expect(exercise.phases.length).toBeGreaterThanOrEqual(1);
-      expect(exercise.cues.length).toBeGreaterThanOrEqual(1);
-      expect(exercise.startingPosition.length).toBeGreaterThan(0);
-      expect(exercise.easier.length).toBeGreaterThan(0);
-      expect(exercise.harder.length).toBeGreaterThan(0);
-      expect(exercise.reviewStatus).toBe('needs-qualified-review');
-    },
-  );
+  it('has at least 40 exercises, every one passing the coach-content rules', () => {
+    // Setup, steps, phases, breathing, cues, form checks by camera view, 3–4 mistakes with
+    // looks-like / why / fix, safety notes, art brief, valid links and muscle names, review pending.
+    expect(rules.validateExercises([...EXERCISES])).toEqual([]);
+    expect(EXERCISES.length).toBeGreaterThanOrEqual(40);
+  });
+
+  it('shows every movement pattern in the library, in order', () => {
+    expect(PATTERN_GROUPS.map((group) => group.pattern)).toEqual(rules.PATTERNS);
+    for (const group of PATTERN_GROUPS) {
+      expect(EXERCISES.filter((exercise) => exercise.pattern === group.pattern).length).toBeGreaterThanOrEqual(4);
+    }
+  });
+
+  it('teaches each mistake with the view it is visible from and a fix', () => {
+    for (const exercise of EXERCISES) {
+      for (const mistake of exercise.mistakes) {
+        expect(['side', 'front', 'back', 'above']).toContain(mistake.view);
+        expect(mistake.fix).not.toBe(mistake.looksLike);
+      }
+    }
+  });
 
   it('only links easier/harder variations that exist', () => {
     for (const exercise of EXERCISES) {
@@ -51,6 +66,28 @@ describe('exercise catalog', () => {
         expect(isAvailable(last, [])).toBe(true);
       }
     }
+  });
+
+  it('never swaps a rep exercise for a timed hold', () => {
+    for (const exercise of EXERCISES) {
+      for (const swap of substitutesFor(exercise.id, ['dumbbells', 'band'])) {
+        expect(swap.measure).toBe(exercise.measure);
+        expect(swap.pattern).toBe(exercise.pattern);
+      }
+    }
+  });
+
+  it('searches names, muscles and equipment, ignoring case and punctuation', () => {
+    expect(searchExercises(EXERCISES, 'PUSH UP').map((exercise) => exercise.id)).toEqual(
+      expect.arrayContaining(['push-up', 'incline-push-up']),
+    );
+    expect(searchExercises(EXERCISES, 'glutes').length).toBeGreaterThan(3);
+    expect(searchExercises(EXERCISES, 'band row').map((exercise) => exercise.id)).toContain('band-row');
+    expect(searchExercises(EXERCISES, 'lunge').map((exercise) => exercise.id)).toEqual(
+      expect.arrayContaining(['reverse-lunge', 'split-squat', 'bulgarian-split-squat']),
+    );
+    expect(searchExercises(EXERCISES, 'zzz')).toEqual([]);
+    expect(searchExercises(EXERCISES, '  ')).toHaveLength(EXERCISES.length);
   });
 
   it('offers same-pattern substitutes the user has equipment for', () => {

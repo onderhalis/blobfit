@@ -1,8 +1,7 @@
 // Generated from assets/illustrations/interim/hd (see the README one folder up). Interim art: replace with production exports.
-import type { ImageSourcePropType } from 'react-native';
-
 export interface ArtAsset {
-  source: ImageSourcePropType;
+  /** A bundled image (the value of `require()`). */
+  source: number;
   width: number;
   height: number;
 }

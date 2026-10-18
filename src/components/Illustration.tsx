@@ -5,7 +5,8 @@ import Svg, { Line } from 'react-native-svg';
 import type { Exercise } from '@/domain/types';
 import { colors, radius } from '@/theme/tokens';
 
-import { ART, type ArtName } from './art';
+import { ART, type ArtAsset, type ArtName } from './art';
+import { EXERCISE_FRAMES } from './exerciseFrames';
 import { Icon, type IconName } from './Icon';
 
 interface IllustrationProps {
@@ -38,6 +39,8 @@ const EXERCISE_THUMB: Record<string, ArtName> = {
   squat: 'blob-squat',
   'push-up': 'blob-push-up-small',
   'incline-push-up': 'blob-incline-push-up',
+  'knee-push-up': 'blob-knee-push-up',
+  lunge: 'blob-lunge',
   row: 'blob-row',
 };
 
@@ -45,22 +48,48 @@ const EXERCISE_HERO: Record<string, ArtName> = {
   squat: 'blob-squat',
   'push-up': 'blob-push-up',
   'incline-push-up': 'blob-incline-push-up',
+  'knee-push-up': 'blob-knee-push-up',
+  lunge: 'blob-lunge',
   row: 'blob-row',
 };
 
 const PATTERN_ICON: Record<Exercise['pattern'], IconName> = {
   squat: 'body-outline',
+  lunge: 'walk',
+  hinge: 'body-outline',
   push: 'barbell-outline',
   pull: 'barbell-outline',
-  hinge: 'body-outline',
   core: 'timer-outline',
+  arms: 'barbell-outline',
 };
 
-export function exerciseArt(exercise: Exercise, kind: 'thumb' | 'hero'): ArtName | null {
-  if (!exercise.illustration) {
-    return null;
+export function exerciseArt(exercise: Exercise, kind: 'thumb' | 'hero'): ArtAsset | null {
+  // Exercise-specific frames (assets/exercises) win over the interim concept crops.
+  const frames = EXERCISE_FRAMES[exercise.id];
+  const frame = frames?.end ?? frames?.start;
+  if (frame) {
+    return frame;
   }
-  return (kind === 'thumb' ? EXERCISE_THUMB : EXERCISE_HERO)[exercise.illustration] ?? null;
+  const name = exercise.illustration ? (kind === 'thumb' ? EXERCISE_THUMB : EXERCISE_HERO)[exercise.illustration] : undefined;
+  return name ? ART[name] : null;
+}
+
+/** An art asset fitted inside a `size` box: wide art fits the width, tall art the height. */
+export function FittedArt({ asset, size, label }: { asset: ArtAsset; size: number; label?: string }) {
+  const wide = asset.width / asset.height > 1.2;
+  const height = wide ? (size * asset.height) / asset.width : size;
+  const width = (height * asset.width) / asset.height;
+  return (
+    <View
+      style={{ width, height }}
+      accessible={Boolean(label)}
+      accessibilityRole={label ? 'image' : undefined}
+      accessibilityLabel={label}
+      importantForAccessibility={label ? 'yes' : 'no-hide-descendants'}
+      accessibilityElementsHidden={!label}>
+      <Image source={asset.source} style={StyleSheet.absoluteFill} contentFit="contain" transition={0} />
+    </View>
+  );
 }
 
 /** Exercise artwork, or a neutral icon tile when no approved Blob pose exists yet. */
@@ -75,13 +104,7 @@ export function ExerciseArt({
 }) {
   const art = exerciseArt(exercise, kind);
   if (art) {
-    const asset = ART[art];
-    const fitsWide = asset.width / asset.height > 1.2;
-    return fitsWide ? (
-      <Illustration name={art} height={(size * asset.height) / asset.width} width={size} />
-    ) : (
-      <Illustration name={art} height={size} />
-    );
+    return <FittedArt asset={art} size={size} />;
   }
   return (
     <View

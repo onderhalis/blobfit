@@ -53,6 +53,9 @@ export const SF_SYMBOLS: Partial<Record<IconName, SFSymbolName>> = {
   'time-outline': 'clock',
   'timer-outline': 'timer',
   'hourglass-outline': 'hourglass',
+  'videocam-outline': 'video',
+  search: 'magnifyingglass',
+  'close-circle-outline': 'xmark.circle',
 };
 
 export function Icon({ name, size, color }: { name: IconName; size: number; color: string }) {

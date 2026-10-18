@@ -28,6 +28,10 @@ export const MUSCLE_REGIONS: Record<string, { side: Side; shapes: Shape[] }[]> =
   chest: [{ side: 'front', shapes: pair(rect(30, 42, 19, 15, 6)) }],
   'front shoulders': [{ side: 'front', shapes: pair(ellipse(24, 43, 7, 7)) }],
   'rear shoulders': [{ side: 'back', shapes: pair(ellipse(24, 43, 7, 7)) }],
+  'side shoulders': [
+    { side: 'front', shapes: pair(ellipse(16, 43, 5, 7)) },
+    { side: 'back', shapes: pair(ellipse(16, 43, 5, 7)) },
+  ],
   shoulders: [
     { side: 'front', shapes: pair(ellipse(24, 43, 7, 7)) },
     { side: 'back', shapes: pair(ellipse(24, 43, 7, 7)) },
@@ -39,13 +43,16 @@ export const MUSCLE_REGIONS: Record<string, { side: Side; shapes: Shape[] }[]> =
     { side: 'back', shapes: pair(rect(11, 70, 12, 22)) },
   ],
   core: [{ side: 'front', shapes: [rect(36, 60, 28, 32, 9)] }],
+  obliques: [{ side: 'front', shapes: pair(rect(27, 62, 8, 28, 4)) }],
   quadriceps: [{ side: 'front', shapes: pair(rect(31, 104, 13, 38)) }],
   adductors: [{ side: 'front', shapes: pair(rect(44.5, 104, 4, 26, 2)) }],
   'upper back': [{ side: 'back', shapes: [rect(32, 38, 36, 15, 7)] }],
   back: [{ side: 'back', shapes: [rect(30, 55, 40, 22, 10)] }],
   'lower back': [{ side: 'back', shapes: [rect(38, 79, 24, 13, 6)] }],
   glutes: [{ side: 'back', shapes: pair(rect(31, 94, 18, 18, 9)) }],
+  'outer hips': [{ side: 'back', shapes: pair(rect(25, 86, 7, 14, 3)) }],
   hamstrings: [{ side: 'back', shapes: pair(rect(31, 116, 15, 32)) }],
+  calves: [{ side: 'back', shapes: pair(rect(32, 152, 13, 24)) }],
 };
 
 function ShapeView({ shape, fill }: { shape: Shape; fill: string }) {

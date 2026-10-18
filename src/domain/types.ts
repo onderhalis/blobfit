@@ -33,13 +33,43 @@ export interface Preferences {
   planStartedAt: string;
 }
 
-export type MovementPattern = 'squat' | 'push' | 'pull' | 'hinge' | 'core';
+/** Movement families. Swaps during a workout stay within one family (and one measure). */
+export type MovementPattern = 'squat' | 'lunge' | 'hinge' | 'push' | 'pull' | 'core' | 'arms';
 export type BodyArea = 'Lower Body' | 'Upper Body' | 'Core';
 export type Measure = 'reps' | 'seconds';
+
+/** 1 = starter, 2 = beginner, 3 = next step. */
+export type ExerciseLevel = 1 | 2 | 3;
+
+/** The camera position a coach would watch from (or film from) to judge the position. */
+export type CameraView = 'side' | 'front' | 'back' | 'above';
 
 export interface ExercisePhase {
   label: string;
   text: string;
+}
+
+/** A common fault, taught the way a coach would: what it looks like, why it matters, the fix. */
+export interface ExerciseMistake {
+  title: string;
+  /** Where to look from to spot it. */
+  view: CameraView;
+  /** What it looks like, including the angle or position that makes it wrong. */
+  looksLike: string;
+  why: string;
+  fix: string;
+}
+
+/** Something to check from one camera view, e.g. by filming one set. */
+export interface FormCheck {
+  view: CameraView;
+  check: string;
+}
+
+/** Brief for the two key frames of the exercise illustration (see docs/EXERCISE_ART_BRIEF.md). */
+export interface ArtBrief {
+  view: CameraView;
+  frames: { label: string; pose: string }[];
 }
 
 export interface Exercise {
@@ -50,7 +80,7 @@ export interface Exercise {
   /** Human-readable equipment label. */
   equipment: string;
   steps: string[];
-  mistakes: string[];
+  mistakes: ExerciseMistake[];
   easier: string;
   harder: string;
   reviewStatus: 'needs-qualified-review' | 'reviewed';
@@ -64,6 +94,12 @@ export interface Exercise {
   startingPosition: string;
   phases: ExercisePhase[];
   cues: string[];
+  breathing: string;
+  formChecks: FormCheck[];
+  /** When to stop, swap or shorten the range. Practical guidance, not medical advice. */
+  safety: string[];
+  level: ExerciseLevel;
+  artBrief: ArtBrief;
   easierId?: string;
   harderId?: string;
   illustration?: string;

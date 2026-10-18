@@ -142,6 +142,10 @@ try {
   await byId('plan-exercise-incline-push-up').click();
   await byId('exercise-detail').waitFor();
   await byId('exercise-detail').getByText('Content review pending').first().waitFor();
+  // Taught like a coach: what to check from which camera view, and each mistake with its fix.
+  await byId('form-checks').getByText('From the side').waitFor();
+  assert.ok((await byId('mistakes').locator('[data-testid^="mistake-"]').count()) >= 3, 'at least three mistakes');
+  await byId('mistake-0').getByText('FIX').waitFor();
   await shot('04-exercise-incline-push-up');
   await goTo(at(5, 9), '/exercise/push-up');
   await byId('exercise-detail').waitFor();
@@ -208,10 +212,29 @@ try {
   await byId('save-preferences').click();
   await byId('more').waitFor();
 
-  step('library');
+  step('library: 40+ movements, search and equipment filter');
   await byId('more-library').click();
   await byId('library').waitFor();
+  const libraryCount = Number((await byId('library').getByText(/^\d+ movements\./).first().textContent()).match(/^\d+/)[0]);
+  assert.ok(libraryCount >= 40, `library has ${libraryCount} movements`);
   await shot('09-library');
+  await byId('library-search').fill('lunge');
+  await byId('library-count').getByText(/movements?$/).waitFor();
+  await byId('library-reverse-lunge').waitFor();
+  assert.equal(await byId('library-squat').count(), 0, 'search hides non-matching exercises');
+  await shot('09b-library-search');
+  await byId('library-search').fill('');
+  await byId('filter-band').click();
+  await byId('library-band-row').waitFor();
+  assert.equal(await byId('library-squat').count(), 0, 'band filter hides bodyweight exercises');
+  await byId('library-search').fill('zzz');
+  await byId('library').getByText('No exercises match').waitFor();
+  await byId('library').getByRole('button', { name: 'Clear search' }).click();
+  await byId('library-squat').waitFor();
+  await byId('library-pike-push-up').click();
+  await byId('exercise-detail').waitFor();
+  await byId('mistakes').waitFor();
+  await shot('09c-exercise-new');
 
   step('a failed save is surfaced and can be retried');
   await goTo(at(14, 9), '/more');

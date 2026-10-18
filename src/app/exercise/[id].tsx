@@ -3,28 +3,32 @@ import { StyleSheet, View } from 'react-native';
 
 import { AppText, Eyebrow } from '@/components/AppText';
 import { Button } from '@/components/Button';
-import { Card, Chevron, ReviewBadge } from '@/components/Card';
+import type { ArtAsset } from '@/components/art';
+import { Card, Chevron, ReviewBadge, Tag } from '@/components/Card';
+import { EXERCISE_FRAMES } from '@/components/exerciseFrames';
 import { Icon, type IconName } from '@/components/Icon';
-import { ExerciseArt } from '@/components/Illustration';
+import { ExerciseArt, FittedArt } from '@/components/Illustration';
 import { MUSCLE_COLORS, MuscleMap } from '@/components/MuscleMap';
-import { EmptyState, Screen, TopBar } from '@/components/Screen';
+import { EmptyState, Screen, TopBar, useLayout } from '@/components/Screen';
 import { formatShortDate } from '@/domain/dates';
-import { EQUIPMENT_LABEL, findExercise } from '@/domain/exercises';
+import { EQUIPMENT_LABEL, LEVEL_LABEL, PATTERN_LABEL, findExercise } from '@/domain/exercises';
 import { slotTarget } from '@/domain/plan';
 import { performances, suggestTarget } from '@/domain/progression';
 import { findOpenSession } from '@/domain/session';
-import type { Exercise } from '@/domain/types';
+import type { CameraView, Exercise, ExerciseMistake } from '@/domain/types';
 import { lastTimeSummary, nextTimeLine } from '@/features/progressionCopy';
+import { listJoin } from '@/lib/format';
 import { useStore } from '@/state/AppStore';
 import { colors, radius, space } from '@/theme/tokens';
 
-const PATTERN_LABEL: Record<Exercise['pattern'], string> = {
-  squat: 'Squat pattern',
-  push: 'Push pattern',
-  pull: 'Pull pattern',
-  hinge: 'Hinge pattern',
-  core: 'Core control',
+const VIEW_LABEL: Record<CameraView, string> = {
+  side: 'From the side',
+  front: 'From the front',
+  back: 'From behind',
+  above: 'From above',
 };
+
+const VIEW_ORDER: CameraView[] = ['side', 'front', 'back', 'above'];
 
 function MetaItem({ icon, value, label }: { icon: IconName; value: string; label: string }) {
   return (
@@ -76,6 +80,75 @@ function Variation({ kind, name, id }: { kind: 'Easier' | 'Harder'; name: string
     <Card tone={kind === 'Easier' ? 'mint' : 'pink'} style={styles.variation}>
       {content}
     </Card>
+  );
+}
+
+/** The two key positions, when exercise art exists (assets/exercises via npm run art:sync). */
+function KeyFrames({ exercise }: { exercise: Exercise }) {
+  const { content } = useLayout();
+  const frames = EXERCISE_FRAMES[exercise.id];
+  if (!frames?.start || !frames.end) {
+    return (
+      <View style={styles.art}>
+        <ExerciseArt exercise={exercise} kind="hero" size={260} />
+      </View>
+    );
+  }
+  const size = (content - space.sm) / 2;
+  return (
+    <View style={styles.frames}>
+      {[frames.start, frames.end].map((asset, i) => {
+        const frame = exercise.artBrief.frames[i];
+        return (
+          <View key={frame.label} style={[styles.frame, { width: size }]}>
+            <FittedArt asset={asset} size={size - space.sm} label={`${frame.label}: ${frame.pose}`} />
+            <AppText variant="caption" tone="secondary" center>
+              {i + 1}. {frame.label}
+            </AppText>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+function Mistake({ mistake, art, index }: { mistake: ExerciseMistake; art: ArtAsset | null; index: number }) {
+  return (
+    <View style={[styles.mistake, index > 0 && styles.divider]} testID={`mistake-${index}`}>
+      <View style={styles.mistakeHead}>
+        <Icon name="close-circle" size={22} color={colors.danger} />
+        <AppText variant="h3" style={styles.flex}>
+          {mistake.title}
+        </AppText>
+      </View>
+      <Tag label={VIEW_LABEL[mistake.view]} tint="blue" icon="videocam-outline" />
+      {art ? (
+        <View style={styles.mistakeArt}>
+          <FittedArt asset={art} size={160} label={`Shown wrong on purpose: ${mistake.looksLike}`} />
+        </View>
+      ) : null}
+      <View style={styles.mistakeRow}>
+        <AppText variant="caption" tone="secondary" style={styles.mistakeLabel}>
+          LOOKS LIKE
+        </AppText>
+        <AppText>{mistake.looksLike}</AppText>
+      </View>
+      <View style={styles.mistakeRow}>
+        <AppText variant="caption" tone="secondary" style={styles.mistakeLabel}>
+          WHY IT MATTERS
+        </AppText>
+        <AppText tone="secondary">{mistake.why}</AppText>
+      </View>
+      <View style={[styles.mistakeRow, styles.fix]}>
+        <View style={styles.mistakeHead}>
+          <Icon name="checkmark-circle" size={18} color={colors.success} />
+          <AppText variant="caption" style={[styles.mistakeLabel, { color: colors.successInk }]}>
+            FIX
+          </AppText>
+        </View>
+        <AppText>{mistake.fix}</AppText>
+      </View>
+    </View>
   );
 }
 
@@ -135,12 +208,10 @@ export default function ExerciseDetail() {
           </AppText>
         </View>
       </View>
-      <View style={styles.art}>
-        <ExerciseArt exercise={exercise} kind="hero" size={260} />
-      </View>
+      <KeyFrames exercise={exercise} />
 
       <View style={styles.metaRow}>
-        <MetaItem icon="stats-chart" value="Beginner" label="Level" />
+        <MetaItem icon="stats-chart" value={LEVEL_LABEL[exercise.level]} label="Level" />
         <MetaItem icon="barbell-outline" value={equipment} label="Equipment" />
         <MetaItem
           icon={exercise.measure === 'seconds' ? 'timer-outline' : 'repeat'}
@@ -171,27 +242,7 @@ export default function ExerciseDetail() {
       ) : null}
 
       <Card style={styles.section}>
-        <AppText variant="h2">Muscles worked</AppText>
-        <AppText tone="secondary">
-          Mainly {exercise.primaryMuscles.join(' and ')}
-          {exercise.secondaryMuscles.length > 0 ? `, with help from ${exercise.secondaryMuscles.join(', ')}` : ''}.
-        </AppText>
-        <MuscleMap primary={exercise.primaryMuscles} secondary={exercise.secondaryMuscles} />
-        <View style={styles.chips}>
-          {exercise.primaryMuscles.map((muscle) => (
-            <MuscleChip key={muscle} name={muscle} kind="primary" />
-          ))}
-          {exercise.secondaryMuscles.map((muscle) => (
-            <MuscleChip key={muscle} name={muscle} kind="secondary" />
-          ))}
-        </View>
-        <AppText variant="caption" tone="secondary">
-          Red: main muscles · Yellow: supporting muscles. Simplified diagram, pending coach review.
-        </AppText>
-      </Card>
-
-      <Card style={styles.section}>
-        <AppText variant="h2">Starting position</AppText>
+        <AppText variant="h2">Setup</AppText>
         <AppText>{exercise.startingPosition}</AppText>
       </Card>
 
@@ -215,17 +266,21 @@ export default function ExerciseDetail() {
       </Card>
 
       <Card style={styles.section}>
-        <AppText variant="h2">Each rep</AppText>
+        <AppText variant="h2">{exercise.measure === 'seconds' ? 'The hold' : 'Each rep'}</AppText>
         {exercise.phases.map((phase) => (
           <View key={phase.label} style={styles.phase}>
             <AppText variant="bodyStrong">{phase.label}</AppText>
             <AppText tone="secondary">{phase.text}</AppText>
           </View>
         ))}
+        <View style={[styles.phase, styles.breathing]}>
+          <AppText variant="bodyStrong">Breathing</AppText>
+          <AppText tone="secondary">{exercise.breathing}</AppText>
+        </View>
       </Card>
 
       <Card style={styles.section}>
-        <AppText variant="h2">Form cues</AppText>
+        <AppText variant="h2">Coach cues</AppText>
         {exercise.cues.map((cue) => (
           <View key={cue} style={styles.listRow}>
             <Icon name="checkmark-circle" size={22} color={colors.success} />
@@ -234,14 +289,59 @@ export default function ExerciseDetail() {
         ))}
       </Card>
 
-      <Card style={styles.section}>
-        <AppText variant="h2">Common mistakes</AppText>
-        {exercise.mistakes.map((mistake) => (
-          <View key={mistake} style={styles.listRow}>
-            <Icon name="close-circle" size={22} color={colors.danger} />
-            <AppText style={styles.flex}>{mistake.charAt(0).toUpperCase() + mistake.slice(1)}</AppText>
+      <Card style={styles.section} testID="form-checks">
+        <AppText variant="h2">Check your form</AppText>
+        <AppText tone="secondary">Film one set with your phone from these angles, then compare.</AppText>
+        {VIEW_ORDER.filter((view) => exercise.formChecks.some((check) => check.view === view)).map((view) => (
+          <View key={view} style={styles.viewGroup}>
+            <Tag label={VIEW_LABEL[view]} tint="blue" icon="videocam-outline" />
+            {exercise.formChecks
+              .filter((check) => check.view === view)
+              .map((check) => (
+                <View key={check.check} style={styles.listRow}>
+                  <View style={styles.bullet} />
+                  <AppText style={styles.flex}>{check.check}</AppText>
+                </View>
+              ))}
           </View>
         ))}
+      </Card>
+
+      <Card style={styles.section} testID="mistakes">
+        <AppText variant="h2">Common mistakes</AppText>
+        {exercise.mistakes.map((mistake, i) => (
+          <Mistake key={mistake.title} mistake={mistake} index={i} art={EXERCISE_FRAMES[exercise.id]?.mistakes[i] ?? null} />
+        ))}
+      </Card>
+
+      <Card style={styles.section}>
+        <AppText variant="h2">Stop, swap or go easier</AppText>
+        {exercise.safety.map((note) => (
+          <View key={note} style={styles.listRow}>
+            <Icon name="warning-outline" size={20} color={colors.tint.butter.fg} />
+            <AppText style={styles.flex}>{note}</AppText>
+          </View>
+        ))}
+      </Card>
+
+      <Card style={styles.section}>
+        <AppText variant="h2">Muscles worked</AppText>
+        <AppText tone="secondary">
+          Mainly {listJoin(exercise.primaryMuscles)}
+          {exercise.secondaryMuscles.length > 0 ? `, with help from ${listJoin(exercise.secondaryMuscles)}` : ''}.
+        </AppText>
+        <MuscleMap primary={exercise.primaryMuscles} secondary={exercise.secondaryMuscles} />
+        <View style={styles.chips}>
+          {exercise.primaryMuscles.map((muscle) => (
+            <MuscleChip key={muscle} name={muscle} kind="primary" />
+          ))}
+          {exercise.secondaryMuscles.map((muscle) => (
+            <MuscleChip key={muscle} name={muscle} kind="secondary" />
+          ))}
+        </View>
+        <AppText variant="caption" tone="secondary">
+          Red: main muscles · Yellow: supporting muscles. Simplified diagram, pending coach review.
+        </AppText>
       </Card>
 
       <AppText variant="h2">Variations</AppText>
@@ -264,6 +364,18 @@ const styles = StyleSheet.create({
   heroText: { gap: space.xs },
   name: { marginTop: space.xxs },
   art: { alignItems: 'center', justifyContent: 'center', minHeight: 170 },
+  frames: { flexDirection: 'row', gap: space.sm },
+  frame: { alignItems: 'center', gap: space.xxs },
+  breathing: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border, paddingTop: space.sm },
+  viewGroup: { gap: space.xs, alignItems: 'flex-start' },
+  bullet: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.ink, marginTop: 9, marginHorizontal: 8 },
+  mistake: { gap: space.xs, alignItems: 'stretch', paddingTop: space.xs },
+  divider: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.border, paddingTop: space.sm },
+  mistakeHead: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
+  mistakeArt: { alignItems: 'center' },
+  mistakeRow: { gap: 2 },
+  mistakeLabel: { letterSpacing: 1.2, fontSize: 11 },
+  fix: { backgroundColor: colors.successSoft, borderRadius: radius.md, padding: space.sm },
   metaRow: { flexDirection: 'row', gap: space.xs },
   meta: { flex: 1, alignItems: 'center', gap: 2 },
   metaIcon: {
