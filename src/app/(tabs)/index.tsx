@@ -12,7 +12,7 @@ import { Screen, TopBar } from '@/components/Screen';
 import { WEEKDAY_LONG, formatDuration, formatShortDate, weekdayOf } from '@/domain/dates';
 import { getExercise } from '@/domain/exercises';
 import { WORKOUT_TEMPLATES, nextTrainingDay } from '@/domain/plan';
-import { suggestTarget } from '@/domain/progression';
+import { startingPoint, suggestTarget } from '@/domain/progression';
 import { completedSessions, newBestsIn, todayStatus, weekStreak, weekSummary, type TodayStatus } from '@/domain/progress';
 import { doneSets, sessionTotals } from '@/domain/session';
 import { suggestionCopy } from '@/features/progressionCopy';
@@ -168,12 +168,12 @@ export default function Home() {
               style={({ pressed }) => [styles.exercise, index > 0 && styles.divider, pressed && styles.pressed]}
               onPress={() => router.push({ pathname: '/exercise/[id]', params: { id: exercise.id } })}
               accessibilityRole="button"
-              accessibilityLabel={`${exercise.name}, ${prescription({ ...item, target: suggestion.value })}${note.tone === 'up' ? `, ${note.title}` : ''}`}>
+              accessibilityLabel={`${exercise.name}, ${prescription({ ...item, target: startingPoint(suggestion).value })}${note.tone === 'up' ? `, ${note.title}` : ''}`}>
               <ExerciseArt exercise={exercise} kind="thumb" size={48} />
               <View style={styles.flex}>
                 <AppText variant="bodyStrong">{exercise.name}</AppText>
                 <AppText variant="caption" tone="secondary">
-                  {prescription({ ...item, target: suggestion.value })}
+                  {prescription({ ...item, target: startingPoint(suggestion).value })}
                 </AppText>
                 {note.tone === 'up' ? (
                   <AppText variant="caption" style={{ color: colors.successInk }}>

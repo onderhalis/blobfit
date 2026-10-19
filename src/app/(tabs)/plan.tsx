@@ -7,7 +7,7 @@ import { Button } from '@/components/Button';
 import { Card, Chevron, ReviewBadge, Tag } from '@/components/Card';
 import { Icon, type IconName } from '@/components/Icon';
 import { Hero } from '@/components/Hero';
-import { suggestTarget } from '@/domain/progression';
+import { startingPoint, suggestTarget } from '@/domain/progression';
 import { suggestionCopy } from '@/features/progressionCopy';
 import { ExerciseArt, Illustration, MotionMarks } from '@/components/Illustration';
 import { WeekDots } from '@/components/Progress';
@@ -190,7 +190,7 @@ export default function Plan() {
           equipment: prefs.equipment,
         });
         const note = suggestionCopy(exercise.id, suggestion, data.settings.units);
-        const planned = { ...item, target: suggestion.value };
+        const planned = { ...item, target: startingPoint(suggestion).value };
         return (
           <Card
             key={item.slot}

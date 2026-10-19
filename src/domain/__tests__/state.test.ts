@@ -115,6 +115,18 @@ describe('app reducer', () => {
     expect(data.sessions).toEqual([]);
   });
 
+  it('applies an accepted load to the open session only', () => {
+    const session = createSession(buildWorkout('A', makePrefs({ equipment: ['dumbbells'] })), {
+      id: 's',
+      now: at(2026, 10, 5),
+      history: [],
+    });
+    const row = session.exercises.findIndex((log) => log.exerciseId === 'row');
+    const data = run(INITIAL_DATA, { type: 'startSession', session }, { type: 'applyLoad', sessionId: 's', exerciseIndex: row, loadKg: 10, value: 10 });
+    expect(data.sessions[0].exercises[row].sets.every((set) => set.loadKg === 10)).toBe(true);
+    expect(run(data, { type: 'applyLoad', sessionId: 'other', exerciseIndex: row, loadKg: 12, value: 10 })).toEqual(data);
+  });
+
   it('resets everything', () => {
     const prefs = makePrefs();
     const data = run(

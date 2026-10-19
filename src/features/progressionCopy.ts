@@ -76,8 +76,8 @@ export function suggestionCopy(
       const before = Math.max(...(last?.sets.map((set) => set.loadKg ?? 0) ?? [0]));
       const added = toDisplayLoad(suggestion.loadKg ?? 0, units) - toDisplayLoad(before, units);
       return {
-        title: `+${Number.isInteger(added) ? added : added.toFixed(1)} ${units} from last time`,
-        detail: `Back to ${suggestion.value} reps with the heavier load.`,
+        title: `Ready for +${Number.isInteger(added) ? added : added.toFixed(1)} ${units}`,
+        detail: `Last time's load is set. Tap to go heavier for ${suggestion.value} reps, or keep it.`,
         tone: 'up',
       };
     }
@@ -99,22 +99,20 @@ export function suggestionCopy(
   }
 }
 
-/** "Next time: 11 reps per set (+1)", "Next time: 10 reps at 10 kg", "Next time: try Goblet Squat". */
+/** "Next time: 11 reps per set", "Next time: ready for 10 kg, or stay at 12 reps", "Next time: try Goblet Squat…". */
 export function nextTimeLine(exerciseId: string, suggestion: Suggestion, units: Units): string {
   const exercise = getExercise(exerciseId);
   if (suggestion.reason === 'ready-for-harder' && suggestion.harderId) {
     return `Next time: try ${getExercise(suggestion.harderId).name}, or stay at ${suggestion.value} reps`;
+  }
+  if (suggestion.reason === 'more-load' && suggestion.loadKg && suggestion.hold) {
+    return `Next time: ready for ${formatLoad(suggestion.loadKg, units)}, or stay at ${suggestion.hold.value} reps`;
   }
   const amount =
     exercise.measure === 'seconds'
       ? `${suggestion.value}s holds`
       : `${suggestion.value} reps per set${exercise.perSide ? ' each side' : ''}`;
   const load = exercise.loadable && suggestion.loadKg ? ` at ${formatLoad(suggestion.loadKg, units)}` : '';
-  const change =
-    suggestion.reason === 'repeat' || suggestion.reason === 'hold-at-top'
-      ? ' (same as today)'
-      : suggestion.reason === 'more-load'
-        ? ' (heavier)'
-        : '';
+  const change = suggestion.reason === 'repeat' || suggestion.reason === 'hold-at-top' ? ' (same as today)' : '';
   return `Next time: ${amount}${load}${change}`;
 }

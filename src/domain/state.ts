@@ -7,6 +7,7 @@ import {
   removeSet,
   resumeSession,
   setEffort,
+  applyLoad,
   setSkipped,
   substituteExercise,
   updateSet,
@@ -29,6 +30,7 @@ export type Action =
   | { type: 'skipExercise'; sessionId: string; exerciseIndex: number; skipped: boolean }
   | { type: 'substituteExercise'; sessionId: string; exerciseIndex: number; exerciseId: string }
   | { type: 'setEffort'; sessionId: string; exerciseIndex: number; effort: Effort | undefined }
+  | { type: 'applyLoad'; sessionId: string; exerciseIndex: number; loadKg: number; value: number }
   | { type: 'pauseSession'; sessionId: string; now: string }
   | { type: 'resumeSession'; sessionId: string; now: string }
   | { type: 'completeSession'; sessionId: string; now: string }
@@ -133,6 +135,10 @@ export function reducer(data: AppData, action: Action): AppData {
     case 'setEffort':
       return mapSession(data, action.sessionId, (session) =>
         isOpen(session) ? setEffort(session, action.exerciseIndex, action.effort) : session,
+      );
+    case 'applyLoad':
+      return mapSession(data, action.sessionId, (session) =>
+        isOpen(session) ? applyLoad(session, action.exerciseIndex, action.loadKg, action.value) : session,
       );
     case 'pauseSession':
       return mapSession(data, action.sessionId, (session) => pauseSession(session, new Date(action.now)));

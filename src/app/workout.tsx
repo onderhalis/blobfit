@@ -18,7 +18,7 @@ import { canComplete, doneSets, elapsedMs, findOpenSession, MAX_SETS } from '@/d
 import type { ExerciseLog, Units, WorkoutSession } from '@/domain/types';
 import { goToTab } from '@/features/navigation';
 import { EFFORT_LABEL, lastTimeLine, suggestionCopy } from '@/features/progressionCopy';
-import { fromDisplayLoad, plural, toDisplayLoad } from '@/lib/format';
+import { formatLoad, fromDisplayLoad, plural, toDisplayLoad } from '@/lib/format';
 import { haptics } from '@/lib/haptics';
 import { useNow, useStore } from '@/state/AppStore';
 import { colors, radius, space, TOUCH } from '@/theme/tokens';
@@ -229,6 +229,14 @@ function ExerciseCard({
   const timed = exercise.measure === 'seconds';
   const options = substitutesFor(log.exerciseId, equipment);
   const harder = suggestion.harderId ? options.find((option) => option.id === suggestion.harderId) : undefined;
+  // A heavier load is only offered: the sets keep last time's load until the user taps to accept.
+  const offered = suggestion.reason === 'more-load' && suggestion.loadKg !== null;
+  const heavier =
+    offered && log.sets.some((set) => !set.done && set.loadKg !== suggestion.loadKg) ? suggestion.loadKg : null;
+  const detail =
+    offered && heavier === null
+      ? `Heavier load set: ${suggestion.value} reps at ${formatLoad(suggestion.loadKg, units)}.`
+      : note.detail;
   const base = { sessionId: session.id, exerciseIndex: index } as const;
   const done = log.sets.filter((set) => set.done).length;
   const swapTo = (exerciseId: string) => dispatch({ type: 'substituteExercise', ...base, exerciseId });
@@ -285,9 +293,9 @@ function ExerciseCard({
             <AppText variant="bodyStrong" style={note.tone === 'up' ? { color: colors.successInk } : undefined}>
               {note.title}
             </AppText>
-            {note.detail ? (
+            {detail ? (
               <AppText variant="caption" tone="secondary">
-                {note.detail}
+                {detail}
               </AppText>
             ) : null}
             {suggestion.last ? (
@@ -300,6 +308,17 @@ function ExerciseCard({
       ) : null}
       {harder && !log.skipped ? (
         <Button label={`Try ${harder.name}`} variant="secondary" size="md" icon="swap-horizontal" onPress={() => swapTo(harder.id)} />
+      ) : null}
+      {heavier !== null && !log.skipped ? (
+        <Button
+          testID={`apply-load-${exercise.id}`}
+          label={`Use ${formatLoad(heavier, units)}`}
+          variant="secondary"
+          size="md"
+          icon="trending-up"
+          onPress={() => dispatch({ type: 'applyLoad', ...base, loadKg: heavier, value: suggestion.value })}
+          accessibilityHint={`Sets not done yet switch to ${formatLoad(heavier, units)} for ${suggestion.value} reps`}
+        />
       ) : null}
 
       {log.skipped ? (

@@ -1,7 +1,7 @@
 import { getExercise } from '../exercises';
 import { buildWorkout } from '../plan';
 import { lastPerformance, loadStepKg, suggestTarget } from '../progression';
-import { completeSession, createSession, setEffort, substituteExercise, updateSet } from '../session';
+import { applyLoad, completeSession, createSession, setEffort, substituteExercise, updateSet } from '../session';
 import type { Effort, EquipmentId, WorkoutSession } from '../types';
 import { at, makePrefs } from './helpers';
 
@@ -81,11 +81,16 @@ describe('suggestTarget', () => {
     });
   });
 
-  it('adds load at the top of a loaded rep range and resets reps', () => {
+  it('offers more load at the top of a loaded rep range, holding last time until accepted', () => {
     const climbing = logged(at(2026, 10, 5), 'row', [10, 10, 10], { loadKg: 8 });
     expect(suggestTarget(row, 10, [climbing], opts)).toMatchObject({ value: 11, loadKg: 8, reason: 'more-reps' });
     const atTop = logged(at(2026, 10, 7), 'row', [12, 12, 12], { loadKg: 8 });
-    expect(suggestTarget(row, 10, [atTop, climbing], opts)).toMatchObject({ value: 10, loadKg: 10, reason: 'more-load' });
+    expect(suggestTarget(row, 10, [atTop, climbing], opts)).toMatchObject({
+      value: 10,
+      loadKg: 10,
+      reason: 'more-load',
+      hold: { value: 12, loadKg: 8 },
+    });
     expect(suggestTarget(row, 10, [atTop], { units: 'lb', equipment: DUMBBELLS }).loadKg).toBeCloseTo(8 + loadStepKg('lb'));
   });
 
@@ -110,6 +115,23 @@ describe('sessions use the suggestion', () => {
     const row = next.exercises.find((log) => log.exerciseId === 'row');
     expect(row?.target).toBe(11);
     expect(row?.sets.every((set) => set.value === 11 && set.loadKg === 8)).toBe(true);
+  });
+
+  it('never applies a heavier load on its own: last load is set, one tap switches the open sets', () => {
+    const atTop = logged(at(2026, 10, 7, 18), 'row', [12, 12, 12], { loadKg: 8 });
+    const plan = buildWorkout('A', makePrefs({ equipment: DUMBBELLS }));
+    const next = createSession(plan, { id: 'n', now: at(2026, 10, 9, 18), history: [atTop], ...opts });
+    const index = next.exercises.findIndex((log) => log.exerciseId === 'row');
+    expect(next.exercises[index].target).toBe(12);
+    expect(next.exercises[index].sets.every((set) => set.value === 12 && set.loadKg === 8)).toBe(true);
+
+    // First set done at the old load, then the user accepts the increase.
+    const oneDone = updateSet(next, index, 0, { done: true });
+    const accepted = applyLoad(oneDone, index, 10, 10);
+    const sets = accepted.exercises[index].sets;
+    expect(sets[0]).toMatchObject({ value: 12, loadKg: 8, done: true });
+    expect(sets.slice(1).every((set) => set.value === 10 && set.loadKg === 10 && !set.done)).toBe(true);
+    expect(accepted.exercises[index].target).toBe(10);
   });
 
   it('re-targets a swapped exercise from its own history', () => {

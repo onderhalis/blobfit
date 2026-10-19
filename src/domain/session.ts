@@ -1,6 +1,6 @@
 import { getExercise } from './exercises';
 import { slotTarget } from './plan';
-import { suggestTarget } from './progression';
+import { startingPoint, suggestTarget } from './progression';
 import type { Effort, EquipmentId, ExerciseLog, SetLog, Units, WorkoutPlan, WorkoutSession } from './types';
 
 /** What progression needs to know about the user. Defaults keep older callers working. */
@@ -57,14 +57,14 @@ export function createSession(
     pausedMs: 0,
     exercises: plan.exercises.map((planned) => {
       const exercise = getExercise(planned.exerciseId);
-      const suggestion = suggestTarget(exercise, planned.target, options.history, context(options));
-      const load = exercise.loadable ? (suggestion.loadKg ?? lastLoadFor(exercise.id, options.history)) : null;
+      const start = startingPoint(suggestTarget(exercise, planned.target, options.history, context(options)));
+      const load = exercise.loadable ? (start.loadKg ?? lastLoadFor(exercise.id, options.history)) : null;
       return {
         slot: planned.slot,
         exerciseId: planned.exerciseId,
         skipped: false,
-        target: suggestion.value,
-        sets: freshSets(planned.sets, suggestion.value, load),
+        target: start.value,
+        sets: freshSets(planned.sets, start.value, load),
       };
     }),
   };
@@ -142,18 +142,27 @@ export function substituteExercise(
   const next = getExercise(exerciseId);
   return mapExercise(session, exerciseIndex, (log) => {
     const original = log.substitutedFrom ?? log.exerciseId;
-    const suggestion = suggestTarget(next, slotTarget(log.slot) ?? log.target, history, context(options));
-    const load = next.loadable ? (suggestion.loadKg ?? lastLoadFor(next.id, history)) : null;
+    const start = startingPoint(suggestTarget(next, slotTarget(log.slot) ?? log.target, history, context(options)));
+    const load = next.loadable ? (start.loadKg ?? lastLoadFor(next.id, history)) : null;
     return {
       ...log,
       exerciseId: next.id,
       substitutedFrom: original === next.id ? undefined : original,
       skipped: false,
-      target: suggestion.value,
+      target: start.value,
       effort: undefined,
-      sets: freshSets(log.sets.length, suggestion.value, load),
+      sets: freshSets(log.sets.length, start.value, load),
     };
   });
+}
+
+/** The user accepted a heavier load: sets not yet done switch to it, with the new rep target. */
+export function applyLoad(session: WorkoutSession, exerciseIndex: number, loadKg: number, value: number): WorkoutSession {
+  return mapExercise(session, exerciseIndex, (log) => ({
+    ...log,
+    target: value,
+    sets: log.sets.map((set) => (set.done ? set : { ...set, loadKg, value })),
+  }));
 }
 
 export function setEffort(session: WorkoutSession, exerciseIndex: number, effort: Effort | undefined): WorkoutSession {

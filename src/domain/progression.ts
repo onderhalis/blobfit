@@ -63,6 +63,16 @@ export interface Suggestion {
   last: LastPerformance | null;
   /** The harder variation to try, when `reason` is 'ready-for-harder'. */
   harderId?: string;
+  /**
+   * For 'more-load': what the session starts with until the user accepts the heavier load
+   * (last time's load, reps at the top of the range). The increase is never applied for them.
+   */
+  hold?: { value: number; loadKg: number };
+}
+
+/** Reps/seconds and load a new session starts with: the suggestion, except an offered load increase. */
+export function startingPoint(suggestion: Suggestion): { value: number; loadKg: number | null } {
+  return suggestion.hold ?? { value: suggestion.value, loadKg: suggestion.loadKg };
 }
 
 /** Bodyweight reps climb this far above the plan's target before progressing the movement. */
@@ -81,7 +91,8 @@ export function loadStepKg(units: Units): number {
  * Beginner progression from the last time this exercise was logged ("double progression"):
  * - missed the target, or it felt hard: repeat the same target;
  * - reps: add 1 rep (2 if it felt easy) up to the top of the rep range;
- * - loaded and at the top of the range: add one load step and go back to the plan's reps;
+ * - loaded and at the top of the range: offer one load step with the plan's reps (the user taps
+ *   to accept; until then the session keeps last time's load at the top of the range);
  * - bodyweight and at the top of the range: try the harder variation if the user has the
  *   equipment, otherwise hold the reps and slow the lowering;
  * - timed holds: add 5 s (10 s if easy) up to the top of the range.
@@ -120,7 +131,7 @@ export function suggestTarget(
     const top = plannedTarget + REP_RANGE_LOADED;
     if (achieved >= top) {
       const next = Math.round((lastLoad + loadStepKg(options.units)) * 100) / 100;
-      return { value: plannedTarget, loadKg: next, reason: 'more-load', last };
+      return { value: plannedTarget, loadKg: next, reason: 'more-load', last, hold: { value: top, loadKg: lastLoad } };
     }
     return { value: Math.min(top, Math.max(aimed, achieved) + step), loadKg: lastLoad, reason: 'more-reps', last };
   }
