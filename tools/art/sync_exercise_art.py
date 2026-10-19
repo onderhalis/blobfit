@@ -13,9 +13,12 @@ Output:
     src/components/exerciseFrames.ts                   typed registry the app imports
 
 Image generators never place two frames exactly alike, and the app cross-fades start -> end to show
-the movement. So every frame of one exercise is re-laid out the same way: one shared scale (the
-largest pose fills 84% of the canvas), and the ground contact (the lowest band of the body: feet,
-or hands and feet) centred at the same point near the bottom. Relative sizes between frames are kept.
+the movement. So every frame of one exercise is re-laid out the same way:
+- one scale for Blob: his pill eyes are the same size in every pose, so each frame is scaled until
+  the eyes match (frames where no eye is found use the exercise's typical scale);
+- the largest pose fills 84% of the canvas;
+- the ground contact (the lowest band of the body: feet, or hands and feet) sits centred at the
+  same point near the bottom.
 
 Every input is checked first. A file that fails (wrong size, no transparency, unknown exercise or
 mistake number) is reported and skipped; the rest still sync. Exit code 1 if anything was skipped.
@@ -26,8 +29,10 @@ import json
 import re
 import shutil
 import sys
+from collections import deque
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -71,6 +76,36 @@ def check(path: Path, image: Image.Image) -> str | None:
     if box[0] == 0 or box[1] == 0 or box[2] == w or box[3] == h:
         return 'touches the edge of the canvas; leave transparent padding so nothing is clipped'
     return None
+
+
+def eye_height(rgba: Image.Image) -> float | None:
+    """Median height in px of Blob's pill eyes: small, upright, solid dark shapes ringed by cream."""
+    pixels = np.asarray(rgba).astype(int)
+    lum = pixels[..., :3].mean(axis=2)
+    dark = (pixels[..., 3] > 200) & (lum < 70)
+    seen = np.zeros_like(dark)
+    heights = []
+    for y0, x0 in zip(*np.nonzero(dark)):
+        if seen[y0, x0]:
+            continue
+        queue, points = deque([(y0, x0)]), []
+        seen[y0, x0] = True
+        while queue:
+            y, x = queue.popleft()
+            points.append((y, x))
+            for ny, nx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+                if 0 <= ny < dark.shape[0] and 0 <= nx < dark.shape[1] and dark[ny, nx] and not seen[ny, nx]:
+                    seen[ny, nx] = True
+                    queue.append((ny, nx))
+        ys, xs = zip(*points)
+        top, left, bottom, right = min(ys), min(xs), max(ys), max(xs)
+        h, w = bottom - top + 1, right - left + 1
+        if not (8 <= h <= 160 and 1.4 <= h / w <= 4.5 and len(points) / (h * w) > 0.55):
+            continue
+        ring = lum[max(0, top - 6):bottom + 7, max(0, left - 6):right + 7]
+        if (ring > 170).mean() > 0.35:  # an eye sits on the cream head, not on the shorts or a dumbbell
+            heights.append(h)
+    return float(np.median(heights)) if heights else None
 
 
 def ground_contact_x(rgba: Image.Image) -> float:
@@ -118,8 +153,14 @@ def main() -> int:
 
     for exercise_id, items in frames.items():
         boxes = [rgba.getchannel('A').point(lambda a: 255 if a > 24 else 0).getbbox() for _, _, rgba in items]
-        scale = min(OUT * FILL / max(box[2] - box[0], box[3] - box[1]) for box in boxes)
-        for (stem, mistake, rgba), box in zip(items, boxes):
+        # Relative scale per frame: equalise eye height; frames without a detectable eye get the median.
+        eyes = [eye_height(rgba) for _, _, rgba in items]
+        found = [e for e in eyes if e]
+        reference = float(np.median(found)) if found else 1.0
+        relative = [reference / e if e else 1.0 for e in eyes]
+        fit = min(OUT * FILL / (max(box[2] - box[0], box[3] - box[1]) * r) for box, r in zip(boxes, relative))
+        for (stem, mistake, rgba), box, r in zip(items, boxes, relative):
+            scale = fit * r
             cut = rgba.crop(box)
             cut = cut.resize((max(1, round(cut.width * scale)), max(1, round(cut.height * scale))), Image.LANCZOS)
             anchor = ground_contact_x(cut)
