@@ -1,7 +1,8 @@
 // Writes the illustrator's to-do list, generated from data/exercises.json and from what is already
 // delivered in assets/exercises/:
 //   docs/EXERCISE_ART_BRIEF.md          spec, delivery, checklist per exercise
-//   docs/art-prompts/batch-<n>.md       one ready-to-paste image prompt per missing file
+//   docs/art-prompts/batch-<n>.md       one ready-to-paste sheet prompt per exercise with missing frames
+//                                       (one image, 3 x 2 cells; tools/art/import_sheets.py cuts it up)
 //
 //   node tools/art/exercise-brief.mjs                # rewrite both
 //   node tools/art/exercise-brief.mjs --check        # exit 1 if the committed files are out of date (npm run check)
@@ -20,12 +21,20 @@ const CAMERA = {
   back: 'back view, camera at hip height, looking straight at the back of the body',
   above: 'top-down view from directly above the body',
 };
-const STYLE =
+const CHARACTER =
   'Same character as the BLOB FIT reference (base-character-sheet.png): a 3D soft-clay mascot with a warm cream-white, ' +
   'rounded, beginner-build body (soft, no visible muscles), two upright black pill-shaped eyes, no mouth, nose, hair or ears, ' +
-  'wearing plain black athletic shorts. Whole body in frame with empty space on every side. Fully transparent background: ' +
-  'no floor, room, scenery or shadow box; only a faint contact shadow under the body. Soft studio light from the upper left. ' +
-  'No text, letters, numbers, logos, arrows, ticks or crosses. Square 1024 x 1024 PNG.';
+  'wearing plain black athletic shorts.';
+const SHEET =
+  'One landscape image, at least 1536 x 1024 px (larger is better), as a PNG with a fully transparent background. ' +
+  'Divide it into an invisible grid of 3 columns x 2 rows of equal cells. Draw one full-body figure in each cell that is listed ' +
+  'below, centred in its cell with clear empty space around it; nothing touches the image edge or reaches into another cell. ' +
+  'Cells marked "leave empty" stay fully transparent. No grid lines, borders, labels, numbers, text, logos, arrows, ticks or crosses. ' +
+  `Character in every cell: ${CHARACTER} Same character size, proportions and lighting in every cell. ` +
+  'No floor, room or scenery; only a faint contact shadow under the body. Soft studio light from the upper left. ' +
+  'Props are identical in every cell (same object, size, colour and placement): dumbbells are plain dark grey hexagonal dumbbells, ' +
+  'a band is one plain muted grey resistance band, benches, chairs, boxes and steps are plain and neutral, a mat is a thin plain grey mat. No brand marks.';
+const CELL = ['top left', 'top middle', 'top right', 'bottom left', 'bottom middle', 'bottom right'];
 
 const exercises = JSON.parse(readFileSync('data/exercises.json', 'utf8'));
 const byId = new Map(exercises.map((e) => [e.id, e]));
@@ -36,21 +45,43 @@ const files = (e) => [
   ...e.artBrief.frames.map((frame, i) => ({
     name: i === 0 ? 'start.png' : 'end.png',
     what: `${frame.label}: ${frame.pose}`,
-    prompt: `${STYLE} Camera: ${CAMERA[e.artBrief.view]}. Exercise: ${e.name}, "${frame.label}" position, correct and controlled technique: ${frame.pose} ${equipment(e)}`,
+    cell:
+      i === 0
+        ? `CORRECT technique, "${frame.label}" position. Camera: ${CAMERA[e.artBrief.view]}. ${frame.pose}`
+        : `CORRECT technique, "${frame.label}" position. Exactly the same camera angle, distance, props and hand grip as cell 1; only the movement has changed. ${frame.pose}`,
   })),
   ...e.mistakes.map((m, i) => ({
     name: `mistake-${i + 1}.png`,
     what: `Wrong on purpose (${VIEW[m.view]}): **${m.title}.** ${m.looksLike}`,
-    prompt: `${STYLE} Camera: ${CAMERA[m.view]}. Exercise: ${e.name}, shown done WRONG on purpose to illustrate the common mistake "${m.title}". Make this fault clearly visible: ${m.looksLike} Everything else as in the normal setup: ${e.startingPosition} ${equipment(e)}`,
+    cell: `WRONG on purpose, the mistake "${m.title}". Camera: ${CAMERA[m.view]}. Make this fault clearly visible: ${m.looksLike} Everything else as in the normal setup.`,
   })),
 ];
 const delivered = (e, file) => existsSync(`assets/exercises/${e.id}/${file}`);
+/** start and end are always drawn together, so the loop between them never mixes two generations. */
+const wanted = (e) => {
+  const list = files(e);
+  const pair = !delivered(e, 'start.png') || !delivered(e, 'end.png');
+  return list.map((f, i) => (i < 2 ? pair : !delivered(e, f.name)));
+};
+const sheetPrompt = (e) => {
+  const list = files(e);
+  const draw = wanted(e);
+  const same = draw[0] ? ' Props, hand position and character size as in cell 1.' : '';
+  const cells = CELL.map((where, i) =>
+    list[i] && draw[i]
+      ? `Cell ${i + 1} (${where}): ${list[i].cell}${i >= 2 ? same : ''}`
+      : `Cell ${i + 1} (${where}): leave empty.`,
+  );
+  return [SHEET, `Exercise: ${e.name}. ${equipment(e)} Normal setup: ${e.startingPosition}`, ...cells].join('\n\n');
+};
 
 const ordered = [...exercises].sort((a, b) => batchOf(a) - batchOf(b) || PLAN.indexOf(a.id) - PLAN.indexOf(b.id));
 const count = (list, predicate = () => true) => list.reduce((n, e) => n + files(e).filter((f) => predicate(e, f)).length, 0);
 const total = count(ordered);
 const done = count(ordered, (e, f) => delivered(e, f.name));
 const missingIn = (batch) => count(ordered.filter((e) => batchOf(e) === batch), (e, f) => !delivered(e, f.name));
+const needsSheet = (e) => wanted(e).some(Boolean);
+const sheetsIn = (batch) => ordered.filter((e) => batchOf(e) === batch && needsSheet(e)).length;
 
 const lines = [
   '# Exercise art brief',
@@ -65,7 +96,9 @@ const lines = [
   '- **`start.png` and `end.png`:** the two key positions of a correct rep, from the camera view given. The app loops them to show the movement, and they teach most of it: the screen has almost no text.',
   '- **`mistake-<n>.png`:** one image per common mistake, showing that fault clearly but realistically, from the view given. The app puts it next to a one-line fix, so the image itself has no red cross, arrows or text.',
   '',
-  `**Ready-to-paste prompts:** one per image, in [\`docs/art-prompts/\`](art-prompts/). Missing images: batch 1 ${missingIn(1)}, batch 2 ${missingIn(2)}, batch 3 ${missingIn(3)}.`,
+  '**One sheet per exercise.** All frames of an exercise are drawn in one image, a 3 × 2 grid read left to right, top row first: 1 start, 2 end, 3–6 mistakes 1–4. Drawing them together keeps the character, camera and props the same, so the start → end loop does not jump. `npm run art:import` cuts the sheet into the files listed below.',
+  '',
+  `**Ready-to-paste prompts:** one per exercise, in [\`docs/art-prompts/\`](art-prompts/). Sheets still needed: batch 1 ${sheetsIn(1)}, batch 2 ${sheetsIn(2)}, batch 3 ${sheetsIn(3)} (missing images: ${missingIn(1)} / ${missingIn(2)} / ${missingIn(3)}).`,
   '',
   '## Spec (same for every file)',
   '- **Character:**',
@@ -73,28 +106,27 @@ const lines = [
   '  - **Black athletic shorts**, beginner build (S0–S1), same proportions in every frame.',
   '  - No extra muscles, no recolors. Use the founder handoff `base-character-sheet.png` as the reference for every image.',
   '- **Canvas:**',
-  '  - Square PNG, at least 1024 × 1024 px, with a transparent background (RGBA).',
-  '  - The whole body in frame with empty space on every side; nothing touches the edge.',
-  '  - No floor, room, scenery, text, logo, arrows or ticks. A faint contact shadow under the body is fine.',
+  '  - One landscape PNG per exercise, at least 1536 × 1024 px (larger is better), with a transparent background (RGBA).',
+  '  - An invisible 3 × 2 grid: one whole body per cell, with empty space around it; nothing touches the image edge or reaches into another cell.',
+  '  - No grid lines, floor, room, scenery, text, logo, arrows or ticks. A faint contact shadow under the body is fine.',
   '- **Camera and scale:**',
-  '  - Camera at hip height, using the view listed for that file.',
-  '  - Keep the same framing for all files of one exercise. Pixel-exact alignment is not needed: `npm run art:sync` puts every frame of an exercise on one shared scale and the same ground point, so the start → end loop does not jump.',
+  '  - Camera at hip height, using the view listed for that cell.',
+  '  - Same character size in every cell. Pixel-exact alignment is not needed: `npm run art:sync` puts every frame of an exercise on one shared scale and the same ground point.',
   '- **Props:** simple, neutral and realistic: dark grey dumbbells, a muted band with its anchor visible, a plain bench, chair or wall. No brand marks.',
   '- **Technique:** the correct frames must match the text, because a coach reviews both. When the text and a drawing disagree, the text wins; flag it in issue #1.',
   '',
   '## Delivery',
-  `- **Path:** \`assets/exercises/<exercise-id>/<file>\` on branch \`${BRANCH}\`, for example \`assets/exercises/squat/start.png\`.`,
-  '- **Upload, one of:**',
-  '  - On GitHub: Add file → Upload files, and drag the `assets` folder in (it keeps the folder layout; up to 100 files per upload).',
-  '  - Or a ZIP with the same layout, uploaded to `assets/exercises/inbox/`. Claude unpacks it.',
-  '- **After upload:** Claude runs `npm run art:sync`. It validates every file, aligns the frames, writes optimized WebP copies, wires them into the app and reports any file it skipped and why.',
-  '- **Order:** batch 1 (the beginner plan) first, then batch 2 (their variations and the bodyweight movements), then batch 3. Within an exercise, `start` and `end` come first.',
+  '- **File name:** the exercise id, for example `hip-hinge.png`. The id is in each prompt heading.',
+  '- **Send it, one of:**',
+  '  - Paste the sheets into the Claude Code chat. Claude saves them under the right name.',
+  `  - Or upload them to \`assets/exercises/inbox/\` on branch \`${BRANCH}\` (GitHub: Add file → Upload files).`,
+  '- **After delivery:** Claude runs `npm run art:import`. It cuts each sheet into the files below, then `art:sync` validates them, aligns the frames, writes optimized WebP copies and wires them into the app. Claude checks every cell against the exercise text and answers with one list of the cells to redo, if any.',
+  '- **Order:** batch 1 (the beginner plan) first, then batch 2 (their variations and the bodyweight movements), then batch 3.',
   '',
   '## Acceptance',
-  '- Every file resolves on GitHub at the exact path listed below.',
-  '- `npm run art:sync` reports no skipped files.',
-  '- The character lock holds in every frame, including black shorts.',
-  '- The pose matches the written description and the exercise text. No pose sheets, collages or crops of a sheet.',
+  '- Every file listed below exists after `npm run art:import`, and `npm run art:sync` reports no skipped files.',
+  '- The character lock holds in every cell, including black shorts.',
+  '- Each cell shows the pose its prompt describes and matches the exercise text. Start and end differ only by the movement.',
   '',
   '## Checklist',
   '',
@@ -124,24 +156,19 @@ for (const batch of [1, 2, 3]) {
 const outputs = new Map([[OUT, lines.join('\n')]]);
 for (const batch of [1, 2, 3]) {
   const items = ordered.filter((e) => batchOf(e) === batch);
-  const missing = count(items, (e, f) => !delivered(e, f.name));
+  const open = items.filter(needsSheet);
   const body = [
-    `# Image prompts, batch ${batch}`,
+    `# Sheet prompts, batch ${batch}`,
     '',
-    `Generated by \`tools/art/exercise-brief.mjs\`. Do not edit by hand. **${missing} images still missing in this batch.** Spec and delivery: [\`docs/EXERCISE_ART_BRIEF.md\`](../EXERCISE_ART_BRIEF.md).`,
+    `Generated by \`tools/art/exercise-brief.mjs\`. Do not edit by hand. **${open.length} sheets still needed in this batch.** Spec and delivery: [\`docs/EXERCISE_ART_BRIEF.md\`](../EXERCISE_ART_BRIEF.md).`,
     '',
-    'One image per prompt. Attach `base-character-sheet.png` as the character reference every time. Save each result as a transparent PNG with exactly the file name shown above its prompt. Delivered files are left out of this list.',
+    'One image per prompt: all frames of one exercise on one transparent sheet. Attach `base-character-sheet.png` as the character reference every time. Name each result after the exercise id in its heading, for example `hip-hinge.png`. Exercises whose frames are all delivered are left out.',
     '',
   ];
-  for (const e of items) {
-    const open = files(e).filter((f) => !delivered(e, f.name));
-    if (open.length === 0) continue;
-    body.push(`## ${e.name} (\`${e.id}\`)`, '');
-    for (const file of open) {
-      body.push(`\`assets/exercises/${e.id}/${file.name}\``, '', '```text', file.prompt, '```', '');
-    }
+  for (const e of open) {
+    body.push(`## ${open.indexOf(e) + 1}. ${e.name} → \`${e.id}.png\``, '', '```text', sheetPrompt(e), '```', '');
   }
-  if (missing === 0) body.push('Everything in this batch is delivered.', '');
+  if (open.length === 0) body.push('Everything in this batch is delivered.', '');
   outputs.set(PROMPTS(batch), body.join('\n'));
 }
 

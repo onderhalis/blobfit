@@ -1317,11 +1317,11 @@
       "frames": [
         {
           "label": "Start",
-          "pose": "Standing tall, feet hip-width apart, knees softly bent, a long dowel held vertically along the back touching the head, upper back and tailbone, one hand behind the neck, one at the lower back."
+          "pose": "Standing tall, feet hip-width apart, knees softly bent, hands resting on the hips, chest up, eyes forward."
         },
         {
           "label": "Bottom",
-          "pose": "Hips pushed far back behind the heels, shins nearly vertical, knees softly bent, torso tipped forward about 45° with a flat back, dowel still touching head, upper back and tailbone."
+          "pose": "Hands still on the hips. Hips pushed far back behind the heels, shins nearly vertical, knees softly bent, torso tipped forward about 45° with a flat back from head to tailbone."
         }
       ]
     },
@@ -3199,14 +3199,6 @@
         "why": "Your upper traps and arms take over, and your lats and mid-back do less.",
         "fix": "Set your shoulders down before each rep. Pull your elbows back toward your hips and finish with your hands at your lower ribs.",
         "cue": "Shoulders down, hands to lower ribs."
-      },
-      {
-        "title": "Letting the band snap back",
-        "view": "side",
-        "looksLike": "After the pull, your arms shoot forward in under a second and the band tugs your torso forward.",
-        "why": "You skip the controlled return, which is half of every rep, and you start the next pull out of position.",
-        "fix": "Take two seconds to let your arms straighten. Reach until your shoulder blades spread forward, keeping your chest tall.",
-        "cue": "Arms take two seconds to straighten."
       }
     ],
     "safety": [
@@ -3525,12 +3517,12 @@
         "cue": "Both shoulders level, chest down."
       },
       {
-        "title": "Jerking weight",
+        "title": "Rounding the back",
         "view": "side",
-        "looksLike": "The dumbbell flies up in a fraction of a second with a bounce of the shoulder or hips, then drops straight back down.",
-        "why": "Momentum moves the weight instead of your back, and the drop skips the lowering, which is half of each rep.",
-        "fix": "Lift in about one second, pause at the top, and lower over two to three seconds. If you can't pause, the dumbbell is too heavy.",
-        "cue": "Lift, pause, then lower slowly."
+        "looksLike": "Your upper back hunches into a curve and your head drops toward the floor, so your back is no longer flat as you pull.",
+        "why": "A rounded back gives your shoulder blade nothing steady to pull against, so your arm does more of the work and your lats do less.",
+        "fix": "Before each rep, push the bench away with your support hand and get long from head to tailbone. If your back rounds as you pull, use a lighter dumbbell.",
+        "cue": "Back flat, head in line."
       },
       {
         "title": "Pulling toward the shoulder",
@@ -4092,12 +4084,12 @@
         "cue": "Hips down, level with your shoulders."
       },
       {
-        "title": "Holding your breath",
+        "title": "Head hanging down",
         "view": "side",
-        "looksLike": "Your stomach stays rigid with no rise and fall, and you gasp or drop your knees as soon as you let a breath out.",
-        "why": "Bracing has to work while you breathe. Holding your breath props you up for a few seconds, then the position falls apart.",
-        "fix": "Breathe in through your nose and out through pursed lips while your stomach stays firm. Shorten the hold until you can breathe all the way through.",
-        "cue": "Stomach firm, breathe in and out."
+        "looksLike": "Your head drops below the line of your back, chin tucked toward your chest, and your eyes look back at your knees or feet.",
+        "why": "A hanging head pulls your upper back into a curve, so the straight line from ears to ankles breaks at the top.",
+        "fix": "Lift your head until your ears line up with your shoulders, and look at the floor just ahead of your hands.",
+        "cue": "Ears in line with your shoulders."
       }
     ],
     "safety": [

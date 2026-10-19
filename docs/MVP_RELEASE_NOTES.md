@@ -150,14 +150,16 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
   - **Review:** everything is still `needs-qualified-review`. Angle numbers in the mistakes (for example "elbows near 90°, a T") are coaching estimates for spotting faults on video, not measured thresholds.
 - **Swaps:** a workout swap stays within the same movement family and the same measure, so a timed hold never replaces a rep exercise.
 - **Art pipeline:**
-  - **Brief:** `docs/EXERCISE_ART_BRIEF.md` is generated from the data (`npm run art:brief`). It lists 258 images in three batches (the beginner plan first), each with its file path, camera view and pose. The delivery checklist updates itself.
+  - **Brief:** `docs/EXERCISE_ART_BRIEF.md` is generated from the data (`npm run art:brief`). It lists 257 images in three batches (the beginner plan first), each with its file path, camera view and pose. The delivery checklist updates itself.
   - **Sync:** after Astra uploads to `assets/exercises/<id>/`, `npm run art:sync` checks each PNG (transparency, size, padding, a known id and mistake number) and writes optimized WebP copies. It also regenerates `src/components/exerciseFrames.ts`. The detail screen then shows the start and end frames side by side, and each mistake image next to its fix.
-  - **Request:** issue #1, CC-011 to CC-014. `docs/art-prompts/batch-<n>.md` has one ready-to-paste prompt per missing image. `npm run art:sync` puts every frame of an exercise on one shared scale and ground point, so generated images don't need pixel-exact alignment.
-  - **Release gate:** `npm run release:check` fails while any of the 258 images is missing, so the app does not ship with exercise art gaps.
+  - **Request:** issue #1, CC-011 to CC-014 and CC-017. `npm run art:sync` puts every frame of an exercise on one shared scale and ground point, so generated images don't need pixel-exact alignment.
+  - **One sheet per exercise (founder, 2026-10-19):** single images arrived with a different camera, arms or props in each frame, and every file needed its own message. Now `docs/art-prompts/batch-<n>.md` has one prompt per exercise: one transparent image with a 3 × 2 grid (start, end, mistakes). `npm run art:import` (`tools/art/import_sheets.py`) cuts a sheet into the per-file frames, keeping one scale for the whole sheet, and then runs `art:sync`. A sheet can be pasted into the Claude chat or uploaded to `assets/exercises/inbox/`. That is 49 images instead of 247 for what is left. Each frame is smaller (about 500 px instead of 1024), so the loop is a little softer on 3× screens.
+  - **Release gate:** `npm run release:check` fails while any of the 257 images is missing, so the app does not ship with exercise art gaps.
 - **Visual first (founder, 2026-10-19):** "People learn exercise by looking at it or watching it."
   - The detail screen now shows the movement (start and end frames, looping), three key points, and each mistake as a picture plus a one-line fix (`mistakes[].cue`, 40 characters max).
   - The longer coaching text is kept as source material for the art brief and the coach review.
-- **Not done:** no art has been delivered yet, so the library shows the interim concept crops (squat, split squat, push-up variations, row) or a neutral icon.
+  - Mistakes that a still picture can't show were replaced or dropped in the beginner plan: row "Jerking weight" became "Rounding the back", plank "Holding your breath" became "Head hanging down", and band row lost "Letting the band snap back". The hip hinge is drawn with hands on hips instead of a dowel. Batch 2 and 3 still have a few timing mistakes ("Rushing the reps", "Moving too fast"); they get the same treatment before those sheets are requested.
+- **Not done:** 10 of 257 images are in (squat and incline push-up). The rest of the library shows the interim concept crops (split squat, push-up variations, row) or a neutral icon.
 
 Screens (web build): [library](screenshots/09-library.png) and [search](screenshots/09b-library-search.png) at 393pt; [incline push-up detail](screenshots/exercise-detail-320.png) at 320pt.
 
