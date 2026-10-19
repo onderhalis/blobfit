@@ -1,0 +1,140 @@
+import { buildWorkout } from '../plan';
+import { adherence, totals, weekSummary } from '../progress';
+import { createSession } from '../session';
+import { INITIAL_DATA, reducer } from '../state';
+import type { AppData } from '../types';
+import { at, makePrefs } from './helpers';
+
+function run(data: AppData, ...actions: Parameters<typeof reducer>[1][]): AppData {
+  return actions.reduce(reducer, data);
+}
+
+describe('app reducer', () => {
+  it('completes onboarding → workout → progress end to end', () => {
+    const prefs = makePrefs({ equipment: [], experience: 'new' });
+    let data = run(INITIAL_DATA, { type: 'savePreferences', preferences: prefs, now: prefs.planStartedAt });
+    expect(data.preferences?.trainingDays).toEqual([0, 2, 4]);
+
+    const startAt = at(2026, 10, 5, 18);
+    const session = createSession(buildWorkout('A', data.preferences!), { id: 's1', now: startAt, history: [] });
+    data = run(
+      data,
+      { type: 'startSession', session },
+      { type: 'updateSet', sessionId: 's1', exerciseIndex: 0, setIndex: 0, patch: { done: true, value: 10 } },
+      { type: 'updateSet', sessionId: 's1', exerciseIndex: 0, setIndex: 1, patch: { done: true, value: 8 } },
+      { type: 'substituteExercise', sessionId: 's1', exerciseIndex: 1, exerciseId: 'push-up' },
+      { type: 'updateSet', sessionId: 's1', exerciseIndex: 1, setIndex: 0, patch: { done: true, value: 5 } },
+      { type: 'skipExercise', sessionId: 's1', exerciseIndex: 2, skipped: true },
+      { type: 'completeSession', sessionId: 's1', now: at(2026, 10, 5, 18, 22).toISOString() },
+    );
+
+    const saved = data.sessions[0];
+    expect(saved.status).toBe('completed');
+    expect(saved.exercises[1]).toMatchObject({ exerciseId: 'push-up', substitutedFrom: 'incline-push-up' });
+
+    const t = totals(data.sessions);
+    expect(t).toMatchObject({ sessions: 1, sets: 3, reps: 23, activeMinutes: 22 });
+    const week = weekSummary(data.preferences!, data.sessions, at(2026, 10, 5, 20));
+    expect(week.done).toBe(1);
+    expect(week.days[0].status).toBe('done');
+    expect(adherence(data.preferences!, data.sessions, at(2026, 10, 5, 20)).ratio).toBe(1);
+  });
+
+  it('allows only one open session', () => {
+    const prefs = makePrefs();
+    const a = createSession(buildWorkout('A', prefs), { id: 'a', now: at(2026, 10, 5), history: [] });
+    const b = createSession(buildWorkout('B', prefs), { id: 'b', now: at(2026, 10, 5), history: [] });
+    const data = run(INITIAL_DATA, { type: 'startSession', session: a }, { type: 'startSession', session: b });
+    expect(data.sessions.map((session) => session.id)).toEqual(['a']);
+  });
+
+  it('keeps the original plan start when preferences are edited', () => {
+    const first = makePrefs();
+    const edited = makePrefs({ trainingDays: [4, 1], planStartedAt: at(2026, 11, 1).toISOString() });
+    const data = run(
+      INITIAL_DATA,
+      { type: 'savePreferences', preferences: first, now: first.planStartedAt },
+      { type: 'savePreferences', preferences: edited, now: at(2026, 10, 17, 12).toISOString() },
+    );
+    expect(data.preferences?.planStartedAt).toBe(first.planStartedAt);
+    expect(data.preferences?.trainingDays).toEqual([1, 4]);
+  });
+
+  it('records schedule changes from the day they are made', () => {
+    const first = makePrefs({ trainingDays: [0, 3] });
+    let data = run(INITIAL_DATA, { type: 'savePreferences', preferences: first, now: first.planStartedAt });
+    expect(data.preferences?.scheduleHistory).toEqual([{ from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] }]);
+
+    // Same days again: no new entry.
+    data = run(data, { type: 'savePreferences', preferences: first, now: at(2026, 10, 10).toISOString() });
+    expect(data.preferences?.scheduleHistory).toHaveLength(1);
+
+    // Two edits on Saturday collapse into one entry effective from Saturday.
+    data = run(
+      data,
+      { type: 'savePreferences', preferences: { ...first, trainingDays: [0, 2] }, now: at(2026, 10, 17, 9).toISOString() },
+      { type: 'savePreferences', preferences: { ...first, trainingDays: [4, 0, 2] }, now: at(2026, 10, 17, 20).toISOString() },
+    );
+    expect(data.preferences?.trainingDays).toEqual([0, 2, 4]);
+    expect(data.preferences?.scheduleHistory).toEqual([
+      { from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] },
+      { from: at(2026, 10, 17, 0).toISOString(), trainingDays: [0, 2, 4] },
+    ]);
+  });
+
+  it('starts a history for preferences saved before schedule history existed', () => {
+    const legacy = { ...makePrefs({ trainingDays: [0, 3] }) };
+    delete legacy.scheduleHistory;
+    const data = run(
+      { ...INITIAL_DATA, preferences: legacy },
+      { type: 'savePreferences', preferences: { ...legacy, trainingDays: [1, 4] }, now: at(2026, 10, 14).toISOString() },
+    );
+    expect(data.preferences?.scheduleHistory).toEqual([
+      { from: at(2026, 10, 5, 0).toISOString(), trainingDays: [0, 3] },
+      { from: at(2026, 10, 14, 0).toISOString(), trainingDays: [1, 4] },
+    ]);
+  });
+
+  it('does not edit completed sessions and discards only open ones', () => {
+    const prefs = makePrefs();
+    const session = createSession(buildWorkout('A', prefs), { id: 's', now: at(2026, 10, 5), history: [] });
+    let data = run(
+      INITIAL_DATA,
+      { type: 'startSession', session },
+      { type: 'updateSet', sessionId: 's', exerciseIndex: 0, setIndex: 0, patch: { done: true } },
+      { type: 'completeSession', sessionId: 's', now: at(2026, 10, 5, 10).toISOString() },
+    );
+    const before = data;
+    data = run(
+      data,
+      { type: 'updateSet', sessionId: 's', exerciseIndex: 0, setIndex: 0, patch: { value: 99 } },
+      { type: 'discardSession', sessionId: 's' },
+    );
+    expect(data).toBe(before);
+    data = run(data, { type: 'deleteSession', sessionId: 's' });
+    expect(data.sessions).toEqual([]);
+  });
+
+  it('applies an accepted load to the open session only', () => {
+    const session = createSession(buildWorkout('A', makePrefs({ equipment: ['dumbbells'] })), {
+      id: 's',
+      now: at(2026, 10, 5),
+      history: [],
+    });
+    const row = session.exercises.findIndex((log) => log.exerciseId === 'row');
+    const data = run(INITIAL_DATA, { type: 'startSession', session }, { type: 'applyLoad', sessionId: 's', exerciseIndex: row, loadKg: 10, value: 10 });
+    expect(data.sessions[0].exercises[row].sets.every((set) => set.loadKg === 10)).toBe(true);
+    expect(run(data, { type: 'applyLoad', sessionId: 'other', exerciseIndex: row, loadKg: 12, value: 10 })).toEqual(data);
+  });
+
+  it('resets everything', () => {
+    const prefs = makePrefs();
+    const data = run(
+      INITIAL_DATA,
+      { type: 'savePreferences', preferences: prefs, now: prefs.planStartedAt },
+      { type: 'setUnits', units: 'lb' },
+    );
+    expect(data.settings.units).toBe('lb');
+    expect(run(data, { type: 'resetAll' })).toEqual(INITIAL_DATA);
+  });
+});

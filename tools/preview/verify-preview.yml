@@ -1,0 +1,75 @@
+# Copied onto the gh-pages branch by tools/preview/deploy-pages.sh. Runs on every preview deploy:
+# waits until GitHub Pages serves the new build, then runs the full Playwright smoke test against
+# the live HTTPS URL, using the exact source commit the preview was built from.
+name: Verify web preview
+
+on:
+  push:
+    branches: [gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PREVIEW_URL: https://onderhalis.github.io/blobfit
+
+jobs:
+  verify:
+    name: Live preview smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: site
+      - id: meta
+        run: |
+          echo "source=$(jq -r .sourceCommit site/preview.json)" >> "$GITHUB_OUTPUT"
+          echo "build=$(jq -r .buildId site/preview.json)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.meta.outputs.source }}
+          path: src
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: src/package-lock.json
+      - run: npm ci
+        working-directory: src
+      - run: npx playwright install --with-deps chromium
+        working-directory: src
+      - name: Wait until GitHub Pages serves this build
+        run: |
+          for i in $(seq 1 60); do
+            live=$(curl -fsSL "$PREVIEW_URL/preview.json?check=$GITHUB_RUN_ID-$i" | jq -r .buildId 2>/dev/null || true)
+            if [ "$live" = "${{ steps.meta.outputs.build }}" ]; then echo "Live: $live"; exit 0; fi
+            echo "Attempt $i: live build is '${live:-unavailable}', waiting"
+            sleep 15
+          done
+          echo "::error::$PREVIEW_URL did not serve build ${{ steps.meta.outputs.build }} within 15 minutes. Check Settings → Pages → Build and deployment: Deploy from a branch, gh-pages, / (root)."
+          exit 1
+      - name: Smoke test the live preview (390x844)
+        run: npm run e2e
+        working-directory: src
+        env:
+          E2E_REMOTE_URL: ${{ env.PREVIEW_URL }}
+          E2E_OUT: e2e-output/live-390
+      - name: Smoke test the live preview (320x568)
+        run: npm run e2e
+        working-directory: src
+        env:
+          E2E_REMOTE_URL: ${{ env.PREVIEW_URL }}
+          E2E_VIEWPORT: 320x568
+          E2E_OUT: e2e-output/live-320
+      - name: Summary
+        run: |
+          echo "### Web preview verified" >> "$GITHUB_STEP_SUMMARY"
+          echo "$PREVIEW_URL/ serves build \`${{ steps.meta.outputs.build }}\` and passed the full smoke test at 390x844 and 320x568." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-preview-screenshots
+          path: src/e2e-output/
+          retention-days: 14

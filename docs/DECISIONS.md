@@ -14,3 +14,16 @@ Approved 11 PNG references were assembled in a companion ZIP, but **binary asset
 
 ## 2026-10-17 — CC-002 MVP review
 Accepted P2–P9 as proposed by Claude Code, with details in GitHub Issue #1. Streaks count completed weeks; current week remains in progress. Progress compares comparable user-logged metrics only. Colored goal art cannot replace the canonical cream-white mascot with black shorts. Exercise guidance must receive qualified review before public release. AsyncStorage is acceptable for MVP with migration tests.
+
+## 2026-10-19 — Exercise art as one sheet per exercise
+Founder decision (CC-017):
+- Astra draws all missing frames of one exercise in a single transparent image: start and end together, then the mistakes.
+- The founder only forwards the sheets.
+- Claude cuts, checks and integrates them (`npm run art:import`), and answers each batch with one list of frames to redraw.
+- Mistakes that a still image cannot show (breathing, tempo) are replaced with visible faults.
+
+## 2026-10-19 — Muscle visuals use Blob
+Founder decision:
+- The muscle map is Blob from the front and back, with the working muscles as coloured areas: primary in coral, secondary in amber.
+- Astra draws the two views once (`docs/art-prompts/body-map.md`). The app paints the areas from `data/exercises.json`, so new exercises need no new art.
+- Areas show where an exercise works, not anatomy, and stay review pending.
