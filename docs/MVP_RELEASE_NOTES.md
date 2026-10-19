@@ -153,13 +153,27 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
   - **Brief:** `docs/EXERCISE_ART_BRIEF.md` is generated from the data (`npm run art:brief`). It lists 257 images in three batches (the beginner plan first), each with its file path, camera view and pose. The delivery checklist updates itself.
   - **Sync:** after Astra uploads to `assets/exercises/<id>/`, `npm run art:sync` checks each PNG (transparency, size, padding, a known id and mistake number) and writes optimized WebP copies. It also regenerates `src/components/exerciseFrames.ts`. The detail screen then shows the start and end frames side by side, and each mistake image next to its fix.
   - **Request:** issue #1, CC-011 to CC-014 and CC-017. `npm run art:sync` puts every frame of an exercise on one shared scale and ground point, so generated images don't need pixel-exact alignment.
-  - **One sheet per exercise (founder, 2026-10-19):** single images arrived with a different camera, arms or props in each frame, and every file needed its own message. Now `docs/art-prompts/batch-<n>.md` has one prompt per exercise: one transparent image with a 3 × 2 grid (start, end, mistakes). `npm run art:import` (`tools/art/import_sheets.py`) cuts a sheet into the per-file frames, keeping one scale for the whole sheet, and then runs `art:sync`. A sheet can be pasted into the Claude chat or uploaded to `assets/exercises/inbox/`. That is 49 images instead of 247 for what is left. Each frame is smaller (about 500 px instead of 1024), so the loop is a little softer on 3× screens.
+  - **One sheet per exercise (founder, 2026-10-19):** single images arrived with a different camera, arms or props in each frame, and every file needed its own message. Now `docs/art-prompts/batch-<n>.md` has one prompt per exercise: one transparent image with the numbered frames it still needs, in rows of up to three (start and end always together, then the missing mistakes). `npm run art:import` (`tools/art/import_sheets.py`) cuts a sheet into the per-file frames at a fixed eye size, so a redrawn frame matches the rest, and then runs `art:sync`. A sheet can be pasted into the Claude chat or uploaded to `assets/exercises/inbox/`. That is 49 images instead of 247 for what is left. Each frame is smaller (about 500 px instead of 1024), so the loop is a little softer on 3× screens.
   - **Release gate:** `npm run release:check` fails while any of the 257 images is missing, so the app does not ship with exercise art gaps.
 - **Visual first (founder, 2026-10-19):** "People learn exercise by looking at it or watching it."
   - The detail screen now shows the movement (start and end frames, looping), three key points, and each mistake as a picture plus a one-line fix (`mistakes[].cue`, 40 characters max).
   - The longer coaching text is kept as source material for the art brief and the coach review.
-  - Mistakes that a still picture can't show were replaced or dropped in the beginner plan: row "Jerking weight" became "Rounding the back", plank "Holding your breath" became "Head hanging down", and band row lost "Letting the band snap back". The hip hinge is drawn with hands on hips instead of a dowel. Batch 2 and 3 still have a few timing mistakes ("Rushing the reps", "Moving too fast"); they get the same treatment before those sheets are requested.
-- **Not done:** 10 of 257 images are in (squat and incline push-up). The rest of the library shows the interim concept crops (split squat, push-up variations, row) or a neutral icon.
+  - Mistakes that a still picture can't show were replaced or dropped in the beginner plan: row "Jerking weight" became "Rounding the back", plank "Holding your breath" became "Head hanging down", and band row lost "Letting the band snap back". The hip hinge is drawn with hands on hips instead of a dowel. The same went for batches 2 and 3:
+    - bear plank: "Hands too far forward";
+    - dead bug: "Head lifting off the floor";
+    - bird dog: "Head lifting to look ahead";
+    - hammer and band curl: "Stopping short at the bottom";
+    - goblet squat: "Knees caving in";
+    - floor press: "Hips lifting off the floor";
+    - step-up: "Knee caving inward";
+    - box squat: "Dropping onto the seat" is now described as the visible end position.
+- **Batch 1 delivery (2026-10-19):** five sheets (plank, hip hinge, prone Y raise, band row, row), 25 frames. 19 passed review and are in the app. The other 6 come back in the next prompts:
+  - hip hinge "Leaning back at the top" was drawn bent forward;
+  - prone Y raise start and top had the head up, which is the third mistake, and "Shrugging toward the ears" was not drawn from above;
+  - row "Twisting trunk" (front view) and "Rounding the back" did not show the fault.
+
+  Their text and camera wording are sharper now.
+- **Not done:** 29 of 257 images are in. The rest of the library shows the interim concept crops (split squat, push-up variations) or a neutral icon.
 
 Screens (web build): [library](screenshots/09-library.png) and [search](screenshots/09b-library-search.png) at 393pt; [incline push-up detail](screenshots/exercise-detail-320.png) at 320pt.
 

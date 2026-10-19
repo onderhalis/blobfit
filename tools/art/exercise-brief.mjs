@@ -2,7 +2,7 @@
 // delivered in assets/exercises/:
 //   docs/EXERCISE_ART_BRIEF.md          spec, delivery, checklist per exercise
 //   docs/art-prompts/batch-<n>.md       one ready-to-paste sheet prompt per exercise with missing frames
-//                                       (one image, 3 x 2 cells; tools/art/import_sheets.py cuts it up)
+//                                       (one image, figures in rows of up to three; tools/art/import_sheets.py cuts it up)
 //
 //   node tools/art/exercise-brief.mjs                # rewrite both
 //   node tools/art/exercise-brief.mjs --check        # exit 1 if the committed files are out of date (npm run check)
@@ -17,9 +17,9 @@ const PLAN = ['squat', 'incline-push-up', 'row', 'band-row', 'prone-y-raise', 'h
 const VIEW = { side: 'side view', front: 'front view', back: 'back view', above: 'from above' };
 const CAMERA = {
   side: 'side view, camera at hip height, looking straight at the side of the body',
-  front: 'front view, camera at hip height, looking straight at the front of the body',
+  front: 'front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view)',
   back: 'back view, camera at hip height, looking straight at the back of the body',
-  above: 'top-down view from directly above the body',
+  above: 'top-down view from directly above, looking straight down at the body (not a side view)',
 };
 const CHARACTER =
   'Same character as the BLOB FIT reference (base-character-sheet.png): a 3D soft-clay mascot with a warm cream-white, ' +
@@ -27,14 +27,13 @@ const CHARACTER =
   'wearing plain black athletic shorts.';
 const SHEET =
   'One landscape image, at least 1536 x 1024 px (larger is better), as a PNG with a fully transparent background. ' +
-  'Divide it into an invisible grid of 3 columns x 2 rows of equal cells. Draw one full-body figure in each cell that is listed ' +
-  'below, centred in its cell with clear empty space around it; nothing touches the image edge or reaches into another cell. ' +
-  'Cells marked "leave empty" stay fully transparent. No grid lines, borders, labels, numbers, text, logos, arrows, ticks or crosses. ' +
-  `Character in every cell: ${CHARACTER} Same character size, proportions and lighting in every cell. ` +
+  'Draw exactly the numbered figures listed below, no more and no fewer, in rows of up to three, read left to right, top row first. ' +
+  'Leave clear empty space between the figures and around them; no figure touches the image edge or another figure. ' +
+  'No grid lines, borders, labels, numbers, text, logos, arrows, ticks or crosses. ' +
+  `Character in every figure: ${CHARACTER} Same character size, proportions and lighting in every figure. ` +
   'No floor, room or scenery; only a faint contact shadow under the body. Soft studio light from the upper left. ' +
-  'Props are identical in every cell (same object, size, colour and placement): dumbbells are plain dark grey hexagonal dumbbells, ' +
+  'Props are identical in every figure (same object, size, colour and placement): dumbbells are plain dark grey hexagonal dumbbells, ' +
   'a band is one plain muted grey resistance band, benches, chairs, boxes and steps are plain and neutral, a mat is a thin plain grey mat. No brand marks.';
-const CELL = ['top left', 'top middle', 'top right', 'bottom left', 'bottom middle', 'bottom right'];
 
 const exercises = JSON.parse(readFileSync('data/exercises.json', 'utf8'));
 const byId = new Map(exercises.map((e) => [e.id, e]));
@@ -48,7 +47,7 @@ const files = (e) => [
     cell:
       i === 0
         ? `CORRECT technique, "${frame.label}" position. Camera: ${CAMERA[e.artBrief.view]}. ${frame.pose}`
-        : `CORRECT technique, "${frame.label}" position. Exactly the same camera angle, distance, props and hand grip as cell 1; only the movement has changed. ${frame.pose}`,
+        : `CORRECT technique, "${frame.label}" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. ${frame.pose}`,
   })),
   ...e.mistakes.map((m, i) => ({
     name: `mistake-${i + 1}.png`,
@@ -63,16 +62,23 @@ const wanted = (e) => {
   const pair = !delivered(e, 'start.png') || !delivered(e, 'end.png');
   return list.map((f, i) => (i < 2 ? pair : !delivered(e, f.name)));
 };
-const sheetPrompt = (e) => {
+/** The frames a sheet holds, in order. tools/art/import_sheets.py (needed) reads a sheet the same way. */
+const needed = (e) => {
   const list = files(e);
   const draw = wanted(e);
-  const same = draw[0] ? ' Props, hand position and character size as in cell 1.' : '';
-  const cells = CELL.map((where, i) =>
-    list[i] && draw[i]
-      ? `Cell ${i + 1} (${where}): ${list[i].cell}${i >= 2 ? same : ''}`
-      : `Cell ${i + 1} (${where}): leave empty.`,
-  );
-  return [SHEET, `Exercise: ${e.name}. ${equipment(e)} Normal setup: ${e.startingPosition}`, ...cells].join('\n\n');
+  return draw.some(Boolean) ? list.filter((_, i) => draw[i]) : list;
+};
+const LAYOUT = (count) =>
+  count === 1
+    ? 'Layout: one figure, centred.'
+    : count <= 3
+      ? `Layout: one row of ${count} figures.`
+      : `Layout: two rows; figures 1-3 in the top row, figures 4-${count} in the bottom row.`;
+const sheetPrompt = (e) => {
+  const list = needed(e);
+  const same = list[0]?.name === 'start' ? ' Props, hand position and character size as in figure 1.' : '';
+  const figures = list.map((f, i) => `Figure ${i + 1}: ${f.cell}${f.name.startsWith('mistake') ? same : ''}`);
+  return [SHEET, LAYOUT(list.length), `Exercise: ${e.name}. ${equipment(e)} Normal setup: ${e.startingPosition}`, ...figures].join('\n\n');
 };
 
 const ordered = [...exercises].sort((a, b) => batchOf(a) - batchOf(b) || PLAN.indexOf(a.id) - PLAN.indexOf(b.id));
@@ -96,7 +102,7 @@ const lines = [
   '- **`start.png` and `end.png`:** the two key positions of a correct rep, from the camera view given. The app loops them to show the movement, and they teach most of it: the screen has almost no text.',
   '- **`mistake-<n>.png`:** one image per common mistake, showing that fault clearly but realistically, from the view given. The app puts it next to a one-line fix, so the image itself has no red cross, arrows or text.',
   '',
-  '**One sheet per exercise.** All frames of an exercise are drawn in one image, a 3 × 2 grid read left to right, top row first: 1 start, 2 end, 3–6 mistakes 1–4. Drawing them together keeps the character, camera and props the same, so the start → end loop does not jump. `npm run art:import` cuts the sheet into the files listed below.',
+  '**One sheet per exercise.** All missing frames of an exercise are drawn in one image, in rows of up to three, read left to right, top row first: start and end (always together), then the missing mistakes in order. Drawing them together keeps the character, camera and props the same, so the start → end loop does not jump. `npm run art:import` cuts the sheet into the files listed below.',
   '',
   `**Ready-to-paste prompts:** one per exercise, in [\`docs/art-prompts/\`](art-prompts/). Sheets still needed: batch 1 ${sheetsIn(1)}, batch 2 ${sheetsIn(2)}, batch 3 ${sheetsIn(3)} (missing images: ${missingIn(1)} / ${missingIn(2)} / ${missingIn(3)}).`,
   '',
@@ -107,11 +113,11 @@ const lines = [
   '  - No extra muscles, no recolors. Use the founder handoff `base-character-sheet.png` as the reference for every image.',
   '- **Canvas:**',
   '  - One landscape PNG per exercise, at least 1536 × 1024 px (larger is better), with a transparent background (RGBA).',
-  '  - An invisible 3 × 2 grid: one whole body per cell, with empty space around it; nothing touches the image edge or reaches into another cell.',
+  '  - Exactly the figures the prompt lists, in rows of up to three, with empty space around each; nothing touches the image edge or another figure.',
   '  - No grid lines, floor, room, scenery, text, logo, arrows or ticks. A faint contact shadow under the body is fine.',
   '- **Camera and scale:**',
-  '  - Camera at hip height, using the view listed for that cell.',
-  '  - Same character size in every cell. Pixel-exact alignment is not needed: `npm run art:sync` puts every frame of an exercise on one shared scale and the same ground point.',
+  '  - Camera at hip height, using the view listed for that figure.',
+  '  - Same character size in every figure. Pixel-exact alignment is not needed: `npm run art:sync` puts every frame of an exercise on one shared scale and the same ground point.',
   '- **Props:** simple, neutral and realistic: dark grey dumbbells, a muted band with its anchor visible, a plain bench, chair or wall. No brand marks.',
   '- **Technique:** the correct frames must match the text, because a coach reviews both. When the text and a drawing disagree, the text wins; flag it in issue #1.',
   '',
@@ -120,13 +126,13 @@ const lines = [
   '- **Send it, one of:**',
   '  - Paste the sheets into the Claude Code chat. Claude saves them under the right name.',
   `  - Or upload them to \`assets/exercises/inbox/\` on branch \`${BRANCH}\` (GitHub: Add file → Upload files).`,
-  '- **After delivery:** Claude runs `npm run art:import`. It cuts each sheet into the files below, then `art:sync` validates them, aligns the frames, writes optimized WebP copies and wires them into the app. Claude checks every cell against the exercise text and answers with one list of the cells to redo, if any.',
+  '- **After delivery:** Claude runs `npm run art:import`. It cuts each sheet into the files below, then `art:sync` validates them, aligns the frames, writes optimized WebP copies and wires them into the app. Claude checks every figure against the exercise text and answers with one list of the frames to redo, if any; rejected frames come back in the next prompt.',
   '- **Order:** batch 1 (the beginner plan) first, then batch 2 (their variations and the bodyweight movements), then batch 3.',
   '',
   '## Acceptance',
   '- Every file listed below exists after `npm run art:import`, and `npm run art:sync` reports no skipped files.',
-  '- The character lock holds in every cell, including black shorts.',
-  '- Each cell shows the pose its prompt describes and matches the exercise text. Start and end differ only by the movement.',
+  '- The character lock holds in every figure, including black shorts.',
+  '- Each figure shows the pose its prompt describes and matches the exercise text. Start and end differ only by the movement.',
   '',
   '## Checklist',
   '',

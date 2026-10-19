@@ -12,6 +12,23 @@ export interface ExerciseFrameSet {
 }
 
 export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {
+  'band-row': {
+    start: { source: require('@/assets/exercises/build/band-row/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/band-row/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      { source: require('@/assets/exercises/build/band-row/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/band-row/mistake-2.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/band-row/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+  'hip-hinge': {
+    start: { source: require('@/assets/exercises/build/hip-hinge/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/hip-hinge/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      { source: require('@/assets/exercises/build/hip-hinge/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/hip-hinge/mistake-2.webp'), width: 900, height: 900 },
+    ],
+  },
   'incline-push-up': {
     start: { source: require('@/assets/exercises/build/incline-push-up/start.webp'), width: 900, height: 900 },
     end: { source: require('@/assets/exercises/build/incline-push-up/end.webp'), width: 900, height: 900 },
@@ -19,6 +36,31 @@ export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {
       { source: require('@/assets/exercises/build/incline-push-up/mistake-1.webp'), width: 900, height: 900 },
       { source: require('@/assets/exercises/build/incline-push-up/mistake-2.webp'), width: 900, height: 900 },
       { source: require('@/assets/exercises/build/incline-push-up/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+  'plank': {
+    start: { source: require('@/assets/exercises/build/plank/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/plank/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      { source: require('@/assets/exercises/build/plank/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/plank/mistake-2.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/plank/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+  'prone-y-raise': {
+    mistakes: [
+      { source: require('@/assets/exercises/build/prone-y-raise/mistake-1.webp'), width: 900, height: 900 },
+      null,
+      { source: require('@/assets/exercises/build/prone-y-raise/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+  'row': {
+    start: { source: require('@/assets/exercises/build/row/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/row/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      null,
+      null,
+      { source: require('@/assets/exercises/build/row/mistake-3.webp'), width: 900, height: 900 },
     ],
   },
   'squat': {
