@@ -7,7 +7,7 @@ This is a request for production art, not a claim that it exists. Until a file i
 ## What to draw
 
 For every exercise:
-- **`start.png` and `end.png`:** the two key positions of a correct rep, from the camera view given.
+- **`start.png` and `end.png`:** the two key positions of a correct rep, from the camera view given. The app loops them to show the movement, and they teach most of it: the screen has almost no text.
 - **`mistake-<n>.png`:** one image per common mistake, showing that fault clearly but realistically, from the view given. The app puts it next to the written fix, so the image itself has no red cross, arrows or text.
 
 ## Spec (same for every file)
@@ -24,6 +24,7 @@ For every exercise:
 - **Camera and scale:**
   - Orthographic-feeling camera at hip height, using the view listed for that file.
   - Same scale for `start`, `end` and the mistakes of one exercise, so they can be compared side by side.
+  - **`start` and `end` must line up exactly:** same canvas, camera, scale and floor line, with the planted feet (or hands, for floor work) on the same pixels. The app shows the movement by cross-fading between these two frames, so any shift reads as a jump.
 - **Props:**
   - Simple, neutral and realistic: dark grey dumbbells, a muted band with its anchor visible, plain bench or chair, plain wall edge.
   - No brand marks.
