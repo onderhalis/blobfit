@@ -178,6 +178,11 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
   - Hip hinge "Leaning back at the top" came back bent forward again; its text now says BACKWARD.
   - Prone Y raise came back as a superman pose again. Its top position now reads "a hand's width above the mat, not a superman pose". "Shrugging toward the ears" needs a top-down view, which the generator does not draw, so it is replaced by "Bending the elbows", a fault visible from the side. Shrugging is still covered by the first key point.
   - The first body map was not used: a muscular Blob (pecs, six-pack) with every muscle pre-coloured. The prompt now asks for a plain, soft body.
+- **Muscle map on Blob (founder, 2026-10-19):** the second body map was plain, and it is in the app.
+  - The exercise screen shows Blob from the front and back, 160 pt tall, with the exercise's main muscles in coral and supporting muscles in amber.
+  - `tools/art/body_map.py` (`npm run art:body-map`) paints one layer per muscle over the figure, keeping the clay shading. The app stacks the layers an exercise needs, so new exercises need no new art.
+  - The areas are hand-placed, an orientation aid rather than anatomy, and stay review pending. The unit test still checks that every muscle in the data has an area.
+- **Prone Y raise, third try:** the top position came back with one elbow bent, and "Bending the elbows" came back as a superman. Its start, top and that mistake now use a head-on camera (from in front of the head), where the Y or W shape of the arms and the small lift are easy to see.
 - **Not done:** 31 of 257 images are in. The rest of the library shows the interim concept crops (split squat, push-up variations) or a neutral icon.
 
 Screens (web build): [library](screenshots/09-library.png) and [search](screenshots/09b-library-search.png) at 393pt; [incline push-up detail](screenshots/exercise-detail-320.png) at 320pt.

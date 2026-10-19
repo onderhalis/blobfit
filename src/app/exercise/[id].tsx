@@ -191,7 +191,7 @@ export default function ExerciseDetail() {
 
       <Card style={styles.section}>
         <AppText variant="h3">Muscles</AppText>
-        <MuscleMap primary={exercise.primaryMuscles} secondary={exercise.secondaryMuscles} height={130} />
+        <MuscleMap primary={exercise.primaryMuscles} secondary={exercise.secondaryMuscles} height={160} />
         <View style={styles.chips}>
           {exercise.primaryMuscles.map((muscle) => (
             <MuscleChip key={muscle} name={muscle} kind="primary" />

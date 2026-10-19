@@ -21,7 +21,7 @@ Figure 3: WRONG on purpose, the mistake "Pulling up with the arms". Camera: side
 
 Figure 4: WRONG on purpose, the mistake "Heels lifting". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Near the bottom your heels peel off the floor and your weight rolls toward your toes, often while you lean into the support. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Knees collapsing inward". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Seen from the front, your knees drift inside the line of your feet as you lower or as you stand up. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Knees collapsing inward". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Seen from the front, your knees drift inside the line of your feet as you lower or as you stand up. Everything else as in the normal setup.
 ```
 
 ## 2. Box Squat → `box-squat.png`
@@ -41,7 +41,7 @@ Figure 3: WRONG on purpose, the mistake "Dropping onto the seat". Camera: side v
 
 Figure 4: WRONG on purpose, the mistake "Rocking to stand up". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: At the bottom you lean back onto the seat, then swing your chest forward to throw your hips off it. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Knees collapsing inward". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Seen from the front, your knees drift inside the line of your feet, most often as you leave the seat. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Knees collapsing inward". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Seen from the front, your knees drift inside the line of your feet, most often as you leave the seat. Everything else as in the normal setup.
 ```
 
 ## 3. Goblet Squat → `goblet-squat.png`
@@ -61,7 +61,7 @@ Figure 3: WRONG on purpose, the mistake "Dumbbell drifting away from chest". Cam
 
 Figure 4: WRONG on purpose, the mistake "Heels lifting". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Near the bottom your heels peel up and your weight rolls toward your toes, often as the dumbbell pulls you forward. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Knees caving in". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As you sit down or stand up, your knees fall inward toward each other, inside the line of your feet. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Knees caving in". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As you sit down or stand up, your knees fall inward toward each other, inside the line of your feet. Everything else as in the normal setup.
 ```
 
 ## 4. Wall Sit → `wall-sit.png`
@@ -97,7 +97,7 @@ Figure 1: CORRECT technique, "Top" position. Camera: side view, camera at hip he
 
 Figure 2: CORRECT technique, "Bottom" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Both knees bent about 90°, back knee a few inches above the floor directly under the hip, front knee over the front foot, front heel flat, torso upright, hands on hips.
 
-Figure 3: WRONG on purpose, the mistake "Feet on a tightrope". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your back foot lines up directly behind your front foot, and you wobble or your hips twist to one side. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Feet on a tightrope". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your back foot lines up directly behind your front foot, and you wobble or your hips twist to one side. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Front heel lifting". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: As you lower, your weight drifts forward, your front knee shoots ahead and your front heel peels off the floor. Everything else as in the normal setup.
 
@@ -117,7 +117,7 @@ Figure 1: CORRECT technique, "Start" position. Camera: side view, camera at hip 
 
 Figure 2: CORRECT technique, "Bottom" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. One foot stepped back a stride, on the ball of the foot, back knee a few inches above the floor under the hip, front knee bent about 90° over the front foot, front heel flat, torso upright, hands on hips.
 
-Figure 3: WRONG on purpose, the mistake "Stepping onto a tightrope". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your back foot lands right behind or across from your front foot, and you wobble or your hips twist. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Stepping onto a tightrope". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your back foot lands right behind or across from your front foot, and you wobble or your hips twist. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Step too short". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your back foot lands close behind you, so your front knee shoots forward and your front heel lifts as you lower. Everything else as in the normal setup.
 
@@ -141,7 +141,7 @@ Figure 3: WRONG on purpose, the mistake "Pushing off the bottom foot". Camera: s
 
 Figure 4: WRONG on purpose, the mistake "Only the toes on the step". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your heel hangs off the edge of the step, so you balance on the ball of your top foot. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Knee caving inward". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As you rise onto the step, your top knee falls inward, inside the line of your foot. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Knee caving inward". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As you rise onto the step, your top knee falls inward, inside the line of your foot. Everything else as in the normal setup.
 ```
 
 ## 8. Lateral Lunge → `lateral-lunge.png`
@@ -153,15 +153,15 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Lateral Lunge. No equipment. Normal setup: Stand tall with feet hip-width apart, toes forward, hands clasped at your chest or on your hips, eyes forward. Check there's clear space to your side.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Standing tall, feet hip-width apart, toes forward, hands clasped at the chest, eyes forward.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Standing tall, feet hip-width apart, toes forward, hands clasped at the chest, eyes forward.
 
 Figure 2: CORRECT technique, "Bottom" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Wide stance, right knee bent over the right foot with hips pushed back, left leg straight, both feet flat and pointing forward, torso leaning slightly forward, hands clasped at the chest.
 
 Figure 3: WRONG on purpose, the mistake "Not sitting back into the hip". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your torso stays straight up and down and your knee pushes far forward, so the heel of the bent leg starts to lift. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Bending the straight leg". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: The leg you stepped away from bends at the knee, so you end up in a half squat on both legs. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Bending the straight leg". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: The leg you stepped away from bends at the knee, so you end up in a half squat on both legs. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Knee collapsing inward". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: The bent knee drifts inside the line of your foot and that foot rolls onto its inner edge. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Knee collapsing inward". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: The bent knee drifts inside the line of your foot and that foot rolls onto its inner edge. Everything else as in the normal setup.
 ```
 
 ## 9. Bulgarian Split Squat → `bulgarian-split-squat.png`
@@ -181,7 +181,7 @@ Figure 3: WRONG on purpose, the mistake "Front foot too close to the bench". Cam
 
 Figure 4: WRONG on purpose, the mistake "Pushing with the back leg". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: You press down into the bench with your back foot to rise, and your hips drift back toward the bench. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Feet on a tightrope". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your front foot lines up directly in front of your back foot, and your hips twist or sway as you lower. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Feet on a tightrope". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your front foot lines up directly in front of your back foot, and your hips twist or sway as you lower. Everything else as in the normal setup.
 ```
 
 ## 10. Glute Bridge → `glute-bridge.png`
@@ -237,7 +237,7 @@ Figure 1: CORRECT technique, "Start" position. Camera: side view, camera at hip 
 
 Figure 2: CORRECT technique, "Top" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Hips lifted on one planted foot so working knee, hips and shoulders form a straight line, working shin near vertical, free leg straight in line with that thigh, upper back on the mat.
 
-Figure 3: WRONG on purpose, the mistake "Hip dropping on the free-leg side". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: At the top, the hip on the side of your lifted leg sits lower than the other, so your belt line tilts toward the floor. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Hip dropping on the free-leg side". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: At the top, the hip on the side of your lifted leg sits lower than the other, so your belt line tilts toward the floor. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Arching to get higher". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your ribs flare, your lower back arches and your hips rise above the line from your working knee to your shoulders. Everything else as in the normal setup.
 
@@ -363,7 +363,7 @@ Figure 3: WRONG on purpose, the mistake "Hips dropping toward a plank". Camera: 
 
 Figure 4: WRONG on purpose, the mistake "Head dropping behind the hands". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your head lowers straight down between or behind your hands, and your forearms lean back toward your feet. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Elbows flaring out wide". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: From the front, your elbows point straight out to the sides, near 90° from your torso, as your head lowers. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Elbows flaring out wide". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: From the front, your elbows point straight out to the sides, near 90° from your torso, as your head lowers. Everything else as in the normal setup.
 ```
 
 ## 19. Kneeling Plank → `kneeling-plank.png`
@@ -395,15 +395,15 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Side Plank. Equipment: none (a mat helps). Normal setup: Lie on your side on a mat with your bottom elbow directly under your shoulder, forearm pointing forward. Legs straight and stacked, or top foot just in front for balance. Hips stacked, head in line with your spine, eyes forward.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Lying on one side on a mat, bottom elbow under the shoulder with forearm pointing forward, legs straight and stacked, hip resting on the mat, top hand on the top hip.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Lying on one side on a mat, bottom elbow under the shoulder with forearm pointing forward, legs straight and stacked, hip resting on the mat, top hand on the top hip.
 
 Figure 2: CORRECT technique, "Hold" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Hips lifted so head, shoulders, hips and feet form one straight line; bottom elbow under the shoulder, top hip stacked over the bottom hip, top hand on the hip, gaze forward.
 
-Figure 3: WRONG on purpose, the mistake "Hips sagging". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your hips drop toward the floor so your body bends sideways into a curve, lower at the hips than at your shoulders and feet. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Hips sagging". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your hips drop toward the floor so your body bends sideways into a curve, lower at the hips than at your shoulders and feet. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Hips rolling or sitting back". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your top hip rolls back behind the bottom one and your seat drifts behind the line of your shoulders and feet, so you bend at the waist. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Hips rolling or sitting back". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your top hip rolls back behind the bottom one and your seat drifts behind the line of your shoulders and feet, so you bend at the waist. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Sinking into the shoulder". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your bottom shoulder hunches up toward your ear and your chest sinks toward the floor, often with the elbow drifting out from under the shoulder. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Sinking into the shoulder". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your bottom shoulder hunches up toward your ear and your chest sinks toward the floor, often with the elbow drifting out from under the shoulder. Everything else as in the normal setup.
 ```
 
 ## 21. Dead Bug → `dead-bug.png`

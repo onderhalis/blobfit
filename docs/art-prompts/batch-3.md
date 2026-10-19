@@ -13,13 +13,13 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Dumbbell Sumo Squat. Equipment: one dumbbell. Normal setup: Feet about one and a half times shoulder-width apart, toes turned out about 30–45°. Hold one dumbbell vertically by its top end with both hands, arms long, so it hangs between your legs. Chest up, eyes forward.
 
-Figure 1: CORRECT technique, "Top" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Standing tall, feet about one and a half times shoulder-width, toes turned out about 30–45°, one dumbbell held vertically by its top end in both hands, arms long, hanging between the legs.
+Figure 1: CORRECT technique, "Top" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Standing tall, feet about one and a half times shoulder-width, toes turned out about 30–45°, one dumbbell held vertically by its top end in both hands, arms long, hanging between the legs.
 
 Figure 2: CORRECT technique, "Bottom" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Thighs about parallel to the floor, knees pushed out over the toes, heels flat, torso upright, arms long, dumbbell hanging straight down between the feet a few inches above the floor.
 
-Figure 3: WRONG on purpose, the mistake "Knees falling inside the toes". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your toes point out at 30–45°, but your knees point straight ahead or inward, so they sit inside your feet. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Knees falling inside the toes". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your toes point out at 30–45°, but your knees point straight ahead or inward, so they sit inside your feet. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Stance too wide". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your feet are so wide that you roll onto their inside edges and can only bend a few inches. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Stance too wide". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your feet are so wide that you roll onto their inside edges and can only bend a few inches. Everything else as in the normal setup.
 
 Figure 5: WRONG on purpose, the mistake "Chest falling forward". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your hips shoot back and your chest drops toward the floor, so the dumbbell swings out in front of your knees. Everything else as in the normal setup.
 ```
@@ -101,7 +101,7 @@ Figure 3: WRONG on purpose, the mistake "Arching the lower back". Camera: side v
 
 Figure 4: WRONG on purpose, the mistake "Pressing out in front". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: At the top, the dumbbells finish in front of your face, with your arms angled forward instead of beside your ears. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Forearms tilting out of line". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: From the front, your elbows flare out wide or pinch in, so the dumbbells sit outside or inside your elbows instead of above them. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Forearms tilting out of line". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: From the front, your elbows flare out wide or pinch in, so the dumbbells sit outside or inside your elbows instead of above them. Everything else as in the normal setup.
 ```
 
 ## 6. Band Chest Press → `band-chest-press.png`
@@ -119,7 +119,7 @@ Figure 2: CORRECT technique, "Press" position. Exactly the same camera angle, di
 
 Figure 3: WRONG on purpose, the mistake "Leaning into the press". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your whole body tips forward from the ankles or hips as you press, so your bodyweight moves the band, not your arms. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Elbows flaring into a T". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As the handles come back, your elbows lift to shoulder height and point straight out to the sides, like the letter T. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Elbows flaring into a T". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As the handles come back, your elbows lift to shoulder height and point straight out to the sides, like the letter T. Everything else as in the normal setup.
 
 Figure 5: WRONG on purpose, the mistake "Letting the band snap back". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your hands fly back past your chest and your elbows shoot well behind your body as the band pulls. Everything else as in the normal setup.
 ```
@@ -133,15 +133,15 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Band Pull-Apart. Equipment: light resistance band. Normal setup: Stand tall, feet hip-width apart, knees soft. Hold the band with both hands, palms down, about shoulder-width apart. Arms straight but not locked at chest height, band slightly taut. Shoulders down, eyes forward.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Standing tall, feet hip-width apart, knees soft. Arms straight forward at chest height, hands shoulder-width apart, palms down, holding a light band with slight tension.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Standing tall, feet hip-width apart, knees soft. Arms straight forward at chest height, hands shoulder-width apart, palms down, holding a light band with slight tension.
 
 Figure 2: CORRECT technique, "Finish" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Same stance. Arms spread out to the sides at chest height in a T, elbows soft, band stretched across the front of the chest, shoulders low.
 
-Figure 3: WRONG on purpose, the mistake "Shrugging toward the ears". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As the band stretches, your shoulders rise and the space between your shoulders and ears shrinks, most of all at the end of the pull. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Shrugging toward the ears". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As the band stretches, your shoulders rise and the space between your shoulders and ears shrinks, most of all at the end of the pull. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Arching the lower back". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: At the end of the pull, your ribs flare, your chest pushes forward and your lower back arches as you lean back. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Bending the elbows". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your elbows bend to 90° or more as you pull, and your hands end near your shoulders, more like a row than a pull-apart. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Bending the elbows". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your elbows bend to 90° or more as you pull, and your hands end near your shoulders, more like a row than a pull-apart. Everything else as in the normal setup.
 ```
 
 ## 8. Band Face Pull → `band-face-pull.png`
@@ -159,7 +159,7 @@ Figure 2: CORRECT technique, "Finish" position. Exactly the same camera angle, d
 
 Figure 3: WRONG on purpose, the mistake "Elbows dropping into a row". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your elbows sink below shoulder height and stay near your sides, so the band ends at your chest or chin, not your eyes. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Hands finishing below the elbows". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: At the end of the pull, your forearms point forward or down, hands lower than elbows, instead of up beside your head. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Hands finishing below the elbows". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: At the end of the pull, your forearms point forward or down, hands lower than elbows, instead of up beside your head. Everything else as in the normal setup.
 
 Figure 5: WRONG on purpose, the mistake "Leaning back to pull". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your torso tips back 15° or more as you pull, and your hips push forward to help bring the band toward you. Everything else as in the normal setup.
 ```
@@ -181,7 +181,7 @@ Figure 3: WRONG on purpose, the mistake "Standing up to finish the rep". Camera:
 
 Figure 4: WRONG on purpose, the mistake "Rounding the back". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your back curves into a C from hips to head, your head drops and the dumbbells drift forward in front of your knees. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Pulling toward the chest". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your elbows flare out wide, the dumbbells travel straight up toward your chest and your shoulders rise toward your ears. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Pulling toward the chest". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your elbows flare out wide, the dumbbells travel straight up toward your chest and your shoulders rise toward your ears. Everything else as in the normal setup.
 ```
 
 ## 10. Band Lat Pulldown → `band-lat-pulldown.png`
@@ -213,15 +213,15 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Dumbbell Reverse Fly. Equipment: two light dumbbells. Normal setup: Feet hip-width apart, knees soft, hinged at the hips with your torso about 45° above horizontal or lower, back flat. Light dumbbells hang under your chest, palms facing in, elbows slightly bent. Eyes on the floor ahead.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Hinged at the hips, torso about 45° above horizontal, knees soft, back flat. Arms hanging under the chest with a slight elbow bend, a light dumbbell in each hand, palms facing in.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Hinged at the hips, torso about 45° above horizontal, knees soft, back flat. Arms hanging under the chest with a slight elbow bend, a light dumbbell in each hand, palms facing in.
 
 Figure 2: CORRECT technique, "Top" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Same hinge. Arms raised out to the sides to just below shoulder height, elbows slightly bent and leading, palms facing the floor, shoulder blades drawn together.
 
 Figure 3: WRONG on purpose, the mistake "Swinging the dumbbells". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your chest bobs up as the dumbbells fly up, and they drop back down in under a second. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Bending the elbows into a row". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your elbows bend from a slight bend to 90° or more as you lift, pulling the dumbbells up and back like a row. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Bending the elbows into a row". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your elbows bend from a slight bend to 90° or more as you lift, pulling the dumbbells up and back like a row. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Shrugging toward the ears". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As the dumbbells rise, your shoulders creep up toward your ears and the dumbbells go above shoulder height. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Shrugging toward the ears". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As the dumbbells rise, your shoulders creep up toward your ears and the dumbbells go above shoulder height. Everything else as in the normal setup.
 ```
 
 ## 12. Pallof Press → `pallof-press.png`
@@ -233,13 +233,13 @@ Layout: two rows; figures 1-3 in the top row, figures 4-5 in the bottom row.
 
 Exercise: Pallof Press. Equipment: resistance band anchored at chest height, to your side. Normal setup: Band anchored at chest height. Stand side-on to the anchor, a step or two away so the band is taut. Feet hip- to shoulder-width apart, knees soft. Both hands hold the band at the middle of your chest. Eyes straight ahead.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Standing side-on to a band anchored at chest height to one side, feet shoulder-width, knees soft, both hands holding the band at the center of the chest, band taut.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Standing side-on to a band anchored at chest height to one side, feet shoulder-width, knees soft, both hands holding the band at the center of the chest, band taut.
 
 Figure 2: CORRECT technique, "Press" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Same stance, arms pressed straight out in front of the chest with hands at the midline, chest and hips facing forward, band pulling sideways toward the anchor.
 
-Figure 3: WRONG on purpose, the mistake "Twisting toward the anchor". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As your arms straighten, your shoulders and hands rotate toward the anchor, so your chest no longer faces straight ahead. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Twisting toward the anchor". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As your arms straighten, your shoulders and hands rotate toward the anchor, so your chest no longer faces straight ahead. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Leaning away from the band". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your upper body tilts away from the anchor or your hips shift sideways, so you're no longer standing tall over your feet. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Leaning away from the band". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your upper body tilts away from the anchor or your hips shift sideways, so you're no longer standing tall over your feet. Everything else as in the normal setup.
 
 Figure 5: WRONG on purpose, the mistake "Arching your lower back". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: As your arms go out, your ribs lift, your lower back arches and your hips push forward. Everything else as in the normal setup.
 ```
@@ -259,7 +259,7 @@ Figure 2: CORRECT technique, "Walk" position. Exactly the same camera angle, dis
 
 Figure 3: WRONG on purpose, the mistake "Shoulders rounding forward". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your shoulders roll forward and your upper back rounds, so the dumbbells hang in front of your thighs and your head pokes forward. Everything else as in the normal setup.
 
-Figure 4: WRONG on purpose, the mistake "Leaning or swaying". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your trunk tips to one side or rocks side to side with each step, and one shoulder sits lower than the other. Everything else as in the normal setup.
+Figure 4: WRONG on purpose, the mistake "Leaning or swaying". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your trunk tips to one side or rocks side to side with each step, and one shoulder sits lower than the other. Everything else as in the normal setup.
 
 Figure 5: WRONG on purpose, the mistake "Dumbbells swinging". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: The dumbbells swing forward and back like pendulums, or bump against your legs as you walk. Everything else as in the normal setup.
 ```
@@ -357,7 +357,7 @@ Figure 1: CORRECT technique, "Top" position. Camera: side view, camera at hip he
 
 Figure 2: CORRECT technique, "Bottom" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Same seated posture; upper arms still beside the head with elbows pointing forward and up, elbows bent a little past 90°, dumbbell lowered behind the head toward the upper back.
 
-Figure 3: WRONG on purpose, the mistake "Elbows flaring out". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As the dumbbell lowers, your elbows splay out to the sides until they are well wider than your shoulders, so your upper arms form a wide V. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Elbows flaring out". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As the dumbbell lowers, your elbows splay out to the sides until they are well wider than your shoulders, so your upper arms form a wide V. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Arching the lower back". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: As the dumbbell goes overhead or behind your head, your ribs flare forward and your lower back arches, tipping your torso back off vertical. Everything else as in the normal setup.
 
@@ -373,15 +373,15 @@ Layout: two rows; figures 1-3 in the top row, figures 4-6 in the bottom row.
 
 Exercise: Dumbbell Lateral Raise. Equipment: two light dumbbells. Normal setup: Stand tall, feet hip-width, knees soft, torso upright or leaning slightly forward. Hold a light dumbbell in each hand at your sides, palms in, elbows slightly bent. Shoulders down, away from your ears, eyes ahead.
 
-Figure 1: CORRECT technique, "Start" position. Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Standing tall, feet hip-width, knees soft, slight forward lean from the hips, a light dumbbell in each hand at the sides, palms facing in, elbows slightly bent, shoulders down.
+Figure 1: CORRECT technique, "Start" position. Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Standing tall, feet hip-width, knees soft, slight forward lean from the hips, a light dumbbell in each hand at the sides, palms facing in, elbows slightly bent, shoulders down.
 
 Figure 2: CORRECT technique, "Top" position. Exactly the same camera angle, distance, props and hand grip as figure 1; only the movement has changed. Same stance and lean; arms raised out to the sides to shoulder height, parallel to the floor, elbows slightly bent and level with the hands, palms down, shoulders down.
 
-Figure 3: WRONG on purpose, the mistake "Shrugging the shoulders". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: As the dumbbells rise, your shoulders hike up toward your ears and the gap between shoulder and ear shrinks, often more on the last reps. Everything else as in the normal setup.
+Figure 3: WRONG on purpose, the mistake "Shrugging the shoulders". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: As the dumbbells rise, your shoulders hike up toward your ears and the gap between shoulder and ear shrinks, often more on the last reps. Everything else as in the normal setup.
 
 Figure 4: WRONG on purpose, the mistake "Swinging the weights up". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: You dip your knees or rock your torso back to start each rep, and the dumbbells fly up fast instead of rising steadily. Everything else as in the normal setup.
 
-Figure 5: WRONG on purpose, the mistake "Raising above the shoulders". Camera: front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view). Make this fault clearly visible: Your hands finish above shoulder height, with your arms angled up past parallel to the floor, often with a shrug to get there. Everything else as in the normal setup.
+Figure 5: WRONG on purpose, the mistake "Raising above the shoulders". Camera: front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view. Make this fault clearly visible: Your hands finish above shoulder height, with your arms angled up past parallel to the floor, often with a shrug to get there. Everything else as in the normal setup.
 
 Figure 6: WRONG on purpose, the mistake "Turning the thumbs up". Camera: side view, camera at hip height, looking straight at the side of the body. Make this fault clearly visible: Your hands lead and rise higher than your elbows, thumbs tipped up, and the dumbbells drift forward toward a front raise. Everything else as in the normal setup.
 ```

@@ -27,6 +27,7 @@ export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {
     mistakes: [
       { source: require('@/assets/exercises/build/hip-hinge/mistake-1.webp'), width: 900, height: 900 },
       { source: require('@/assets/exercises/build/hip-hinge/mistake-2.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/hip-hinge/mistake-3.webp'), width: 900, height: 900 },
     ],
   },
   'incline-push-up': {

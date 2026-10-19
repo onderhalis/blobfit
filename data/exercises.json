@@ -3077,8 +3077,8 @@
       },
       {
         "title": "Bending the elbows",
-        "view": "side",
-        "looksLike": "As your arms lift, your elbows bend and your hands drift in toward your head, so your arms make a W shape instead of a long, straight Y.",
+        "view": "front",
+        "looksLike": "Seen from in front of the head: as the arms lift, both elbows bend and the hands pull in toward the head, so the arms make a W instead of a long, straight Y.",
         "why": "Bent arms shorten the lever, so the muscles between your shoulder blades do less of the work.",
         "fix": "Keep your arms long and straight with your thumbs up. If you can only lift with bent elbows, lift a little lower.",
         "cue": "Long straight arms, thumbs up."
@@ -3100,15 +3100,15 @@
     "harder": "Seated Band Row",
     "harderId": "band-row",
     "artBrief": {
-      "view": "side",
+      "view": "front",
       "frames": [
         {
           "label": "Start",
-          "pose": "Lying face down on a mat, legs straight. Head down: face to the floor, forehead resting on a small folded towel, eyes on the floor. Arms straight overhead in a wide Y, resting on the mat, thumbs up."
+          "pose": "Seen from in front of the head: lying face down on a mat, forehead on a small folded towel, face to the floor. Both straight arms rest on the mat overhead in a wide Y, thumbs up."
         },
         {
           "label": "Top",
-          "pose": "Same as the start with one change: both straight arms hover a hand’s width above the mat. Forehead stays on the towel, face to the floor, chest and hips flat on the mat. Not a superman pose."
+          "pose": "Same view and position; only the arms change: both straight arms hover a hand’s width above the mat, still in a wide Y. Forehead, chest and hips stay down. Not a superman pose."
         }
       ]
     },

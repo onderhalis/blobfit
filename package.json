@@ -21,6 +21,7 @@
     "art:import": "python3 tools/art/import_sheets.py && npm run art:sync",
     "art:sync": "python3 tools/art/sync_exercise_art.py && node tools/art/exercise-brief.mjs",
     "art:brief": "node tools/art/exercise-brief.mjs",
+    "art:body-map": "python3 tools/art/body_map.py",
     "release:check": "node tools/art/exercise-brief.mjs --require-all"
   },
   "dependencies": {

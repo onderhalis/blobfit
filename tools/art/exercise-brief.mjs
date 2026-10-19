@@ -17,7 +17,7 @@ const PLAN = ['squat', 'incline-push-up', 'row', 'band-row', 'prone-y-raise', 'h
 const VIEW = { side: 'side view', front: 'front view', back: 'back view', above: 'from above' };
 const CAMERA = {
   side: 'side view, camera at hip height, looking straight at the side of the body',
-  front: 'front view, camera at hip height, looking straight at the front of the body (the character faces the camera; not a side view)',
+  front: 'front view, camera looking straight at the front of the character, who faces the camera (for an exercise lying face down: camera low in front of the head, looking along the body); not a side view',
   back: 'back view, camera at hip height, looking straight at the back of the body',
   above: 'top-down view from directly above, looking straight down at the body (not a side view)',
 };
