@@ -11,4 +11,23 @@ export interface ExerciseFrameSet {
   mistakes: (ArtAsset | null)[];
 }
 
-export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {};
+export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {
+  'incline-push-up': {
+    start: { source: require('@/assets/exercises/build/incline-push-up/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/incline-push-up/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      { source: require('@/assets/exercises/build/incline-push-up/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/incline-push-up/mistake-2.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/incline-push-up/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+  'squat': {
+    start: { source: require('@/assets/exercises/build/squat/start.webp'), width: 900, height: 900 },
+    end: { source: require('@/assets/exercises/build/squat/end.webp'), width: 900, height: 900 },
+    mistakes: [
+      { source: require('@/assets/exercises/build/squat/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/squat/mistake-2.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/squat/mistake-3.webp'), width: 900, height: 900 },
+    ],
+  },
+};
