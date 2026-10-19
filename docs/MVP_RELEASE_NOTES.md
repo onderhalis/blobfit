@@ -125,7 +125,7 @@ Founder feedback (2026-10-18): parts of the app read as generic AI output. This 
 | Pattern in established apps | In BLOB FIT now |
 |---|---|
 | Previous performance inline while logging (Strong, Hevy) | "Last time (Oct 9): 12, 12 reps · 8 kg" under every exercise, plus a per-exercise history on the exercise screen. |
-| Automatic progressive overload (Fitbod, Jefit, Progress) | Double progression from your own last session (`src/domain/progression.ts`). Reps: +1 per session (+2 if it felt easy). Bodyweight goes up to target +4, then suggests the harder variation if your equipment allows. Loaded: up to target +2 reps, then +2 kg (5 lb). Holds: +5 s (+10 s if it felt easy). Missed reps or "hard" repeat the target. Never below the plan. Each change states its reason. |
+| Automatic progressive overload (Fitbod, Jefit, Progress) | Double progression from your own last session (`src/domain/progression.ts`). Reps: +1 per session (+2 if it felt easy). Bodyweight goes up to target +4, then suggests the harder variation if your equipment allows. Loaded: up to target +2 reps, then +2 kg (5 lb) is *offered*: the workout keeps last time's load until the user taps "Use N kg" (founder decision, 2026-10-19, after ChatGPT's CC-010 review). Harder variations are only suggested, never swapped in automatically. Holds: +5 s (+10 s if it felt easy). Missed reps or "hard" repeat the target. Never below the plan. Each change states its reason. |
 | Effort rating (RPE in Strong/Hevy, "how did it feel" in Fitbod) | Easy / just right / hard after each exercise; it feeds the next target. |
 | Next-time targets | Session summary lists the next target per exercise; Plan and Home show the progressed prescription. |
 | Consistency calendar (Apple Fitness, Hevy) | Six-week training calendar on Progress (trained, extra, planned, missed, rest). It replaces the weekly bar chart. |
@@ -152,7 +152,8 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
 - **Art pipeline:**
   - **Brief:** `docs/EXERCISE_ART_BRIEF.md` is generated from the data (`npm run art:brief`). It lists 258 images in three batches (the beginner plan first), each with its file path, camera view and pose. The delivery checklist updates itself.
   - **Sync:** after Astra uploads to `assets/exercises/<id>/`, `npm run art:sync` checks each PNG (transparency, size, padding, a known id and mistake number) and writes optimized WebP copies. It also regenerates `src/components/exerciseFrames.ts`. The detail screen then shows the start and end frames side by side, and each mistake image next to its fix.
-  - **Request:** issue #1, CC-011.
+  - **Request:** issue #1, CC-011 to CC-014. `docs/art-prompts/batch-<n>.md` has one ready-to-paste prompt per missing image. `npm run art:sync` puts every frame of an exercise on one shared scale and ground point, so generated images don't need pixel-exact alignment.
+  - **Release gate:** `npm run release:check` fails while any of the 258 images is missing, so the app does not ship with exercise art gaps.
 - **Visual first (founder, 2026-10-19):** "People learn exercise by looking at it or watching it."
   - The detail screen now shows the movement (start and end frames, looping), three key points, and each mistake as a picture plus a one-line fix (`mistakes[].cue`, 40 characters max).
   - The longer coaching text is kept as source material for the art brief and the coach review.

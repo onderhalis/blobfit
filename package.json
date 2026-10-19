@@ -19,7 +19,8 @@
     "build:pages": "EXPO_BASE_URL=/blobfit npm run build:web && node tools/preview/route-pages.mjs dist && touch dist/.nojekyll",
     "content:check": "node tools/content/validate-exercises.mjs && node tools/art/exercise-brief.mjs --check",
     "art:sync": "python3 tools/art/sync_exercise_art.py && node tools/art/exercise-brief.mjs",
-    "art:brief": "node tools/art/exercise-brief.mjs"
+    "art:brief": "node tools/art/exercise-brief.mjs",
+    "release:check": "node tools/art/exercise-brief.mjs --require-all"
   },
   "dependencies": {
     "@expo-google-fonts/archivo-black": "^0.4.1",
