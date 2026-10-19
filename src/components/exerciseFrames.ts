@@ -58,8 +58,8 @@ export const EXERCISE_FRAMES: Record<string, ExerciseFrameSet> = {
     start: { source: require('@/assets/exercises/build/row/start.webp'), width: 900, height: 900 },
     end: { source: require('@/assets/exercises/build/row/end.webp'), width: 900, height: 900 },
     mistakes: [
-      null,
-      null,
+      { source: require('@/assets/exercises/build/row/mistake-1.webp'), width: 900, height: 900 },
+      { source: require('@/assets/exercises/build/row/mistake-2.webp'), width: 900, height: 900 },
       { source: require('@/assets/exercises/build/row/mistake-3.webp'), width: 900, height: 900 },
     ],
   },

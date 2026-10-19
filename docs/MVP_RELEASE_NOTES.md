@@ -173,7 +173,12 @@ The founder asked for at least 40 movements, taught the way a coach teaches them
   - row "Twisting trunk" (front view) and "Rounding the back" did not show the fault.
 
   Their text and camera wording are sharper now.
-- **Not done:** 29 of 257 images are in. The rest of the library shows the interim concept crops (split squat, push-up variations) or a neutral icon.
+- **Redraw round (2026-10-19):**
+  - Row is complete: both mistakes now show the fault.
+  - Hip hinge "Leaning back at the top" came back bent forward again; its text now says BACKWARD.
+  - Prone Y raise came back as a superman pose again. Its top position now reads "a hand's width above the mat, not a superman pose". "Shrugging toward the ears" needs a top-down view, which the generator does not draw, so it is replaced by "Bending the elbows", a fault visible from the side. Shrugging is still covered by the first key point.
+  - The first body map was not used: a muscular Blob (pecs, six-pack) with every muscle pre-coloured. The prompt now asks for a plain, soft body.
+- **Not done:** 31 of 257 images are in. The rest of the library shows the interim concept crops (split squat, push-up variations) or a neutral icon.
 
 Screens (web build): [library](screenshots/09-library.png) and [search](screenshots/09b-library-search.png) at 393pt; [incline push-up detail](screenshots/exercise-detail-320.png) at 320pt.
 
