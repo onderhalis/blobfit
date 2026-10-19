@@ -58,6 +58,8 @@ export interface ExerciseMistake {
   looksLike: string;
   why: string;
   fix: string;
+  /** The fix in one short line (40 chars max), the only part the app shows next to the picture. */
+  cue: string;
 }
 
 /** Something to check from one camera view, e.g. by filming one set. */

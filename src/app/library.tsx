@@ -47,10 +47,7 @@ export default function Library() {
   return (
     <Screen testID="library">
       <TopBar back title="Exercise library" />
-      <AppText tone="secondary">
-        {EXERCISES.length} movements. Each one covers the setup, the steps, what to check from the side or front, and
-        the common mistakes with their fixes.
-      </AppText>
+      <AppText tone="secondary">{EXERCISES.length} movements.</AppText>
       <ReviewBadge />
 
       <View style={[styles.search, focused && styles.searchFocused]}>

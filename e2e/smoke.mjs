@@ -142,10 +142,13 @@ try {
   await byId('plan-exercise-incline-push-up').click();
   await byId('exercise-detail').waitFor();
   await byId('exercise-detail').getByText('Content review pending').first().waitFor();
-  // Taught like a coach: what to check from which camera view, and each mistake with its fix.
-  await byId('form-checks').getByText('From the side').waitFor();
+  // Visual first: the movement, three key points, and each mistake with a one-line fix. No long text.
+  await byId('movement-player').waitFor();
+  assert.equal(await byId('key-points').locator('[data-testid^="key-point-"]').count(), 3, 'three key points');
   assert.ok((await byId('mistakes').locator('[data-testid^="mistake-"]').count()) >= 3, 'at least three mistakes');
-  await byId('mistake-0').getByText('FIX').waitFor();
+  for (const gone of ['Setup', 'How to do it', 'Check your form', 'LOOKS LIKE', 'WHY IT MATTERS']) {
+    assert.equal(await byId('exercise-detail').getByText(gone, { exact: true }).count(), 0, `no "${gone}" section`);
+  }
   await shot('04-exercise-incline-push-up');
   await goTo(at(5, 9), '/exercise/push-up');
   await byId('exercise-detail').waitFor();

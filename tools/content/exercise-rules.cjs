@@ -41,6 +41,7 @@ const LIMITS = {
   looksLike: 180,
   why: 150,
   fix: 180,
+  mistakeCue: 40,
   safety: 180,
   frameLabel: 16,
   pose: 220,
@@ -109,6 +110,8 @@ function validateExercises(exercises, { knownIds = [], partial = false } = {}) {
       text(id, `${f}.looksLike`, m?.looksLike, LIMITS.looksLike);
       text(id, `${f}.why`, m?.why, LIMITS.why);
       text(id, `${f}.fix`, m?.fix, LIMITS.fix);
+      text(id, `${f}.cue`, m?.cue, LIMITS.mistakeCue);
+      if (m?.cue && m.cue.toLowerCase() === m.title?.toLowerCase()) fail(id, `${f}.cue repeats the title`);
     });
     list(id, 'safety', e.safety, 1, 3, (s, f) => text(id, f, s, LIMITS.safety));
     if (!VIEWS.includes(e.artBrief?.view)) fail(id, 'artBrief.view is not valid');

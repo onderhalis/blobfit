@@ -64,21 +64,24 @@
         "view": "side",
         "looksLike": "As you stand, your elbows bend, your shoulders hunch toward the support and your knuckles grip hard.",
         "why": "Your arms take over the hardest part of the rep, so your legs don't practice standing up on their own.",
-        "fix": "Rest open hands or fingertips on the support and push the floor away with your feet. If you still need to pull, stop a little higher."
+        "fix": "Rest open hands or fingertips on the support and push the floor away with your feet. If you still need to pull, stop a little higher.",
+        "cue": "Hands open, feet push the floor away."
       },
       {
         "title": "Heels lifting",
         "view": "side",
         "looksLike": "Near the bottom your heels peel off the floor and your weight rolls toward your toes, often while you lean into the support.",
         "why": "Your balance moves to the front of your feet, and your knees take more of the load than your hips.",
-        "fix": "Keep big toe, little toe and heel down. Let your arms straighten so your hips can sit back, and stop where your heels still stay flat."
+        "fix": "Keep big toe, little toe and heel down. Let your arms straighten so your hips can sit back, and stop where your heels still stay flat.",
+        "cue": "Arms long, hips back, heels flat."
       },
       {
         "title": "Knees collapsing inward",
         "view": "front",
         "looksLike": "Seen from the front, your knees drift inside the line of your feet as you lower or as you stand up.",
         "why": "Your knees end up out of line with your hips and feet, and your glutes do less of the work.",
-        "fix": "Keep each knee pointing over your second toe the whole time. Think \"spread the floor\" with your feet and rise more slowly."
+        "fix": "Keep each knee pointing over your second toe the whole time. Think \"spread the floor\" with your feet and rise more slowly.",
+        "cue": "Spread the floor, knees over toes."
       }
     ],
     "safety": [
@@ -173,21 +176,24 @@
         "view": "side",
         "looksLike": "The last few inches turn into a fall. You land with a thump and your weight settles onto the seat.",
         "why": "Your legs stop working at the hardest point, and the rep loses the control it is meant to teach.",
-        "fix": "Lower over two to three seconds and just brush the seat. If you can't slow the last few inches, use a higher seat."
+        "fix": "Lower over two to three seconds and just brush the seat. If you can't slow the last few inches, use a higher seat.",
+        "cue": "Lower slowly, just brush the seat."
       },
       {
         "title": "Rocking to stand up",
         "view": "side",
         "looksLike": "At the bottom you lean back onto the seat, then swing your chest forward to throw your hips off it.",
         "why": "Momentum does the work your legs should be doing, and you lose the position you built on the way down.",
-        "fix": "Keep your torso angle still at the touch, with your weight in your feet. Push straight up through your whole foot. If you still rock, raise the seat."
+        "fix": "Keep your torso angle still at the touch, with your weight in your feet. Push straight up through your whole foot. If you still rock, raise the seat.",
+        "cue": "Torso still, drive straight up."
       },
       {
         "title": "Knees collapsing inward",
         "view": "front",
         "looksLike": "Seen from the front, your knees drift inside the line of your feet, most often as you leave the seat.",
         "why": "Your knees move out of line with your hips and feet, and your glutes do less of the work.",
-        "fix": "Point each knee over your second toe and think \"spread the floor\" as you stand. Slow down the first few inches off the seat."
+        "fix": "Point each knee over your second toe and think \"spread the floor\" as you stand. Slow down the first few inches off the seat.",
+        "cue": "Knees over second toes as you stand."
       }
     ],
     "safety": [
@@ -278,21 +284,24 @@
         "view": "side",
         "looksLike": "Near the bottom your heels peel off the floor and your weight rolls onto the balls of your feet.",
         "why": "Balance gets shaky and the front of the knees takes more of the load.",
-        "fix": "Keep big toe, little toe and heel on the floor. Squat only as deep as you can with heels down, or use the box squat."
+        "fix": "Keep big toe, little toe and heel on the floor. Squat only as deep as you can with heels down, or use the box squat.",
+        "cue": "Heels down; stop before they lift."
       },
       {
         "title": "Knees collapsing inward",
         "view": "front",
         "looksLike": "Seen from the front, your knees drift inside the line of your feet as you lower or as you stand up.",
         "why": "Your knees end up out of line with your hips and feet, and your glutes do less of the work.",
-        "fix": "Keep each knee pointing over your second toe the whole time. Think \"spread the floor\" with your feet and rise more slowly."
+        "fix": "Keep each knee pointing over your second toe the whole time. Think \"spread the floor\" with your feet and rise more slowly.",
+        "cue": "Knees over second toes, rise slowly."
       },
       {
         "title": "Loss of trunk control",
         "view": "side",
         "looksLike": "Your chest drops toward your thighs, or your lower back rounds and tucks under at the bottom.",
         "why": "The work shifts from your legs to your lower back, and the rep gets harder to control.",
-        "fix": "Brace before every rep, keep your chest facing forward, and stop just above the depth where your back starts to round."
+        "fix": "Brace before every rep, keep your chest facing forward, and stop just above the depth where your back starts to round.",
+        "cue": "Brace; stop before your back rounds."
       }
     ],
     "safety": [
@@ -388,21 +397,24 @@
         "view": "side",
         "looksLike": "The dumbbell moves forward off your chest and tips, so your arms end up holding it out in front of you.",
         "why": "Weight further in front pulls your chest down, so your arms and upper back work to hold it and the squat is harder to control.",
-        "fix": "Pin the dumbbell to your chest with your elbows pointing down. If you can't keep it there, use a lighter one."
+        "fix": "Pin the dumbbell to your chest with your elbows pointing down. If you can't keep it there, use a lighter one.",
+        "cue": "Elbows down, dumbbell pinned to chest."
       },
       {
         "title": "Heels lifting",
         "view": "side",
         "looksLike": "Near the bottom your heels peel up and your weight rolls toward your toes, often as the dumbbell pulls you forward.",
         "why": "Your balance shifts forward, and the front of your knees takes more of the load than your hips.",
-        "fix": "Keep big toe, little toe and heel down. Sit between your heels and stop at the depth where your heels stay flat."
+        "fix": "Keep big toe, little toe and heel down. Sit between your heels and stop at the depth where your heels stay flat.",
+        "cue": "Heels flat; sit down between them."
       },
       {
         "title": "Rushing the descent",
         "view": "side",
         "looksLike": "You drop to the bottom in under a second and bounce out, with the dumbbell jolting against your chest.",
         "why": "Speed hides where you lose position, and the bounce does part of the work your legs should do.",
-        "fix": "Lower over two to three seconds and pause briefly at the bottom before you stand. Use a lighter dumbbell if you can't slow down."
+        "fix": "Lower over two to three seconds and pause briefly at the bottom before you stand. Use a lighter dumbbell if you can't slow down.",
+        "cue": "Lower slowly, pause, then stand."
       }
     ],
     "safety": [
@@ -497,21 +509,24 @@
         "view": "front",
         "looksLike": "Your toes point out at 30–45°, but your knees point straight ahead or inward, so they sit inside your feet.",
         "why": "Your knees and feet end up pointing different ways, and your glutes and inner thighs do less of the work.",
-        "fix": "Push your knees out so each one points over your second toe. If you can't, turn your toes in a little or narrow your stance."
+        "fix": "Push your knees out so each one points over your second toe. If you can't, turn your toes in a little or narrow your stance.",
+        "cue": "Knees out, aimed at your second toes."
       },
       {
         "title": "Stance too wide",
         "view": "front",
         "looksLike": "Your feet are so wide that you roll onto their inside edges and can only bend a few inches.",
         "why": "You lose whole-foot contact, which makes you less steady, and the range gets too short to work your legs well.",
-        "fix": "Bring your feet in until both stay flat through the whole rep. About one and a half times shoulder-width is a good start."
+        "fix": "Bring your feet in until both stay flat through the whole rep. About one and a half times shoulder-width is a good start.",
+        "cue": "Bring feet in until both stay flat."
       },
       {
         "title": "Chest falling forward",
         "view": "side",
         "looksLike": "Your hips shoot back and your chest drops toward the floor, so the dumbbell swings out in front of your knees.",
         "why": "The squat turns into a bend at the hips, so your lower back works more and your thighs work less.",
-        "fix": "Keep your chest up and sit straight down between your heels. Keep your shoulders over the dumbbell so it hangs between your feet."
+        "fix": "Keep your chest up and sit straight down between your heels. Keep your shoulders over the dumbbell so it hangs between your feet.",
+        "cue": "Shoulders stay over the dumbbell."
       }
     ],
     "safety": [
@@ -606,21 +621,24 @@
         "view": "side",
         "looksLike": "Your feet are tucked in under you, so your knees push forward past your toes and your heels feel light.",
         "why": "Your shins tilt forward, more of the load sits at the front of your knees, and the hold gets harder to balance.",
-        "fix": "Walk your feet out until your knees stack over your ankles and your shins are vertical at your chosen height."
+        "fix": "Walk your feet out until your knees stack over your ankles and your shins are vertical at your chosen height.",
+        "cue": "Walk your feet out, shins vertical."
       },
       {
         "title": "Sitting too low",
         "view": "side",
         "looksLike": "Your hips drop below your knees, so your thighs slope down toward the wall.",
         "why": "Below parallel the hold gets much harder to keep still, and it goes deeper than this exercise needs.",
-        "fix": "Slide up until your thighs are parallel to the floor or higher. Beginners start higher and lower a little over the weeks."
+        "fix": "Slide up until your thighs are parallel to the floor or higher. Beginners start higher and lower a little over the weeks.",
+        "cue": "Slide up, hips no lower than knees."
       },
       {
         "title": "Back peeling off the wall",
         "view": "side",
         "looksLike": "Your shoulders round forward off the wall, or you lean forward and push your hands into your thighs.",
         "why": "Your arms take part of the load off your legs, and the vertical-shin position is lost.",
-        "fix": "Press your hips and shoulder blades into the wall. Cross your arms or let them hang so your hands don't push on your thighs."
+        "fix": "Press your hips and shoulder blades into the wall. Cross your arms or let them hang so your hands don't push on your thighs.",
+        "cue": "Shoulders on the wall, hands off legs."
       }
     ],
     "safety": [
@@ -713,21 +731,24 @@
         "view": "front",
         "looksLike": "Your back foot lines up directly behind your front foot, and you wobble or your hips twist to one side.",
         "why": "A narrow base gives you little side-to-side balance, so you spend the set steadying yourself instead of using your legs.",
-        "fix": "Set your feet hip-width apart side to side, like train tracks. Hold a wall or chair lightly if you still wobble."
+        "fix": "Set your feet hip-width apart side to side, like train tracks. Hold a wall or chair lightly if you still wobble.",
+        "cue": "Feet hip-width apart, side to side."
       },
       {
         "title": "Front heel lifting",
         "view": "side",
         "looksLike": "As you lower, your weight drifts forward, your front knee shoots ahead and your front heel peels off the floor.",
         "why": "Your weight moves onto the ball of the front foot, balance gets shaky, and your glutes do less of the work.",
-        "fix": "Lengthen your stance and lower your back knee straight down under your hip. Keep your front heel heavy the whole rep."
+        "fix": "Lengthen your stance and lower your back knee straight down under your hip. Keep your front heel heavy the whole rep.",
+        "cue": "Longer stance, front heel planted."
       },
       {
         "title": "Folding at the waist",
         "view": "side",
         "looksLike": "Your chest drops toward your front thigh, well past a slight forward lean, and your hips push back as you lower.",
         "why": "The work shifts from your front leg toward your hips and lower back, and your balance gets harder to hold.",
-        "fix": "Keep your chest tall over your hips and lower your back knee straight down. A slight forward lean is fine."
+        "fix": "Keep your chest tall over your hips and lower your back knee straight down. A slight forward lean is fine.",
+        "cue": "Chest stays tall over your hips."
       }
     ],
     "safety": [
@@ -823,21 +844,24 @@
         "view": "front",
         "looksLike": "Your back foot lands right behind or across from your front foot, and you wobble or your hips twist.",
         "why": "A narrow base leaves you little side-to-side balance, so steadying yourself takes over from the leg work.",
-        "fix": "Step straight back on train tracks, hip-width apart. Fix your eyes on a point ahead, and hold a wall lightly if you need to."
+        "fix": "Step straight back on train tracks, hip-width apart. Fix your eyes on a point ahead, and hold a wall lightly if you need to.",
+        "cue": "Step straight back, feet hip-width."
       },
       {
         "title": "Step too short",
         "view": "side",
         "looksLike": "Your back foot lands close behind you, so your front knee shoots forward and your front heel lifts as you lower.",
         "why": "Your weight moves onto the ball of the front foot, balance gets harder, and your glutes do less of the work.",
-        "fix": "Step back far enough that your back knee can drop straight down under your hip while your front heel stays flat."
+        "fix": "Step back far enough that your back knee can drop straight down under your hip while your front heel stays flat.",
+        "cue": "Step farther back, front heel flat."
       },
       {
         "title": "Pushing off the back foot",
         "view": "side",
         "looksLike": "To get back up, you shove hard off your back toes and the front leg only straightens at the very end.",
         "why": "The back leg does the work meant for the front leg, so the front leg gets less training.",
-        "fix": "Drive through your front heel and midfoot to stand, and let the back foot follow lightly. Slow the return if you need to."
+        "fix": "Drive through your front heel and midfoot to stand, and let the back foot follow lightly. Slow the return if you need to.",
+        "cue": "Drive up through your front heel."
       }
     ],
     "safety": [
@@ -932,21 +956,24 @@
         "view": "side",
         "looksLike": "You bounce or spring off your back toes to get up, and the top leg only straightens near the end.",
         "why": "The bottom leg does much of the lifting, so the top leg gets less of the work the exercise is meant to train.",
-        "fix": "Shift your weight over the top foot first, then stand up through it. Lift the toes of your bottom foot so they can't push."
+        "fix": "Shift your weight over the top foot first, then stand up through it. Lift the toes of your bottom foot so they can't push.",
+        "cue": "Shift onto the top foot, then stand."
       },
       {
         "title": "Only the toes on the step",
         "view": "side",
         "looksLike": "Your heel hangs off the edge of the step, so you balance on the ball of your top foot.",
         "why": "Your base is smaller, balance gets harder, and the work shifts toward the front of your knee and away from your glutes.",
-        "fix": "Place your whole foot on the step, heel included. If the step is too shallow, find a deeper one."
+        "fix": "Place your whole foot on the step, heel included. If the step is too shallow, find a deeper one.",
+        "cue": "Heel on the step, whole foot down."
       },
       {
         "title": "Dropping on the way down",
         "view": "side",
         "looksLike": "After you stand up, the trailing foot falls to the floor in under a second and lands with a thud.",
         "why": "You skip the lowering half of the rep, where the top leg has to control your body weight.",
-        "fix": "Lower over two to three seconds and set your foot down quietly. Use a lower step if you can't control it."
+        "fix": "Lower over two to three seconds and set your foot down quietly. Use a lower step if you can't control it.",
+        "cue": "Step down over two to three seconds."
       }
     ],
     "safety": [
@@ -1039,21 +1066,24 @@
         "view": "side",
         "looksLike": "Your torso stays straight up and down and your knee pushes far forward, so the heel of the bent leg starts to lift.",
         "why": "The front of your thigh does nearly all the work, your glutes do little, and the lifting heel makes you unsteady.",
-        "fix": "Push your hips back as you bend, as if sitting onto a chair behind you, with your chest leaning slightly forward and heel down."
+        "fix": "Push your hips back as you bend, as if sitting onto a chair behind you, with your chest leaning slightly forward and heel down.",
+        "cue": "Sit your hips back toward a chair."
       },
       {
         "title": "Bending the straight leg",
         "view": "front",
         "looksLike": "The leg you stepped away from bends at the knee, so you end up in a half squat on both legs.",
         "why": "Your weight splits between both legs, so the working leg does less and the straight leg's inner thigh barely lengthens.",
-        "fix": "Keep the other leg straight with its foot flat. Lower only as far as you can while it stays straight."
+        "fix": "Keep the other leg straight with its foot flat. Lower only as far as you can while it stays straight.",
+        "cue": "Other leg straight, foot flat."
       },
       {
         "title": "Knee collapsing inward",
         "view": "front",
         "looksLike": "The bent knee drifts inside the line of your foot and that foot rolls onto its inner edge.",
         "why": "Your knee moves out of line with your hip and foot, and your glutes do less of the work.",
-        "fix": "Point the bent knee over your second toe and keep big toe, little toe and heel down. Turning the toes out slightly can help."
+        "fix": "Point the bent knee over your second toe and keep big toe, little toe and heel down. Turning the toes out slightly can help.",
+        "cue": "Bent knee over your second toe."
       }
     ],
     "safety": [
@@ -1145,21 +1175,24 @@
         "view": "side",
         "looksLike": "Your front foot sits close to the bench, so your front knee shoots forward and your front heel lifts as you lower.",
         "why": "Your weight rolls onto the ball of your front foot, which cramps the position and makes balance hard.",
-        "fix": "Move your front foot out to about a long stride from the bench, so your front heel stays flat at the bottom."
+        "fix": "Move your front foot out to about a long stride from the bench, so your front heel stays flat at the bottom.",
+        "cue": "Front foot out a long stride."
       },
       {
         "title": "Pushing with the back leg",
         "view": "side",
         "looksLike": "You press down into the bench with your back foot to rise, and your hips drift back toward the bench.",
         "why": "The back leg takes over part of the lift, so the front leg gets less of the work the exercise is meant for.",
-        "fix": "Keep most of your weight on your front foot. Rest the back laces lightly, as if you could lift that foot at any time."
+        "fix": "Keep most of your weight on your front foot. Rest the back laces lightly, as if you could lift that foot at any time.",
+        "cue": "Most weight on the front foot."
       },
       {
         "title": "Feet on a tightrope",
         "view": "front",
         "looksLike": "Your front foot lines up directly in front of your back foot, and your hips twist or sway as you lower.",
         "why": "A narrow base gives you little side-to-side balance, so you spend the set steadying yourself instead of using your leg.",
-        "fix": "Set your feet hip-width apart side to side, like train tracks. Hold a wall or rail lightly if you still wobble."
+        "fix": "Set your feet hip-width apart side to side, like train tracks. Hold a wall or rail lightly if you still wobble.",
+        "cue": "Feet on train tracks, hip-width apart."
       }
     ],
     "safety": [
@@ -1251,21 +1284,24 @@
         "view": "side",
         "looksLike": "Your knees bend a lot and push forward, your shins tilt toward your toes, and your hips drop down instead of moving back.",
         "why": "The work shifts to the front of your thighs, and you miss the hip movement this drill is meant to teach.",
-        "fix": "Keep your shins nearly vertical. Stand a foot in front of a wall and push your hips back to tap it, then move a little farther away."
+        "fix": "Keep your shins nearly vertical. Stand a foot in front of a wall and push your hips back to tap it, then move a little farther away.",
+        "cue": "Shins upright, hips back to the wall."
       },
       {
         "title": "Rounding the back",
         "view": "side",
         "looksLike": "Your upper back curls and your head drops, or your lower back rounds near the bottom. With a dowel, it lifts off your head or tailbone.",
         "why": "The bend comes from your spine instead of your hips, so your glutes and hamstrings do less of the work.",
-        "fix": "Keep all three dowel contact points for the whole rep. End the rep as soon as one lifts off, even if that range feels short."
+        "fix": "Keep all three dowel contact points for the whole rep. End the rep as soon as one lifts off, even if that range feels short.",
+        "cue": "Back flat; stop before it rounds."
       },
       {
         "title": "Leaning back at the top",
         "view": "side",
         "looksLike": "At the finish your hips push past your feet and your shoulders end up behind your hips, with your lower back arched.",
         "why": "The rep is done once you stand straight. Leaning past that moves the effort from your glutes to your lower back.",
-        "fix": "Finish with a firm glute squeeze and your ribs stacked over your hips. Think \"stand tall\", not \"lean back\"."
+        "fix": "Finish with a firm glute squeeze and your ribs stacked over your hips. Think \"stand tall\", not \"lean back\".",
+        "cue": "Ribs over hips, glutes squeezed."
       }
     ],
     "safety": [
@@ -1359,21 +1395,24 @@
         "view": "side",
         "looksLike": "Your hips rise above the line from knees to shoulders, your ribs flare up and your lower back arches into a curve.",
         "why": "The extra height comes from bending your lower back, not straightening your hips, so your glutes do less of the lift.",
-        "fix": "Breathe out and pull your ribs down before you lift. Stop at a straight line from knees to shoulders and squeeze your glutes there."
+        "fix": "Breathe out and pull your ribs down before you lift. Stop at a straight line from knees to shoulders and squeeze your glutes there.",
+        "cue": "Ribs down; stop at a straight line."
       },
       {
         "title": "Pushing through the toes",
         "view": "side",
         "looksLike": "Your heels peel off the floor at the top and your weight rolls onto the balls of your feet, often because your feet are too close.",
         "why": "Pressing through your toes shifts work to the front of your thighs and calves and away from your glutes.",
-        "fix": "Keep your whole foot down and think \"heels heavy\". If it helps, lift your toes slightly off the floor for a few reps."
+        "fix": "Keep your whole foot down and think \"heels heavy\". If it helps, lift your toes slightly off the floor for a few reps.",
+        "cue": "Heels pressed down, whole foot flat."
       },
       {
         "title": "Feet too far away",
         "view": "side",
         "looksLike": "Your heels sit far from your hips, your shins slant away from you at the top, and the backs of your thighs cramp or take over.",
         "why": "With your feet that far out, your hamstrings do most of the lifting and your glutes do less.",
-        "fix": "Walk your heels in until your shins are close to vertical at the top. If a hamstring cramps, stop, shake it out and reset."
+        "fix": "Walk your heels in until your shins are close to vertical at the top. If a hamstring cramps, stop, shake it out and reset.",
+        "cue": "Walk heels in; shins upright at top."
       }
     ],
     "safety": [
@@ -1468,21 +1507,24 @@
         "view": "side",
         "looksLike": "At the top your head tips back, your ribs flare and your lower back curves, so your hips rise above the line from knees to shoulders.",
         "why": "The last bit of height comes from your lower back instead of your hips, so your glutes stop doing the work at the top.",
-        "fix": "Tuck your chin, keep your eyes forward and bring your ribs down. Stop at a straight line from knees to shoulders and squeeze your glutes."
+        "fix": "Tuck your chin, keep your eyes forward and bring your ribs down. Stop at a straight line from knees to shoulders and squeeze your glutes.",
+        "cue": "Chin tucked; stop at a straight line."
       },
       {
         "title": "Bench too high or low on your back",
         "view": "side",
         "looksLike": "The edge sits up at your neck or down near your waist, so you slide along it or fold around it as your hips rise.",
         "why": "Without a steady pivot point at your shoulder blades, your torso can't move as one piece and the rep is harder to control.",
-        "fix": "Set the edge just below your shoulder blades and rest your elbows on top. Keep that same contact point for every rep."
+        "fix": "Set the edge just below your shoulder blades and rest your elbows on top. Keep that same contact point for every rep.",
+        "cue": "Bench edge just below shoulder blades."
       },
       {
         "title": "Shins slanting at the top",
         "view": "side",
         "looksLike": "At the top your knees sit well in front of or well behind your ankles, so your shins slant clearly away from vertical.",
         "why": "Feet too close shifts work to the front of your thighs; too far shifts it to your hamstrings. Either way your glutes do less.",
-        "fix": "Do one rep and hold the top. Move your feet until your shins are close to vertical, then keep that spot for the set."
+        "fix": "Do one rep and hold the top. Move your feet until your shins are close to vertical, then keep that spot for the set.",
+        "cue": "Adjust feet until shins are upright."
       }
     ],
     "safety": [
@@ -1577,21 +1619,24 @@
         "view": "front",
         "looksLike": "At the top, the hip on the side of your lifted leg sits lower than the other, so your belt line tilts toward the floor.",
         "why": "The muscles on the side of your working hip should hold your pelvis level. When it tilts, they and your glute do less.",
-        "fix": "Lift only as high as you can with level hips. Rest your hands on your hip bones for a few reps to feel them stay even."
+        "fix": "Lift only as high as you can with level hips. Rest your hands on your hip bones for a few reps to feel them stay even.",
+        "cue": "Hips level; lift only that high."
       },
       {
         "title": "Arching to get higher",
         "view": "side",
         "looksLike": "Your ribs flare, your lower back arches and your hips rise above the line from your working knee to your shoulders.",
         "why": "The extra height comes from your spine, not your hip, so the working glute does less of the lift.",
-        "fix": "Bring your ribs down before each rep and stop at a straight line. If it keeps happening, hug your free knee to your chest."
+        "fix": "Bring your ribs down before each rep and stop at a straight line. If it keeps happening, hug your free knee to your chest.",
+        "cue": "Stop at a straight line, not higher."
       },
       {
         "title": "Working foot too far away",
         "view": "side",
         "looksLike": "Your planted heel sits far from your hips, the working shin slants away from you at the top, and the back of that thigh cramps.",
         "why": "With the foot that far out, your hamstring takes over the lift and your glute does less.",
-        "fix": "Bring your heel in until the working shin is close to vertical at the top. If it cramps, stop, shake it out and reset."
+        "fix": "Bring your heel in until the working shin is close to vertical at the top. If it cramps, stop, shake it out and reset.",
+        "cue": "Heel in until your shin is upright."
       }
     ],
     "safety": [
@@ -1685,28 +1730,32 @@
         "view": "side",
         "looksLike": "On the way down the dumbbells swing forward and hang out over your toes, with a clear gap between the weights and your legs.",
         "why": "The farther the load sits from your hips, the more your back has to hold it, and the less your glutes and hamstrings drive the lift.",
-        "fix": "Draw your shoulders down and back to keep the weights against your thighs. Slide them down the front of your legs like they're on rails."
+        "fix": "Draw your shoulders down and back to keep the weights against your thighs. Slide them down the front of your legs like they're on rails.",
+        "cue": "Shoulders back, weights on your legs."
       },
       {
         "title": "Bending the knees as you lower",
         "view": "side",
         "looksLike": "As you go down your knees bend more and push forward, your hips sink and your shins tilt toward your toes, like a squat.",
         "why": "The front of your thighs takes over, and the hamstring stretch that makes this exercise work fades.",
-        "fix": "Set a slight knee bend at the top and hold that exact angle. Think hips back toward the wall behind you, not down toward the floor."
+        "fix": "Set a slight knee bend at the top and hold that exact angle. Think hips back toward the wall behind you, not down toward the floor.",
+        "cue": "Knees keep the same slight bend."
       },
       {
         "title": "Chasing the floor",
         "view": "side",
         "looksLike": "You keep lowering after your hips stop moving back, so your back rounds and the dumbbells head toward your feet.",
         "why": "Past that point your spine bends instead of your hips, so the load moves off your glutes and hamstrings and onto your back.",
-        "fix": "End each rep where your hips stop moving back, usually around the knee to mid-shin for beginners. Your range can grow with practice."
+        "fix": "End each rep where your hips stop moving back, usually around the knee to mid-shin for beginners. Your range can grow with practice.",
+        "cue": "Rise as soon as your hips stop moving."
       },
       {
         "title": "Leaning back at the top",
         "view": "side",
         "looksLike": "At the finish you push your hips past your feet and your shoulders end up behind your hips, arching your lower back.",
         "why": "The rep is done once you stand straight. Leaning past that adds nothing for your glutes and loads your lower back.",
-        "fix": "Finish with a firm glute squeeze and your ribs stacked over your hips. Stand tall, then start the next rep."
+        "fix": "Finish with a firm glute squeeze and your ribs stacked over your hips. Stand tall, then start the next rep.",
+        "cue": "Squeeze glutes, ribs over hips."
       }
     ],
     "safety": [
@@ -1810,21 +1859,24 @@
         "view": "side",
         "looksLike": "As the weights leave the floor your hips rise but your shoulders don't, so your knees straighten and your back tips toward horizontal.",
         "why": "Your legs stop helping and it turns into a stiff-legged pull, with more of the load on your back and hamstrings.",
-        "fix": "Push the floor away so hips and shoulders rise at the same rate. Unlike the RDL, your knees bend here and do real work."
+        "fix": "Push the floor away so hips and shoulders rise at the same rate. Unlike the RDL, your knees bend here and do real work.",
+        "cue": "Legs push; shoulders rise with hips."
       },
       {
         "title": "Rounding to reach the floor",
         "view": "side",
         "looksLike": "To grab the dumbbells your back curves and your shoulders roll forward, and your back stays rounded as you lift.",
         "why": "Your spine bends instead of your hips and knees, so your legs and glutes do less and the lift is harder to control.",
-        "fix": "Raise the dumbbells on sturdy blocks or steps until you can grip them with a long back. Lower the blocks as your range improves."
+        "fix": "Raise the dumbbells on sturdy blocks or steps until you can grip them with a long back. Lower the blocks as your range improves.",
+        "cue": "Start from blocks with a long back."
       },
       {
         "title": "Yanking the weights off the floor",
         "view": "side",
         "looksLike": "The dumbbells jerk off the floor, your elbows bend, and your back position changes in the first few inches of the lift.",
         "why": "A jerk lets your back position slip before your legs take the load, so the hardest part of the lift is out of control.",
-        "fix": "Draw your shoulders down until the dumbbells feel tight, brace, then push the floor away smoothly with straight arms."
+        "fix": "Draw your shoulders down until the dumbbells feel tight, brace, then push the floor away smoothly with straight arms.",
+        "cue": "Arms straight, brace, push smoothly."
       }
     ],
     "safety": [
@@ -1922,21 +1974,24 @@
         "view": "side",
         "looksLike": "Your elbows bend and your hands yank the band forward to your hips, while your hips barely move.",
         "why": "Your arms take over a job meant for your hips, so your glutes and hamstrings do less of the work.",
-        "fix": "Keep your arms long and loose. Treat your hands as hooks and move the band only by driving your hips forward."
+        "fix": "Keep your arms long and loose. Treat your hands as hooks and move the band only by driving your hips forward.",
+        "cue": "Arms long; hips move the band."
       },
       {
         "title": "Squatting instead of hinging",
         "view": "side",
         "looksLike": "Your knees bend and push forward, your hips sink down and your torso stays upright, so your hips barely move back.",
         "why": "It turns into a squat, so the front of your thighs works and your glutes and hamstrings do less.",
-        "fix": "Keep your shins close to vertical and reach your hips back toward the anchor until you feel the backs of your thighs stretch."
+        "fix": "Keep your shins close to vertical and reach your hips back toward the anchor until you feel the backs of your thighs stretch.",
+        "cue": "Shins upright, hips reach back."
       },
       {
         "title": "Leaning back at the top",
         "view": "side",
         "looksLike": "You drive past standing and arch your lower back, so your shoulders end up behind your hips.",
         "why": "The hip snap is done once you're upright. Arching past that moves effort from your glutes to your lower back.",
-        "fix": "Finish tall with your ribs stacked over your hips and a firm glute squeeze. Stand straight, then hinge back."
+        "fix": "Finish tall with your ribs stacked over your hips and a firm glute squeeze. Stand straight, then hinge back.",
+        "cue": "Ribs stacked over hips at the finish."
       }
     ],
     "safety": [
@@ -2029,21 +2084,24 @@
         "view": "back",
         "looksLike": "As your back leg rises, that hip rotates up and out, and the back foot's toes turn out to the side instead of pointing down.",
         "why": "Your pelvis twists instead of hinging, so the standing hip moves less and its glute and hamstring do less of the work.",
-        "fix": "Point your back toes at the floor and keep both hip bones level, as if they were two headlights shining at the floor."
+        "fix": "Point your back toes at the floor and keep both hip bones level, as if they were two headlights shining at the floor.",
+        "cue": "Hips level; back toes aim down."
       },
       {
         "title": "Body and back leg out of line",
         "view": "side",
         "looksLike": "Your chest drops while your back leg stays low, or the leg kicks high while your chest stays up, so you fold at the free-leg hip.",
         "why": "The movement has to happen at your standing hip. When the body bends elsewhere, the standing glute and hamstring do less.",
-        "fix": "Keep your torso and back leg in one line, like a plank tipping on a seesaw, and reach your back heel toward the wall behind you."
+        "fix": "Keep your torso and back leg in one line, like a plank tipping on a seesaw, and reach your back heel toward the wall behind you.",
+        "cue": "Chest and heel move like a seesaw."
       },
       {
         "title": "Standing knee locked or sinking",
         "view": "side",
         "looksLike": "Your standing knee either snaps straight or bends deeper as you lower, so your hips drop down instead of moving back.",
         "why": "A locked knee makes balance harder; a sinking knee turns it into a one-leg squat and takes work off your hamstring.",
-        "fix": "Set a slight bend in your standing knee before you start and keep that same angle for the whole rep."
+        "fix": "Set a slight bend in your standing knee before you start and keep that same angle for the whole rep.",
+        "cue": "Knee slightly bent the whole rep."
       }
     ],
     "safety": [
@@ -2135,21 +2193,24 @@
         "view": "side",
         "looksLike": "Your hips reach the wall before your chest does, so your body bends at the waist into a shallow banana shape.",
         "why": "Your trunk stops moving as one piece, your lower back arches, and your chest and arms travel less.",
-        "fix": "Squeeze your glutes and keep your ribs and pelvis moving together. If the line still breaks, step your feet a little closer."
+        "fix": "Squeeze your glutes and keep your ribs and pelvis moving together. If the line still breaks, step your feet a little closer.",
+        "cue": "Glutes tight, ribs and hips as one."
       },
       {
         "title": "Elbows flaring into a T",
         "view": "back",
         "looksLike": "From behind, your elbows point straight out to the sides at shoulder height, near 90° from your torso, like the letter T.",
         "why": "Your shoulders take more of the strain and your shoulder blades can't move freely, so the press is harder to control.",
-        "fix": "Keep your hands just outside your shoulders and let your elbows travel back about 30–45° from your sides, an arrow shape."
+        "fix": "Keep your hands just outside your shoulders and let your elbows travel back about 30–45° from your sides, an arrow shape.",
+        "cue": "Elbows angled back, not straight out."
       },
       {
         "title": "Head reaching for the wall",
         "view": "side",
         "looksLike": "Your chin pokes forward and your nose nears the wall while your chest stays well back.",
         "why": "The rep looks deeper than it is, so your chest and arms only work through part of the range.",
-        "fix": "Keep your head in line with your body and your eyes on the wall. Let your chest lead toward the wall."
+        "fix": "Keep your head in line with your body and your eyes on the wall. Let your chest lead toward the wall.",
+        "cue": "Head in line; let your chest lead."
       }
     ],
     "safety": [
@@ -2240,21 +2301,24 @@
         "view": "side",
         "looksLike": "Your hips drop below the line from shoulders to heels and your lower back arches as you lower.",
         "why": "Your trunk stops moving as one piece, so your hips reach the edge first and your chest and arms do less of the work.",
-        "fix": "Squeeze your glutes and keep your ribs down so ribs and pelvis move together. Use a higher surface if the line still breaks."
+        "fix": "Squeeze your glutes and keep your ribs down so ribs and pelvis move together. Use a higher surface if the line still breaks.",
+        "cue": "Glutes tight, ribs down."
       },
       {
         "title": "Elbows flaring straight out",
         "view": "front",
         "looksLike": "At the bottom your elbows point straight out to the sides at shoulder height, near 90° from your torso, like the letter T.",
         "why": "Your shoulders take more of the strain and your shoulder blades can't move freely, so the press is harder to control.",
-        "fix": "Set your hands just outside your shoulders, fingers forward, and let your elbows travel back about 30–45° from your sides."
+        "fix": "Set your hands just outside your shoulders, fingers forward, and let your elbows travel back about 30–45° from your sides.",
+        "cue": "Elbows back: an arrow, not a T."
       },
       {
         "title": "Using an unstable surface",
         "view": "side",
         "looksLike": "The bench, chair or table shifts or rocks as you press, or your hands slide on a slick edge.",
         "why": "You lose balance and control, and your effort goes into staying steady instead of pressing.",
-        "fix": "Use a kitchen counter, a heavy table or a bench pushed against a wall. Test it with your full weight before the first rep."
+        "fix": "Use a kitchen counter, a heavy table or a bench pushed against a wall. Test it with your full weight before the first rep.",
+        "cue": "Pick a sturdy surface; test it first."
       }
     ],
     "safety": [
@@ -2347,21 +2411,24 @@
         "view": "side",
         "looksLike": "Your hips stay high with a bend at the waist, so only your head and shoulders dip toward the floor.",
         "why": "Your chest travels only a short way, and the rep turns into a shoulder dip instead of a full push-up.",
-        "fix": "Walk your hands farther forward and squeeze your glutes until your hips line up with your knees and shoulders. Lower as one piece."
+        "fix": "Walk your hands farther forward and squeeze your glutes until your hips line up with your knees and shoulders. Lower as one piece.",
+        "cue": "Walk your hands out, hips in line."
       },
       {
         "title": "Hips sagging",
         "view": "side",
         "looksLike": "Your hips drop below the line from knees to shoulders and your lower back arches as you lower.",
         "why": "Your trunk stops moving as one piece, so your belly nears the floor before your chest does.",
-        "fix": "Squeeze your glutes and pull your ribs down toward your hips. Use a shorter range until the line holds."
+        "fix": "Squeeze your glutes and pull your ribs down toward your hips. Use a shorter range until the line holds.",
+        "cue": "Squeeze glutes, ribs toward hips."
       },
       {
         "title": "Elbows flaring into a T",
         "view": "above",
         "looksLike": "At the bottom your elbows point straight out to the sides, near 90° from your torso, like the letter T.",
         "why": "Your shoulders take more of the strain and your shoulder blades can't move freely, so the press is harder to control.",
-        "fix": "Set your hands just outside your shoulders, fingers forward, and let your elbows travel back about 30–45° from your sides."
+        "fix": "Set your hands just outside your shoulders, fingers forward, and let your elbows travel back about 30–45° from your sides.",
+        "cue": "Fingers forward, elbows angled back."
       }
     ],
     "safety": [
@@ -2456,21 +2523,24 @@
         "view": "side",
         "looksLike": "Your hips drop below the line from shoulders to heels and your lower back arches, often in the last few reps of a set.",
         "why": "Your trunk stops moving as one piece, so your hips reach the floor first and the push gets harder to control.",
-        "fix": "Squeeze your glutes and pull your ribs toward your hips so they move together. If the line still breaks, end the set."
+        "fix": "Squeeze your glutes and pull your ribs toward your hips so they move together. If the line still breaks, end the set.",
+        "cue": "Glutes squeezed, ribs pulled to hips."
       },
       {
         "title": "Flared elbows",
         "view": "above",
         "looksLike": "At the bottom your elbows point straight out to the sides, near 90° from your torso, making a T with your body.",
         "why": "Your shoulders take more of the strain and your shoulder blades can't move freely, so the press is harder to control.",
-        "fix": "Set your hands just outside your shoulders, fingers forward, and aim your elbows back about 30–45° from your sides, an arrow shape."
+        "fix": "Set your hands just outside your shoulders, fingers forward, and aim your elbows back about 30–45° from your sides, an arrow shape.",
+        "cue": "Hands outside shoulders, elbows back."
       },
       {
         "title": "Reduced control",
         "view": "side",
         "looksLike": "Late in the set the reps speed up, you drop through the last few inches, or the depth shrinks to small bounces near the top.",
         "why": "Momentum does the work instead of your chest and triceps, and short reps skip the bottom, where the push is hardest.",
-        "fix": "Lower for two to three seconds to the same depth every rep. End the set when you can't, even if you are short of your target."
+        "fix": "Lower for two to three seconds to the same depth every rep. End the set when you can't, even if you are short of your target.",
+        "cue": "Lower slowly to the same depth."
       }
     ],
     "safety": [
@@ -2566,21 +2636,24 @@
         "view": "above",
         "looksLike": "Your elbows land on the floor straight out from your shoulders, near 90° from your torso, like the letter T.",
         "why": "Your shoulders take more of the load and the dumbbells drift off line, which makes the press harder to control.",
-        "fix": "Before you lower, angle your elbows about 45° from your sides, with palms facing your feet or turned slightly in."
+        "fix": "Before you lower, angle your elbows about 45° from your sides, with palms facing your feet or turned slightly in.",
+        "cue": "Angle elbows 45 degrees, then lower."
       },
       {
         "title": "Bouncing off the floor",
         "view": "side",
         "looksLike": "Your elbows hit the floor hard and rebound straight into the press, with no pause at the bottom.",
         "why": "The rebound does part of the lift for you, so your chest and triceps skip the hardest part of the press.",
-        "fix": "Lower over two to three seconds, let your upper arms touch the floor lightly, and hold for one second before you press."
+        "fix": "Lower over two to three seconds, let your upper arms touch the floor lightly, and hold for one second before you press.",
+        "cue": "Lower slowly, hold one second, press."
       },
       {
         "title": "Wrists bent back",
         "view": "side",
         "looksLike": "Your wrists fold back so the dumbbells sit behind your forearms, knuckles pointing toward your head instead of the ceiling.",
         "why": "The weight is off line with your forearms, so your wrists strain and less force goes into the press.",
-        "fix": "Grip the handle firmly and stack dumbbell over wrist and wrist over elbow, knuckles toward the ceiling."
+        "fix": "Grip the handle firmly and stack dumbbell over wrist and wrist over elbow, knuckles toward the ceiling.",
+        "cue": "Firm grip, knuckles to the ceiling."
       }
     ],
     "safety": [
@@ -2672,21 +2745,24 @@
         "view": "side",
         "looksLike": "As the dumbbells go up, your ribs flare, your lower back peels off the chair, and your chest tilts toward the ceiling.",
         "why": "Leaning back turns the lift into a partial chest press, so your shoulders skip the top of the overhead range.",
-        "fix": "Keep your ribs down and your back on the chair. Use lighter dumbbells so you can finish each rep without arching."
+        "fix": "Keep your ribs down and your back on the chair. Use lighter dumbbells so you can finish each rep without arching.",
+        "cue": "Lighter weight, back on the chair."
       },
       {
         "title": "Pressing out in front",
         "view": "side",
         "looksLike": "At the top, the dumbbells finish in front of your face, with your arms angled forward instead of beside your ears.",
         "why": "The weight sits ahead of your shoulders, so it is harder to balance and your shoulders work through a shorter range.",
-        "fix": "Press up and slightly back so your arms finish beside your ears, with the dumbbells over your shoulders."
+        "fix": "Press up and slightly back so your arms finish beside your ears, with the dumbbells over your shoulders.",
+        "cue": "Dumbbells finish over your shoulders."
       },
       {
         "title": "Forearms tilting out of line",
         "view": "front",
         "looksLike": "From the front, your elbows flare out wide or pinch in, so the dumbbells sit outside or inside your elbows instead of above them.",
         "why": "The weight pulls your forearms off line, so less of your effort goes straight up into the press.",
-        "fix": "Keep each dumbbell stacked over its wrist and elbow from shoulder height to the top, and lower only to shoulder height."
+        "fix": "Keep each dumbbell stacked over its wrist and elbow from shoulder height to the top, and lower only to shoulder height.",
+        "cue": "Stack dumbbell over wrist over elbow."
       }
     ],
     "safety": [
@@ -2778,21 +2854,24 @@
         "view": "side",
         "looksLike": "Your whole body tips forward from the ankles or hips as you press, so your bodyweight moves the band, not your arms.",
         "why": "Leaning takes tension out of the band and shifts the work away from your chest and triceps.",
-        "fix": "Use a staggered stance, brace and keep your torso still. If you can't, use a lighter band or step closer to the anchor."
+        "fix": "Use a staggered stance, brace and keep your torso still. If you can't, use a lighter band or step closer to the anchor.",
+        "cue": "Staggered stance, brace, torso still."
       },
       {
         "title": "Elbows flaring into a T",
         "view": "front",
         "looksLike": "As the handles come back, your elbows lift to shoulder height and point straight out to the sides, like the letter T.",
         "why": "Your shoulders take more of the strain and your shoulder blades can't move freely, so the press is harder to control.",
-        "fix": "Keep your elbows angled down and back about 45° from your sides, an arrow shape, with your hands at chest height."
+        "fix": "Keep your elbows angled down and back about 45° from your sides, an arrow shape, with your hands at chest height.",
+        "cue": "Elbows low and back, hands at chest."
       },
       {
         "title": "Letting the band snap back",
         "view": "side",
         "looksLike": "Your hands fly back past your chest and your elbows shoot well behind your body as the band pulls.",
         "why": "The return half stops doing useful work, and the band pulls your shoulders back past a range you can control.",
-        "fix": "Take two to three seconds to come back, and stop when your hands reach your chest, elbows just behind your torso."
+        "fix": "Take two to three seconds to come back, and stop when your hands reach your chest, elbows just behind your torso.",
+        "cue": "Hands return slowly, stop at chest."
       }
     ],
     "safety": [
@@ -2883,21 +2962,24 @@
         "view": "side",
         "looksLike": "As you lower, your hips sink and your body flattens toward a plank, so your chest, not your head, heads for the floor.",
         "why": "The press turns into a regular push-up, and your shoulders lose the overhead angle the exercise is meant to train.",
-        "fix": "Walk your feet closer to your hands and keep your hips high. Think about lowering your head, not your chest."
+        "fix": "Walk your feet closer to your hands and keep your hips high. Think about lowering your head, not your chest.",
+        "cue": "Walk your feet in, hips stay high."
       },
       {
         "title": "Head dropping behind the hands",
         "view": "side",
         "looksLike": "Your head lowers straight down between or behind your hands, and your forearms lean back toward your feet.",
         "why": "Your forearms tilt off vertical, so your shoulders can't press in a straight line and the rep is harder to control.",
-        "fix": "Aim the top of your head at a spot a few inches in front of your hands, so your head and hands make a triangle."
+        "fix": "Aim the top of your head at a spot a few inches in front of your hands, so your head and hands make a triangle.",
+        "cue": "Top of head aims ahead of your hands."
       },
       {
         "title": "Elbows flaring out wide",
         "view": "front",
         "looksLike": "From the front, your elbows point straight out to the sides, near 90° from your torso, as your head lowers.",
         "why": "Your shoulders end up in a weaker pressing position and your shoulder blades can't move freely.",
-        "fix": "Set your hands slightly wider than your shoulders, fingers forward, and let your elbows track back about 45°."
+        "fix": "Set your hands slightly wider than your shoulders, fingers forward, and let your elbows track back about 45°.",
+        "cue": "Elbows aim back as your head lowers."
       }
     ],
     "safety": [
@@ -2990,21 +3072,24 @@
         "view": "side",
         "looksLike": "Your chest and head peel off the mat and your lower back arches so your arms can rise higher.",
         "why": "The lift comes from your lower back instead of your shoulder blades, so your upper back does less of the work.",
-        "fix": "Keep your forehead on the towel and your chest on the mat, and lightly squeeze your glutes. Lift only as high as your shoulder blades take your arms."
+        "fix": "Keep your forehead on the towel and your chest on the mat, and lightly squeeze your glutes. Lift only as high as your shoulder blades take your arms.",
+        "cue": "Chest on the mat, small arm lift."
       },
       {
         "title": "Shrugging toward the ears",
         "view": "above",
         "looksLike": "Seen from above, your shoulders ride up toward your ears as your arms lift, and the gap between ears and shoulders closes.",
         "why": "Your upper traps take over, and the lower muscles between your shoulder blades, the ones this targets, do less.",
-        "fix": "Before each lift, slide your shoulder blades down toward your back pockets. Hold that position and lift a little lower if you need to."
+        "fix": "Before each lift, slide your shoulder blades down toward your back pockets. Hold that position and lift a little lower if you need to.",
+        "cue": "Shoulders down first, then lift."
       },
       {
         "title": "Lifting the head to look ahead",
         "view": "side",
         "looksLike": "Your forehead leaves the towel and your chin pokes forward so you look ahead, bending your neck back as your arms lift.",
         "why": "Your neck works to hold your head up, and it gets harder to feel and control your shoulder blades.",
-        "fix": "Leave your forehead on the towel and your eyes on the floor. Think of a long neck, from the back of your head to your upper back."
+        "fix": "Leave your forehead on the towel and your eyes on the floor. Think of a long neck, from the back of your head to your upper back.",
+        "cue": "Eyes on the floor, neck long."
       }
     ],
     "safety": [
@@ -3096,28 +3181,32 @@
         "view": "side",
         "looksLike": "Your torso swings from upright to leaning back 20° or more on each pull, then tips forward as the band returns.",
         "why": "Your body weight stretches the band instead of your back muscles, so they do less of the work.",
-        "fix": "Keep your shoulders stacked over your hips so only your arms move. If you can't, use a lighter band or hold it with more slack."
+        "fix": "Keep your shoulders stacked over your hips so only your arms move. If you can't, use a lighter band or hold it with more slack.",
+        "cue": "Torso still; only your arms move."
       },
       {
         "title": "Slumping instead of sitting tall",
         "view": "side",
         "looksLike": "Your lower back rounds into a C, your pelvis rolls back and your chest drops toward your legs.",
         "why": "From a slumped seat your shoulder blades can't draw back fully, so the pull becomes mostly an arm movement.",
-        "fix": "Bend your knees a little or sit on a folded towel or cushion so you can sit tall with your shoulders over your hips."
+        "fix": "Bend your knees a little or sit on a folded towel or cushion so you can sit tall with your shoulders over your hips.",
+        "cue": "Bend your knees or sit on a cushion."
       },
       {
         "title": "Shrugging the shoulders",
         "view": "side",
         "looksLike": "As you pull, your shoulders rise toward your ears and your hands finish near your chest instead of your lower ribs.",
         "why": "Your upper traps and arms take over, and your lats and mid-back do less.",
-        "fix": "Set your shoulders down before each rep. Pull your elbows back toward your hips and finish with your hands at your lower ribs."
+        "fix": "Set your shoulders down before each rep. Pull your elbows back toward your hips and finish with your hands at your lower ribs.",
+        "cue": "Shoulders down, hands to lower ribs."
       },
       {
         "title": "Letting the band snap back",
         "view": "side",
         "looksLike": "After the pull, your arms shoot forward in under a second and the band tugs your torso forward.",
         "why": "You skip the controlled return, which is half of every rep, and you start the next pull out of position.",
-        "fix": "Take two seconds to let your arms straighten. Reach until your shoulder blades spread forward, keeping your chest tall."
+        "fix": "Take two seconds to let your arms straighten. Reach until your shoulder blades spread forward, keeping your chest tall.",
+        "cue": "Arms take two seconds to straighten."
       }
     ],
     "safety": [
@@ -3207,21 +3296,24 @@
         "view": "front",
         "looksLike": "As the band stretches, your shoulders rise and the space between your shoulders and ears shrinks, most of all at the end of the pull.",
         "why": "Your upper traps take over, and your rear shoulders and the muscles between your shoulder blades do less.",
-        "fix": "Set your shoulders down before each rep. Use a lighter band or start with your hands wider so you can finish without shrugging."
+        "fix": "Set your shoulders down before each rep. Use a lighter band or start with your hands wider so you can finish without shrugging.",
+        "cue": "Shoulders down before each pull."
       },
       {
         "title": "Arching the lower back",
         "view": "side",
         "looksLike": "At the end of the pull, your ribs flare, your chest pushes forward and your lower back arches as you lean back.",
         "why": "Leaning back moves your body toward the band instead of moving the band with your shoulders, so they do less.",
-        "fix": "Brace your stomach and keep your ribs stacked over your hips. Stop the pull when the band reaches your chest."
+        "fix": "Brace your stomach and keep your ribs stacked over your hips. Stop the pull when the band reaches your chest.",
+        "cue": "Ribs over hips; stop at your chest."
       },
       {
         "title": "Bending the elbows",
         "view": "front",
         "looksLike": "Your elbows bend to 90° or more as you pull, and your hands end near your shoulders, more like a row than a pull-apart.",
         "why": "Bent arms shorten the lever and shift work toward your arms and lats, so your rear shoulders do less.",
-        "fix": "Keep a soft, fixed bend in your elbows from start to finish. If you can't, use a lighter band or start with your hands wider."
+        "fix": "Keep a soft, fixed bend in your elbows from start to finish. If you can't, use a lighter band or start with your hands wider.",
+        "cue": "Elbows keep one soft, fixed bend."
       }
     ],
     "safety": [
@@ -3317,21 +3409,24 @@
         "view": "side",
         "looksLike": "Your elbows sink below shoulder height and stay near your sides, so the band ends at your chest or chin, not your eyes.",
         "why": "With low elbows your lats and arms do most of the pulling, and your rear shoulders and upper back do less.",
-        "fix": "Keep your elbows high and wide, about level with your shoulders. Aim for your eyes or forehead, and use a lighter band if you can't reach."
+        "fix": "Keep your elbows high and wide, about level with your shoulders. Aim for your eyes or forehead, and use a lighter band if you can't reach.",
+        "cue": "Elbows level with your shoulders."
       },
       {
         "title": "Hands finishing below the elbows",
         "view": "front",
         "looksLike": "At the end of the pull, your forearms point forward or down, hands lower than elbows, instead of up beside your head.",
         "why": "Without turning your hands up and back, you miss the outward rotation that works the back of your shoulders.",
-        "fix": "Finish each rep in a double-biceps pose: upper arms out to the sides, elbows bent about 90°, hands beside your ears, thumbs back."
+        "fix": "Finish each rep in a double-biceps pose: upper arms out to the sides, elbows bent about 90°, hands beside your ears, thumbs back.",
+        "cue": "Hands finish beside your ears."
       },
       {
         "title": "Leaning back to pull",
         "view": "side",
         "looksLike": "Your torso tips back 15° or more as you pull, and your hips push forward to help bring the band toward you.",
         "why": "Your body weight does the pulling, so your shoulders and upper back get less work.",
-        "fix": "Use a staggered stance with your ribs stacked over your hips, and step closer to the anchor or use a lighter band to cut the tension."
+        "fix": "Use a staggered stance with your ribs stacked over your hips, and step closer to the anchor or use a lighter band to cut the tension.",
+        "cue": "Staggered stance, less band tension."
       }
     ],
     "safety": [
@@ -3426,21 +3521,24 @@
         "view": "front",
         "looksLike": "As you pull, your chest turns toward the ceiling on the working side and that shoulder finishes higher than the supported one.",
         "why": "Rotating your torso lifts the weight with your body, so your back muscles move it through less range.",
-        "fix": "Keep both shoulders level and your chest facing the floor. If you have to twist to finish the rep, use a lighter dumbbell."
+        "fix": "Keep both shoulders level and your chest facing the floor. If you have to twist to finish the rep, use a lighter dumbbell.",
+        "cue": "Both shoulders level, chest down."
       },
       {
         "title": "Jerking weight",
         "view": "side",
         "looksLike": "The dumbbell flies up in a fraction of a second with a bounce of the shoulder or hips, then drops straight back down.",
         "why": "Momentum moves the weight instead of your back, and the drop skips the lowering, which is half of each rep.",
-        "fix": "Lift in about one second, pause at the top, and lower over two to three seconds. If you can't pause, the dumbbell is too heavy."
+        "fix": "Lift in about one second, pause at the top, and lower over two to three seconds. If you can't pause, the dumbbell is too heavy.",
+        "cue": "Lift, pause, then lower slowly."
       },
       {
         "title": "Pulling toward the shoulder",
         "view": "side",
         "looksLike": "The dumbbell travels straight up toward your armpit or chest, your elbow flares away from your side and your shoulder rises toward your ear.",
         "why": "That path shifts work to your upper traps and arm, and your lats do less of the pull.",
-        "fix": "Think elbow to hip: pull the dumbbell back in a slight arc toward your hip pocket, upper arm close to your side, shoulder down."
+        "fix": "Think elbow to hip: pull the dumbbell back in a slight arc toward your hip pocket, upper arm close to your side, shoulder down.",
+        "cue": "Elbow back toward your hip pocket."
       }
     ],
     "safety": [
@@ -3540,21 +3638,24 @@
         "view": "side",
         "looksLike": "Your torso rises from about 45° toward upright as you pull, so the dumbbells finish near your stomach with your chest lifted.",
         "why": "Standing up turns part of each rep into a hip movement and leaves your back muscles less to do.",
-        "fix": "Pick a torso angle and keep it for the whole set. Use lighter dumbbells, or the supported row if holding the hinge is the hard part."
+        "fix": "Pick a torso angle and keep it for the whole set. Use lighter dumbbells, or the supported row if holding the hinge is the hard part.",
+        "cue": "Hold your torso angle the whole set."
       },
       {
         "title": "Rounding the back",
         "view": "side",
         "looksLike": "Your back curves into a C from hips to head, your head drops and the dumbbells drift forward in front of your knees.",
         "why": "From a rounded position your shoulder blades can't draw back fully, and the hinge gets harder to hold as you tire.",
-        "fix": "Brace your stomach, push your hips back and keep a long line from head to hips. Raise your torso a little or bend your knees more to stay flat."
+        "fix": "Brace your stomach, push your hips back and keep a long line from head to hips. Raise your torso a little or bend your knees more to stay flat.",
+        "cue": "Brace; long line from head to hips."
       },
       {
         "title": "Pulling toward the chest",
         "view": "front",
         "looksLike": "Your elbows flare out wide, the dumbbells travel straight up toward your chest and your shoulders rise toward your ears.",
         "why": "That path shifts work to your upper traps and arms, and your lats do less of the pull.",
-        "fix": "Pull your elbows back toward your hips, close to your sides, and keep your shoulders down. Finish with the dumbbells beside your lower ribs."
+        "fix": "Pull your elbows back toward your hips, close to your sides, and keep your shoulders down. Finish with the dumbbells beside your lower ribs.",
+        "cue": "Elbows close, weights to lower ribs."
       }
     ],
     "safety": [
@@ -3647,21 +3748,24 @@
         "view": "side",
         "looksLike": "Your torso tips back 30° or more as you pull, and the band comes toward your chest like a row instead of down to your ribs.",
         "why": "Leaning back turns the pulldown into a row and lets your body weight help, so your lats do less of the pull down.",
-        "fix": "Keep your torso nearly upright with only a slight lean. Move closer to the door or use a lighter band if you need to lean to finish."
+        "fix": "Keep your torso nearly upright with only a slight lean. Move closer to the door or use a lighter band if you need to lean to finish.",
+        "cue": "Torso almost upright the whole pull."
       },
       {
         "title": "Shoulders stuck up by the ears",
         "view": "back",
         "looksLike": "Your shoulders stay hunched up through the pull, and your elbows stop around shoulder height instead of reaching your ribs.",
         "why": "Without your shoulder blades moving down, your arms do most of the work and your lats get less.",
-        "fix": "Start each rep by drawing your shoulders down away from your ears, then pull your elbows down to the sides of your ribs."
+        "fix": "Start each rep by drawing your shoulders down away from your ears, then pull your elbows down to the sides of your ribs.",
+        "cue": "Shoulders away from ears, then pull."
       },
       {
         "title": "Crunching the chest down",
         "view": "side",
         "looksLike": "Your chest drops and your upper back rounds as you pull, like a crunch, and your elbows finish in front of your body.",
         "why": "Curling forward lets your abs and body weight help, and your lats work through less range.",
-        "fix": "Keep your chest up toward the anchor and finish with your elbows beside your ribs, slightly behind your torso."
+        "fix": "Keep your chest up toward the anchor and finish with your elbows beside your ribs, slightly behind your torso.",
+        "cue": "Chest tall, elbows end by your ribs."
       }
     ],
     "safety": [
@@ -3752,21 +3856,24 @@
         "view": "side",
         "looksLike": "Your chest bobs up as the dumbbells fly up, and they drop back down in under a second.",
         "why": "Momentum lifts the weight, so your rear shoulders work for only part of each rep.",
-        "fix": "Use lighter dumbbells. Lift in about one second, pause at shoulder height or just below, and lower over two to three seconds."
+        "fix": "Use lighter dumbbells. Lift in about one second, pause at shoulder height or just below, and lower over two to three seconds.",
+        "cue": "Lighter weights, pause at the top."
       },
       {
         "title": "Bending the elbows into a row",
         "view": "front",
         "looksLike": "Your elbows bend from a slight bend to 90° or more as you lift, pulling the dumbbells up and back like a row.",
         "why": "Bent arms shorten the lever and shift work to your mid-back and biceps, so your rear shoulders do less.",
-        "fix": "Set a slight elbow bend before the first rep and keep it. Think of opening your arms wide, and use lighter dumbbells if you can't."
+        "fix": "Set a slight elbow bend before the first rep and keep it. Think of opening your arms wide, and use lighter dumbbells if you can't.",
+        "cue": "Fixed slight bend; open arms wide."
       },
       {
         "title": "Shrugging toward the ears",
         "view": "front",
         "looksLike": "As the dumbbells rise, your shoulders creep up toward your ears and the dumbbells go above shoulder height.",
         "why": "Your upper traps take over, and your rear shoulders and the muscles between your shoulder blades do less.",
-        "fix": "Keep your neck long and shoulders down. Lead with your elbows out to the sides and stop at shoulder height or a little below."
+        "fix": "Keep your neck long and shoulders down. Lead with your elbows out to the sides and stop at shoulder height or a little below.",
+        "cue": "Lead out with elbows, shoulders low."
       }
     ],
     "safety": [
@@ -3860,21 +3967,24 @@
         "view": "side",
         "looksLike": "Your hips drop below the line from knees to shoulders and your lower back arches, so your stomach hangs toward the floor.",
         "why": "The arch shifts the work from your abs to your lower back, so the hold stops training trunk control.",
-        "fix": "Squeeze your glutes and tuck your ribs toward your hips until the line is straight. If the sag comes back, end the hold there."
+        "fix": "Squeeze your glutes and tuck your ribs toward your hips until the line is straight. If the sag comes back, end the hold there.",
+        "cue": "Glutes tight, ribs toward hips."
       },
       {
         "title": "Hips piking up",
         "view": "side",
         "looksLike": "Your seat rises above the line from knees to shoulders, so you bend at the hips and drift back toward an all-fours position.",
         "why": "Bending at the hips shortens the lever and props you up on your knees, so your abs barely have to work.",
-        "fix": "Walk your knees back a little and lower your hips until knees, hips and shoulders line up. You should feel your stomach working."
+        "fix": "Walk your knees back a little and lower your hips until knees, hips and shoulders line up. You should feel your stomach working.",
+        "cue": "Knees back a bit, hips down in line."
       },
       {
         "title": "Chest sinking between the shoulders",
         "view": "side",
         "looksLike": "Your chest drops toward the floor and your shoulder blades pinch together, so your upper back dips between your shoulders.",
         "why": "Your weight hangs on your shoulder joints instead of the muscles around your shoulder blades holding you up.",
-        "fix": "Push the floor away with your forearms until your upper back is flat, and keep your elbows under your shoulders."
+        "fix": "Push the floor away with your forearms until your upper back is flat, and keep your elbows under your shoulders.",
+        "cue": "Forearms press down, upper back flat."
       }
     ],
     "safety": [
@@ -3970,21 +4080,24 @@
         "view": "side",
         "looksLike": "Your hips drop below the line from shoulders to ankles and your lower back arches, so your stomach hangs toward the floor.",
         "why": "The arch shifts the work from your abs to your lower back, so the hold stops training trunk control.",
-        "fix": "Squeeze your glutes and tuck your ribs toward your hips until you're straight again. If the sag comes back, end the hold there."
+        "fix": "Squeeze your glutes and tuck your ribs toward your hips until you're straight again. If the sag comes back, end the hold there.",
+        "cue": "Ribs to hips, glutes squeezed."
       },
       {
         "title": "Hips piking up",
         "view": "side",
         "looksLike": "Your hips rise above the line from shoulders to ankles, so your body forms an upside-down V and more weight shifts onto your arms.",
         "why": "Bending at the hips shortens the lever, so your abs barely have to work to hold you up.",
-        "fix": "Lower your hips until they're level with your shoulders, then squeeze your glutes. Check the line on video or in a mirror at your side."
+        "fix": "Lower your hips until they're level with your shoulders, then squeeze your glutes. Check the line on video or in a mirror at your side.",
+        "cue": "Hips down, level with your shoulders."
       },
       {
         "title": "Holding your breath",
         "view": "side",
         "looksLike": "Your stomach stays rigid with no rise and fall, and you gasp or drop your knees as soon as you let a breath out.",
         "why": "Bracing has to work while you breathe. Holding your breath props you up for a few seconds, then the position falls apart.",
-        "fix": "Breathe in through your nose and out through pursed lips while your stomach stays firm. Shorten the hold until you can breathe all the way through."
+        "fix": "Breathe in through your nose and out through pursed lips while your stomach stays firm. Shorten the hold until you can breathe all the way through.",
+        "cue": "Stomach firm, breathe in and out."
       }
     ],
     "safety": [
@@ -4079,21 +4192,24 @@
         "view": "front",
         "looksLike": "Your hips drop toward the floor so your body bends sideways into a curve, lower at the hips than at your shoulders and feet.",
         "why": "The sides of your trunk and hips stop holding you up, and your weight hangs on your shoulder instead.",
-        "fix": "Push your bottom hip up toward the ceiling until head, hips and feet line up. If it keeps sagging, switch to the bent-knee version."
+        "fix": "Push your bottom hip up toward the ceiling until head, hips and feet line up. If it keeps sagging, switch to the bent-knee version.",
+        "cue": "Bottom hip up until you're straight."
       },
       {
         "title": "Hips rolling or sitting back",
         "view": "front",
         "looksLike": "Your top hip rolls back behind the bottom one and your seat drifts behind the line of your shoulders and feet, so you bend at the waist.",
         "why": "Twisting or bending at the hips takes load off the sides of your trunk, so the hold gets easier but trains less.",
-        "fix": "Stack your top hip over the bottom one and press your hips slightly forward until you're straight. Practicing with your back near a wall helps."
+        "fix": "Stack your top hip over the bottom one and press your hips slightly forward until you're straight. Practicing with your back near a wall helps.",
+        "cue": "Top hip stacked, hips nudged forward."
       },
       {
         "title": "Sinking into the shoulder",
         "view": "front",
         "looksLike": "Your bottom shoulder hunches up toward your ear and your chest sinks toward the floor, often with the elbow drifting out from under the shoulder.",
         "why": "Your weight hangs on the shoulder joint instead of the muscles around your shoulder blade holding you up.",
-        "fix": "Set your elbow under your shoulder and push the floor away so your neck looks long. Shorten the hold if you can't keep it."
+        "fix": "Set your elbow under your shoulder and push the floor away so your neck looks long. Shorten the hold if you can't keep it.",
+        "cue": "Press the floor away, neck long."
       }
     ],
     "safety": [
@@ -4185,21 +4301,24 @@
         "view": "side",
         "looksLike": "As the leg lowers, a gap opens between your lower back and the floor and your ribs flare up toward the ceiling.",
         "why": "Your abs have lost the position, so the leg's weight is arching your spine instead of your trunk resisting it.",
-        "fix": "Reach a shorter distance, keeping the leg higher, and breathe out fully as you reach. Keep the knee bent if a straight leg is too far."
+        "fix": "Reach a shorter distance, keeping the leg higher, and breathe out fully as you reach. Keep the knee bent if a straight leg is too far.",
+        "cue": "Shorter reach, leg higher."
       },
       {
         "title": "Moving too fast",
         "view": "side",
         "looksLike": "The arm and leg drop and swing back in about a second, with a bounce at the bottom or a rush from one side to the other.",
         "why": "Momentum does the work, so your trunk isn't practicing staying still while your arms and legs move.",
-        "fix": "Take 2 to 3 seconds to reach and about 2 to return. Pause for a breath before you switch sides."
+        "fix": "Take 2 to 3 seconds to reach and about 2 to return. Pause for a breath before you switch sides.",
+        "cue": "Two to three seconds out, two back."
       },
       {
         "title": "Moving same-side arm and leg",
         "view": "above",
         "looksLike": "Your right arm and right leg reach out together, instead of your right arm with your left leg.",
         "why": "Opposite arm and leg make your trunk resist a diagonal pull, which is the control this exercise trains.",
-        "fix": "Practice the arms alone, then the legs alone, then put them together. Say \"right arm, left leg\" quietly as you go."
+        "fix": "Practice the arms alone, then the legs alone, then put them together. Say \"right arm, left leg\" quietly as you go.",
+        "cue": "Right arm with left leg, then switch."
       }
     ],
     "safety": [
@@ -4295,21 +4414,24 @@
         "view": "side",
         "looksLike": "Your foot rises above hip height and your lower back dips into an arch, with your seat tilting up.",
         "why": "The lift is coming from arching your back, not from your hips and trunk holding still.",
-        "fix": "Reach your heel straight back, about level with your hip. Think \"long\" rather than \"high\"."
+        "fix": "Reach your heel straight back, about level with your hip. Think \"long\" rather than \"high\".",
+        "cue": "Heel back, level with your hip."
       },
       {
         "title": "Hips tipping or twisting",
         "view": "back",
         "looksLike": "As the leg lifts, that side's hip rises and turns toward the ceiling, and your trunk tilts toward the supporting knee.",
         "why": "Turning lets the movement escape through your hips, so your trunk isn't practicing resisting rotation.",
-        "fix": "Imagine a glass of water on your lower back and don't spill it. Reach a shorter distance until your hips stay level."
+        "fix": "Imagine a glass of water on your lower back and don't spill it. Reach a shorter distance until your hips stay level.",
+        "cue": "Shorter reach until hips stay level."
       },
       {
         "title": "Rushing the reps",
         "view": "side",
         "looksLike": "The arm and leg kick out and drop back in under a second, with little or no pause at full reach.",
         "why": "Momentum does the work, so the muscles that hold your trunk still barely have to.",
-        "fix": "Count two seconds out, a two-second pause, and two seconds back."
+        "fix": "Count two seconds out, a two-second pause, and two seconds back.",
+        "cue": "Two seconds out, hold two, two back."
       }
     ],
     "safety": [
@@ -4403,21 +4525,24 @@
         "view": "side",
         "looksLike": "You crank up until your chest is well off the mat and your lower back folds into a deep bend, with your ribs lifting off the floor.",
         "why": "Past a small lift, your spine is bending to its end range instead of your back muscles controlling a steady position.",
-        "fix": "Lift only a few centimeters, about an inch or two. Stop where your lower ribs stay near the mat, and own that range."
+        "fix": "Lift only a few centimeters, about an inch or two. Stop where your lower ribs stay near the mat, and own that range.",
+        "cue": "Lift an inch or two, ribs near the mat."
       },
       {
         "title": "Head and neck cranking up",
         "view": "side",
         "looksLike": "Your chin juts forward and up so you're looking at the wall ahead, with a sharp bend at the back of your neck.",
         "why": "Your neck leads the movement instead of your back muscles, so the effort ends up in the wrong place.",
-        "fix": "Tuck your chin slightly and keep your eyes on the floor a little in front of you. Lead the lift with your chest."
+        "fix": "Tuck your chin slightly and keep your eyes on the floor a little in front of you. Lead the lift with your chest.",
+        "cue": "Lead with your chest, chin tucked."
       },
       {
         "title": "Jerking up with momentum",
         "view": "side",
         "looksLike": "You throw your chest up in a quick jerk, sometimes with your feet lifting too, then drop straight back down.",
         "why": "Momentum does the lift, so the muscles along your spine get very little time working.",
-        "fix": "Count two seconds up, a short pause, and two seconds down. Keep your feet on the floor and your glutes squeezed."
+        "fix": "Count two seconds up, a short pause, and two seconds down. Keep your feet on the floor and your glutes squeezed.",
+        "cue": "Two seconds up, pause, two down."
       }
     ],
     "safety": [
@@ -4511,21 +4636,24 @@
         "view": "side",
         "looksLike": "Your knees straighten and your hips rise well above your shoulders, so your body forms an upside-down V.",
         "why": "Raising the hips moves the weight onto your arms and legs, so your trunk has much less to hold.",
-        "fix": "Keep your knees bent at about 90° and directly under your hips. Hover them only an inch or two off the floor."
+        "fix": "Keep your knees bent at about 90° and directly under your hips. Hover them only an inch or two off the floor.",
+        "cue": "Knees under hips, hovering low."
       },
       {
         "title": "Back rounding or sagging",
         "view": "side",
         "looksLike": "Your upper back humps up toward the ceiling, or your lower back dips toward the floor, instead of staying flat.",
         "why": "Your trunk is changing shape instead of holding it, and holding that shape is what this exercise trains.",
-        "fix": "Brace your stomach and imagine a tray balanced flat on your back. Set your knees down and reset if the shape changes."
+        "fix": "Brace your stomach and imagine a tray balanced flat on your back. Set your knees down and reset if the shape changes.",
+        "cue": "Brace; balance a tray on your back."
       },
       {
         "title": "Holding your breath",
         "view": "side",
         "looksLike": "Your stomach stays rigid with no rise and fall, and your knees drop as soon as you let a breath out.",
         "why": "Bracing has to work while you breathe. Holding your breath props you up for a few seconds, then the position falls apart.",
-        "fix": "Take slow, steady breaths through your nose or pursed lips while your stomach stays firm. Shorten the hold until you can."
+        "fix": "Take slow, steady breaths through your nose or pursed lips while your stomach stays firm. Shorten the hold until you can.",
+        "cue": "Slow nose breaths, stomach firm."
       }
     ],
     "safety": [
@@ -4622,21 +4750,24 @@
         "view": "front",
         "looksLike": "As your arms straighten, your shoulders and hands rotate toward the anchor, so your chest no longer faces straight ahead.",
         "why": "The point is to resist rotation. Once you turn, the band has won and your trunk stops working against it.",
-        "fix": "Step closer to the anchor to reduce the tension and press more slowly. Keep your hands in front of the middle of your chest."
+        "fix": "Step closer to the anchor to reduce the tension and press more slowly. Keep your hands in front of the middle of your chest.",
+        "cue": "Step closer in, press more slowly."
       },
       {
         "title": "Leaning away from the band",
         "view": "front",
         "looksLike": "Your upper body tilts away from the anchor or your hips shift sideways, so you're no longer standing tall over your feet.",
         "why": "Leaning uses your body weight to counter the pull, instead of your trunk muscles holding you still.",
-        "fix": "Stand tall with your weight even on both feet and your ribs over your hips. Use less band tension if you have to lean."
+        "fix": "Stand tall with your weight even on both feet and your ribs over your hips. Use less band tension if you have to lean.",
+        "cue": "Weight even on both feet, stand tall."
       },
       {
         "title": "Arching your lower back",
         "view": "side",
         "looksLike": "As your arms go out, your ribs lift, your lower back arches and your hips push forward.",
         "why": "The arch lets your back take over, and your abs lose the braced position that resists the pull.",
-        "fix": "Tuck your ribs down and squeeze your glutes before each press. Keep your knees soft and your stance steady."
+        "fix": "Tuck your ribs down and squeeze your glutes before each press. Keep your knees soft and your stance steady.",
+        "cue": "Tuck ribs, squeeze glutes, then press."
       }
     ],
     "safety": [
@@ -4734,21 +4865,24 @@
         "view": "side",
         "looksLike": "Your shoulders roll forward and your upper back rounds, so the dumbbells hang in front of your thighs and your head pokes forward.",
         "why": "Your upper back stops holding your posture, and the weight pulls you out of the tall position the carry trains.",
-        "fix": "Before you walk, stand tall and set your shoulders down and back. Use lighter dumbbells if you can't hold the posture."
+        "fix": "Before you walk, stand tall and set your shoulders down and back. Use lighter dumbbells if you can't hold the posture.",
+        "cue": "Shoulders set back before you walk."
       },
       {
         "title": "Leaning or swaying",
         "view": "front",
         "looksLike": "Your trunk tips to one side or rocks side to side with each step, and one shoulder sits lower than the other.",
         "why": "Your trunk muscles stop holding you upright, so the weights are moving you instead of you carrying them.",
-        "fix": "Take shorter steps and keep your shoulders level. If one side keeps dropping, use lighter dumbbells or shorten the walk."
+        "fix": "Take shorter steps and keep your shoulders level. If one side keeps dropping, use lighter dumbbells or shorten the walk.",
+        "cue": "Shorter steps, shoulders level."
       },
       {
         "title": "Dumbbells swinging",
         "view": "side",
         "looksLike": "The dumbbells swing forward and back like pendulums, or bump against your legs as you walk.",
         "why": "Swinging weights aren't under control, and they pull your trunk around with every step.",
-        "fix": "Squeeze the handles, keep your arms long and still, and slow down with shorter steps."
+        "fix": "Squeeze the handles, keep your arms long and still, and slow down with shorter steps.",
+        "cue": "Arms long and still, grip hard."
       }
     ],
     "safety": [
@@ -4841,21 +4975,24 @@
         "view": "side",
         "looksLike": "A gap opens between your lower back and the floor and your ribs flare up, usually because your legs are too low.",
         "why": "Once your back arches, your abs have lost the shape and your lower back is taking the strain instead.",
-        "fix": "Bend your knees or raise your legs higher until your back presses down again. End the hold if it keeps lifting."
+        "fix": "Bend your knees or raise your legs higher until your back presses down again. End the hold if it keeps lifting.",
+        "cue": "Legs up until your back presses down."
       },
       {
         "title": "Pulling with the neck",
         "view": "side",
         "looksLike": "Your chin juts toward the ceiling and your head lifts higher than your shoulders, with the front of your neck straining.",
         "why": "Your neck is doing the lifting instead of your abs curling your ribs toward your hips.",
-        "fix": "Tuck your chin slightly, as if holding a small ball under it, and lift from your shoulder blades. Rest your head between holds."
+        "fix": "Tuck your chin slightly, as if holding a small ball under it, and lift from your shoulder blades. Rest your head between holds.",
+        "cue": "Hold a small ball under your chin."
       },
       {
         "title": "Shoulders flat on the floor",
         "view": "side",
         "looksLike": "Only your legs lift while your head and shoulder blades stay on the mat, so your body makes an L shape rather than a curve.",
         "why": "Without the upper body lifted, your abs don't have to curl from both ends, and it turns mostly into a leg lift.",
-        "fix": "Curl your ribs toward your hips until your shoulder blades just clear the floor, then lift your legs."
+        "fix": "Curl your ribs toward your hips until your shoulder blades just clear the floor, then lift your legs.",
+        "cue": "Curl up until shoulder blades clear."
       }
     ],
     "safety": [
@@ -4949,21 +5086,24 @@
         "view": "side",
         "looksLike": "You lean back or thrust your hips forward to get the dumbbells moving, so your torso tips 10° or more behind vertical as they rise.",
         "why": "Momentum from your hips and back lifts the weight, so your biceps skip the hardest part of the rep.",
-        "fix": "Soften your knees, brace, and keep your torso completely still. If you can't, use lighter dumbbells or stand with your back against a wall."
+        "fix": "Soften your knees, brace, and keep your torso completely still. If you can't, use lighter dumbbells or stand with your back against a wall.",
+        "cue": "Soft knees, brace, torso stays put."
       },
       {
         "title": "Elbows drifting forward",
         "view": "side",
         "looksLike": "As the dumbbells rise, your elbows slide forward and up, so at the top your upper arms point 30° or more in front of your body.",
         "why": "Your front shoulders start lifting, and the weight ends up stacked over your elbows, where your biceps barely have to work.",
-        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher. Picture your upper arms pinned in place."
+        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher. Picture your upper arms pinned in place.",
+        "cue": "Upper arms pinned to your sides."
       },
       {
         "title": "Cutting the bottom short",
         "view": "side",
         "looksLike": "You drop the dumbbells quickly and start the next curl with your elbows still bent around 30°, never reaching straight arms.",
         "why": "You skip the stretched bottom of the rep, where your biceps work hard, and lose the controlled lowering half of every rep.",
-        "fix": "Count two to three seconds on the way down and let your elbows straighten fully, dumbbells by your thighs, before each curl."
+        "fix": "Count two to three seconds on the way down and let your elbows straighten fully, dumbbells by your thighs, before each curl.",
+        "cue": "Elbows fully straight at the bottom."
       }
     ],
     "safety": [
@@ -5057,21 +5197,24 @@
         "view": "side",
         "looksLike": "You rock back or snap your hips forward to start each curl, so your torso tips 10° or more behind vertical as the dumbbells rise.",
         "why": "Your hips and back supply the momentum, so your biceps and forearms do less of the lifting.",
-        "fix": "Soften your knees, brace, and keep your torso still from the first rep to the last. If you can't, use lighter dumbbells."
+        "fix": "Soften your knees, brace, and keep your torso still from the first rep to the last. If you can't, use lighter dumbbells.",
+        "cue": "Brace; torso still to the last rep."
       },
       {
         "title": "Elbows drifting forward",
         "view": "side",
         "looksLike": "Your elbows travel forward and up as you curl, so at the top your upper arms point 30° or more in front of your body.",
         "why": "Your front shoulders join in, and the dumbbell ends up stacked over the elbow, so your arm muscles get a rest at the top.",
-        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher."
+        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher.",
+        "cue": "Stop the curl before elbows move."
       },
       {
         "title": "Dropping the weight",
         "view": "side",
         "looksLike": "The dumbbells fall back down in under a second and the next curl starts with your elbows still bent, never reaching straight arms.",
         "why": "You give up the lowering half of the rep and the stretched bottom position, where your arm muscles work hard.",
-        "fix": "Count two to three seconds on the way down and let your elbows straighten fully before each curl."
+        "fix": "Count two to three seconds on the way down and let your elbows straighten fully before each curl.",
+        "cue": "Two to three seconds down to straight."
       }
     ],
     "safety": [
@@ -5164,21 +5307,24 @@
         "view": "side",
         "looksLike": "As the band gets tight near the top, your torso tips back 10° or more or your hips push forward to finish the rep.",
         "why": "Your back and hips finish the curl, so your biceps skip the top of the rep, where the band pulls hardest.",
-        "fix": "Keep your torso still to the last rep. Use a lighter band, or bring your feet closer together on the band to ease the tension."
+        "fix": "Keep your torso still to the last rep. Use a lighter band, or bring your feet closer together on the band to ease the tension.",
+        "cue": "Feet closer on the band, torso still."
       },
       {
         "title": "Elbows drifting forward",
         "view": "side",
         "looksLike": "Near the top your elbows slide forward and up, so your upper arms end up angled 30° or more in front of your body.",
         "why": "Your front shoulders help lift, and the band's pull lines up with your forearms, taking work off your biceps.",
-        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher."
+        "fix": "Keep your elbows touching your sides and end the curl where they would have to move to go higher.",
+        "cue": "Curl only as high as elbows stay put."
       },
       {
         "title": "Letting the band snap down",
         "view": "side",
         "looksLike": "After the top, your hands drop in under a second, and the next rep starts with your elbows still bent instead of straight.",
         "why": "The band does the lowering for you, so you lose half the work of each rep and the stretched bottom position.",
-        "fix": "Count two to three seconds on the way down, resisting the band, until your elbows are fully straight."
+        "fix": "Count two to three seconds on the way down, resisting the band, until your elbows are fully straight.",
+        "cue": "Resist the band down to straight arms."
       }
     ],
     "safety": [
@@ -5270,21 +5416,24 @@
         "view": "side",
         "looksLike": "To finish each rep you fold forward at the hips, bringing your chest over your hands and pushing your body weight down onto the band.",
         "why": "Your body weight and shoulders press the band down, so your triceps do only part of the work.",
-        "fix": "Set your torso upright, or with a slight forward lean, before the first rep and hold it. Only your forearms move. Use a lighter band if needed."
+        "fix": "Set your torso upright, or with a slight forward lean, before the first rep and hold it. Only your forearms move. Use a lighter band if needed.",
+        "cue": "Set your torso upright and hold it."
       },
       {
         "title": "Upper arms swinging",
         "view": "side",
         "looksLike": "Your elbows drift forward as your hands rise and swing back as you press, so your upper arms move like a pendulum instead of staying vertical.",
         "why": "Moving at the shoulder turns the rep into a pulldown, so your back and shoulders help and your triceps do less.",
-        "fix": "Keep your elbows touching your sides. Let your hands rise only until your forearms are level, then press back down."
+        "fix": "Keep your elbows touching your sides. Let your hands rise only until your forearms are level, then press back down.",
+        "cue": "Elbows still, forearms up to level."
       },
       {
         "title": "Stopping short of straight",
         "view": "side",
         "looksLike": "You press only partway, stopping with your elbows still bent 20–30° before letting the band pull your hands back up.",
         "why": "The band pulls hardest as your arms reach straight, so stopping short skips the part where your triceps work most.",
-        "fix": "Press until your elbows are fully straight and pause for a moment. If you can't reach straight arms, use a lighter band."
+        "fix": "Press until your elbows are fully straight and pause for a moment. If you can't reach straight arms, use a lighter band.",
+        "cue": "Elbows fully straight, brief pause."
       }
     ],
     "safety": [
@@ -5378,21 +5527,24 @@
         "view": "front",
         "looksLike": "As the dumbbell lowers, your elbows splay out to the sides until they are well wider than your shoulders, so your upper arms form a wide V.",
         "why": "The dumbbell's path gets harder to control, and your triceps get less of the long, stretched range this exercise is for.",
-        "fix": "Point your elbows forward and up, about shoulder-width apart. If your shoulders won't allow it, use a lighter dumbbell and a shorter range."
+        "fix": "Point your elbows forward and up, about shoulder-width apart. If your shoulders won't allow it, use a lighter dumbbell and a shorter range.",
+        "cue": "Elbows about shoulder-width apart."
       },
       {
         "title": "Arching the lower back",
         "view": "side",
         "looksLike": "As the dumbbell goes overhead or behind your head, your ribs flare forward and your lower back arches, tipping your torso back off vertical.",
         "why": "Your back makes room for the weight instead of your shoulders, and the rep becomes harder to control.",
-        "fix": "Breathe in, brace, and keep your ribs pulled down toward your hips. Use a lighter dumbbell if the arch keeps coming back."
+        "fix": "Breathe in, brace, and keep your ribs pulled down toward your hips. Use a lighter dumbbell if the arch keeps coming back.",
+        "cue": "Brace and pull ribs toward your hips."
       },
       {
         "title": "Upper arms dropping forward",
         "view": "side",
         "looksLike": "Your upper arms tip forward as you lower the weight and swing back as you press, so the dumbbell moves in an arc in front of your face.",
         "why": "Moving at the shoulder lets other muscles help and shortens the triceps' stretch, so the triceps do less of the work.",
-        "fix": "Keep your upper arms close to your head and still; only your elbows bend. Lower only as far as you can without your elbows dropping."
+        "fix": "Keep your upper arms close to your head and still; only your elbows bend. Lower only as far as you can without your elbows dropping.",
+        "cue": "Upper arms still beside your head."
       }
     ],
     "safety": [
@@ -5488,28 +5640,32 @@
         "view": "front",
         "looksLike": "As the dumbbells rise, your shoulders hike up toward your ears and the gap between shoulder and ear shrinks, often more on the last reps.",
         "why": "Your upper traps take over the lift, so your side shoulders do less of the work you are after.",
-        "fix": "Set your shoulders down before each rep and think \"reach out to the walls\", not up. Use lighter dumbbells."
+        "fix": "Set your shoulders down before each rep and think \"reach out to the walls\", not up. Use lighter dumbbells.",
+        "cue": "Reach out to the walls, not up."
       },
       {
         "title": "Swinging the weights up",
         "view": "side",
         "looksLike": "You dip your knees or rock your torso back to start each rep, and the dumbbells fly up fast instead of rising steadily.",
         "why": "Momentum lifts the weight, so your side shoulders skip the start of the rep and you lose control at the top.",
-        "fix": "Hold a slight forward lean, keep your knees still, and raise in about one to two seconds. If you have to swing, the dumbbells are too heavy."
+        "fix": "Hold a slight forward lean, keep your knees still, and raise in about one to two seconds. If you have to swing, the dumbbells are too heavy.",
+        "cue": "Knees still, slow steady raise."
       },
       {
         "title": "Raising above the shoulders",
         "view": "front",
         "looksLike": "Your hands finish above shoulder height, with your arms angled up past parallel to the floor, often with a shrug to get there.",
         "why": "Above shoulder height your upper traps take more of the work, and your side shoulders gain little.",
-        "fix": "Stop when your arms are parallel to the floor. Picture a shelf at shoulder height and touch it with your elbows."
+        "fix": "Stop when your arms are parallel to the floor. Picture a shelf at shoulder height and touch it with your elbows.",
+        "cue": "Arms stop parallel to the floor."
       },
       {
         "title": "Turning the thumbs up",
         "view": "side",
         "looksLike": "Your hands lead and rise higher than your elbows, thumbs tipped up, and the dumbbells drift forward toward a front raise.",
         "why": "Turning the thumbs up and bringing the arms forward shifts the work toward your front shoulders.",
-        "fix": "Lead with your elbows and keep the dumbbells level at the top. Thumbs level with or slightly below your little fingers is fine."
+        "fix": "Lead with your elbows and keep the dumbbells level at the top. Thumbs level with or slightly below your little fingers is fine.",
+        "cue": "Thumbs level with your little fingers."
       }
     ],
     "safety": [
