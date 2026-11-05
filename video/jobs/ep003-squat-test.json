@@ -1,0 +1,35 @@
+{
+  "id": "ep003-squat-test",
+  "title": "EP003 Squat — 5 s movement test (9:16)",
+  "episode": "EP003",
+  "model": "klingai/kling-v2.6",
+  "firstFrame": "video/inputs/ep003-squat-first-frame-canonical.png",
+  "firstFrameRequirements": {
+    "minWidth": 1080,
+    "minHeight": 1920,
+    "aspect": "9:16",
+    "spec": "docs/VIDEO_FIRST_FRAME_SPEC.md"
+  },
+  "imageParam": "inputImageUrl",
+  "params": {
+    "prompt": "The same soft-clay, cream-white Blob character with two small upright black oval eyes and black athletic shorts relaxes both arms, places feet shoulder-width apart, then performs one slow, controlled bodyweight squat: arms reach forward for balance, hips move back and down, knees track over the toes, heels stay flat, a short pause at a comfortable depth, then he stands back up tall. Smooth, believable motion, soft natural daylight, static camera, full body in frame for the whole clip.",
+    "negativePrompt": "text, letters, logo, watermark, captions, mouth, teeth, nose, eyebrows, hair, ears, human skin, visible muscles, abs, extra limbs, extra fingers, missing shorts, shorts changing color, clothing change, color change of the body, camera shake, zoom, cuts, morphing, melting, deformed feet, floating, heels lifting",
+    "duration": "5",
+    "ratio": "9:16",
+    "sound": "off"
+  },
+  "budgetCapUsd": 1.0,
+  "shotScript": {
+    "owner": "ChatGPT (visual QA) — draft by Claude Code, pending review",
+    "camera": "static, eye level, full body",
+    "action": "one controlled bodyweight squat: descend ~2 s, brief pause, rise ~2 s",
+    "mustKeep": [
+      "cream-white soft-clay body",
+      "two upright black oval eyes, no mouth",
+      "black athletic shorts in every frame",
+      "beginner-friendly soft build, no muscles",
+      "no text or logos"
+    ]
+  },
+  "firstFrameNotes": "Canonical first frame per docs/VIDEO_FIRST_FRAME_SPEC.md (CC-006). Until that PNG is committed, `estimate` shows the live price but issues no approval code, so no paid run is possible. The interim frame video/inputs/ep003-squat-first-frame.png (720x1280) is kept only for the reel preview."
+}
